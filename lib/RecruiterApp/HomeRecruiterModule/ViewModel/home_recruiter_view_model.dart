@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:recuiter_app/AppModule/HomeRecruiterModule/Model/workers_list_model.dart';
-import 'package:recuiter_app/AppModule/HomeRecruiterModule/services/home_recruiter_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/current_week_recruiter_model.dart';
 import '../Model/job_site_recruiter_model.dart';
+import '../Model/workers_list_model.dart';
+import '../services/home_recruiter_services.dart';
 
 class HomeRecruiterViewModel extends GetxController {
   // RxList workersList = [

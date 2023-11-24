@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:recuiter_app/Network/Server/response.dart';
-import 'package:recuiter_app/Network/api_service.dart';
-import 'package:recuiter_app/Network/api_url.dart';
-
+import '../../../Network/Server/response.dart';
+import '../../../Network/api_service.dart';
+import '../../../Network/api_url.dart';
 import '../Model/current_week_recruiter_model.dart';
 import '../Model/job_site_recruiter_model.dart';
 import '../Model/workers_list_model.dart';

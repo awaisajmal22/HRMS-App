@@ -12,7 +12,6 @@ import '../../../Constant/AppText/app_text.dart';
 import '../../../Constant/BackgroundGradient/background_gradient.dart';
 import '../../../RoutesAndBindings/app_routes.dart';
 import '../../../Utils/spint_kit_view_spinner.dart';
-import '../../AuthModule/Login/Model/login_model.dart';
 import '../../HomeRecruiterModule/Model/workers_list_model.dart';
 import '../../HomeRecruiterModule/ViewModel/home_recruiter_view_model.dart';
 import '../../SupportRecruiterModule/View/Supports2_recruiter_view.dart';
