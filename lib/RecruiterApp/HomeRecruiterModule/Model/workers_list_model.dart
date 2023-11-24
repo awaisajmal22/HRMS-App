@@ -1,0 +1,34 @@
+
+import 'dart:convert';
+
+WorkersListModel WorkersListModelFromJson(String str) => WorkersListModel.fromJson(json.decode(str));
+
+String WorkersListModelToJson(WorkersListModel data) => json.encode(data.toJson());
+
+class WorkersListModel {
+    int id;
+    String firstName;
+    String lastName;
+    int timeSheettype;
+
+    WorkersListModel({
+        required this.id,
+        required this.firstName,
+        required this.lastName,
+        required this.timeSheettype,
+    });
+
+    factory WorkersListModel.fromJson(Map<String, dynamic> json) => WorkersListModel(
+        id: json["id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        timeSheettype: json["timeSheettype"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "timeSheettype": timeSheettype,
+    };
+}
