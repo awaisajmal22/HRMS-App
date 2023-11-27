@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:hrmsapp/AuthModule/Forgetpassword/View/forget_password_view.dart';
+import 'package:hrmsapp/AuthModule/Forgetpassword/ViewModel/forget_password_view_model.dart';
 
 import '../AuthModule/Login/View/login_view.dart';
 import '../AuthModule/Login/ViewModel/login_view_model.dart';
@@ -241,5 +243,9 @@ class AppPages {
           Get.lazyPut(() => EditWeeklyTotalHoursRecruiterViewModel());
           Get.lazyPut(() => UploadDocumentRecruiterViewModel());
         })),
+        GetPage(name: AppRoutes.forgetPasswordView, page: ()=>ForgetPasswordView(),
+        binding: BindingsBuilder(() {
+          Get.lazyPut(() => ForgetPasswordViewModel());
+        }))
   ];
 }

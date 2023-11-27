@@ -28,4 +28,5 @@ abstract class AppRoutes {
       '/editDailyTotalHoursRecruiterView';
   static const editWeeklyTotalHoursRecruiterView =
       '/EditWeeklyTotalHoursRecruiterView';
+      static const forgetPasswordView = '/forgetPasswordView';
 }

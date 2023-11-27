@@ -18,7 +18,9 @@ class HomeRecruiterView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          customAppBar(title: 'Worker List'),
+          customAppBar(onTap: (){
+              Get.back();
+            },title: 'Worker List'),
           SizedBox(
             height: 30.h,
           ),

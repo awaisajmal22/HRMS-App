@@ -40,6 +40,9 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
       body: Column(
         children: [
           customAppBar(
+            onTap: (){
+              Get.back();
+            },
             isBackButton: true,
             title: 'Edit Daily Detail Hours',
           ),

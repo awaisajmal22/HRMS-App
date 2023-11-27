@@ -37,7 +37,9 @@ class UnpaidHoursView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          customAppBar(
+          customAppBar(onTap: (){
+              Get.back();
+            },
             isBackButton: true,
             title: 'Report Unpaid Hours',
           ),

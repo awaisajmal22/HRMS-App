@@ -23,7 +23,9 @@ class UploadDocumentView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          customAppBar(
+          customAppBar(onTap: (){
+              Get.back();
+            },
               title: 'Upload Document',
               isBackButton: true,
               ),

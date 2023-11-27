@@ -1,12 +1,9 @@
 import 'package:get/get.dart';
 
 class BottomNavBarRecruiterRecruiterViewModel extends GetxController {
-  var tabIndex = 0.obs;
+  RxInt tabIndex = 0.obs;
 
-  void changeTabIndex(int index) {
-    tabIndex.value = index;
-  }
-
+  
   @override
   void onInit() {
     super.onInit();

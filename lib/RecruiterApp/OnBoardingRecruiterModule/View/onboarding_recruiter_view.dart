@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppButton/text_button.dart';
 import '../../../Constant/AppColors/colors.dart';
 import '../../../Constant/AppText/app_text.dart';
 import '../../../Constant/BackgroundGradient/background_gradient.dart';
 import '../../../RoutesAndBindings/app_routes.dart';
-import '../../../Utils/spint_kit_view_spinner.dart';
-import '../../HomeRecruiterModule/Model/workers_list_model.dart';
-import '../../HomeRecruiterModule/ViewModel/home_recruiter_view_model.dart';
 import '../../SupportRecruiterModule/View/Supports2_recruiter_view.dart';
-import '../../SupportRecruiterModule/View/supports_recruiter_view.dart';
 import '../ViewModel/onboarding_recruiter_view_model.dart';
 
 class OnBoardingRecruiterView extends StatelessWidget {

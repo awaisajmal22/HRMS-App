@@ -25,11 +25,13 @@ class LoginViewModel extends GetxController {
       required String id,
       required String token,
       required String password,
+      required String userRole,
       required int check}) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('id', id);
     pref.setString('name', name);
     pref.setString('token', token);
+    pref.setString('userRole', userRole);
     pref.setString('pass', password);
     pref.setInt('check', check);
     pref.setString('email', email);

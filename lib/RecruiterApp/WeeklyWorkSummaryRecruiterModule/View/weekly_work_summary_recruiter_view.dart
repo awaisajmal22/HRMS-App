@@ -26,6 +26,9 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
       body: Column(
         children: [
           customAppBar(
+            onTap: (){
+              Get.back();
+            },
             isBackButton: true,
             title: 'Weekly Summary',
           ),

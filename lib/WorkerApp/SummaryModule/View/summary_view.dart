@@ -20,6 +20,9 @@ class SummaryView extends StatelessWidget {
       body: Column(
         children: [
           customAppBar(
+            onTap: (){
+              Get.back();
+            },
               title: 'Weekly summary',
               opacity: 0.10,
               isBackButton: true,

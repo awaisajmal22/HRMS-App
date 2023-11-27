@@ -35,6 +35,9 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
       body: Column(
         children: [
           customAppBar(
+            onTap: (){
+              Get.back();
+            },
             isBackButton: true,
             title: 'Submit Weekly Total Hours',
           ),

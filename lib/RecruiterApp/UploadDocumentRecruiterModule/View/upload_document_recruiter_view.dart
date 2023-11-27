@@ -24,6 +24,9 @@ class UploadDocumentRecruiterView extends StatelessWidget {
       body: Column(
         children: [
           customAppBar(
+            onTap: (){
+              Get.back();
+            },
             title: 'Upload Document',
             isBackButton: true,
           ),

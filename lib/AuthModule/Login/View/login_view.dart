@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hrmsapp/AuthModule/Forgetpassword/View/forget_password_view.dart';
 
 import '../../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../../Constant/AppButton/text_button.dart';
@@ -98,7 +98,9 @@ class LoginView extends StatelessWidget {
               children: [
                 Expanded(
                   child: customTextButton(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.forgetPasswordView);
+                    },
                     title: 'Forgot Password',
                     borderColor: AppColor.black,
                     buttonColor: AppColor.white,
@@ -126,16 +128,22 @@ class LoginView extends StatelessWidget {
                         hideOpenDialog(context: context);
                         if (result!= null) {
                             loginVM.setUser(
+                              userRole: result.userRoles![0],
                               password: loginVM.passwordController.text,
                                 email: result.email,
                                 check: result.timeSheettype,
                                 token: result.token ?? "",
                                 name: result.fname,
                                 id: result.id);
+                                if(result.userRoles![0] == "RECRUITER"){
+                                  print('recruiter is here');
+                                  Get.offAllNamed(AppRoutes.onBoardingRecruiterView, arguments: result.token);
+                                } else if(result.userRoles![0]== "WORKER"){
                             Get.offAllNamed(
                               AppRoutes.onBoardingView,
                               arguments: result.token,
                             );
+                                }
                           } else{
                             hideOpenDialog(context: context);
                           }

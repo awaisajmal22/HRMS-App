@@ -25,6 +25,7 @@ class SplashViewModel extends GetxController {
     
     final email = prefs.getString('email');
     final password = prefs.getString('pass');
+    final userRole = prefs.getString('userRole');
     print(email);
     if(prefs.containsKey('email') && prefs.containsKey('pass')){
     if (password == '' || password == null && email == '' || email == null) {
@@ -40,10 +41,17 @@ class SplashViewModel extends GetxController {
        Get.offAllNamed(AppRoutes.loginView);
       } else {
           prefs.setString('token', userModel.token);
+          if(userModel.userRoles![0] == "RECRUITER"){
+            Get.offAllNamed(AppRoutes.onBoardingRecruiterView, arguments: userModel.token);
+          }
+          else if(userModel.userRoles![0] == "WORKER"){
          Get.offAllNamed(
           AppRoutes.onBoardingView,
           arguments: userModel.token,
         );
+          } else {
+            Get.offAllNamed(AppRoutes.loginView);
+          }
       }
     }}else{
        Get.offAllNamed(AppRoutes.loginView);

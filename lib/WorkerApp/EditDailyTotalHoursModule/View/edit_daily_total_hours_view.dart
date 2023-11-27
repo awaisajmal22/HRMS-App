@@ -38,7 +38,9 @@ class EditDailyTotalHoursView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          customAppBar(
+          customAppBar(onTap: (){
+              Get.back();
+            },
             isBackButton: true,
             title: 'Edit Daily Detail Hours',
           ),

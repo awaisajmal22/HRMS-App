@@ -28,7 +28,9 @@ class DailyWorkSummaryRecruiterView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          customAppBar(
+          customAppBar(onTap: (){
+              Get.back();
+            },
             title: 'Daily Summary',
             isBackButton: true,
           ),

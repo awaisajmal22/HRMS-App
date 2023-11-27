@@ -9,8 +9,9 @@ import '../AppText/app_text.dart';
 Widget customAppBar(
     {String title = '',
     bool isBackButton = false,
+    
     double height = 72,
-    VoidCallback? onTap,
+    required VoidCallback onTap,
     double opacity = 0.12}) {
   return Container(
     padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 36.h, bottom: 12.h),
@@ -32,10 +33,7 @@ Widget customAppBar(
       children: [
         isBackButton == true
             ? GestureDetector(
-                onTap: () {
-                  onTap;
-                  Get.back();
-                },
+                onTap: onTap,
                 child: SvgPicture.asset(
                   'assets/icons/back.svg',
                   height: 24.h,

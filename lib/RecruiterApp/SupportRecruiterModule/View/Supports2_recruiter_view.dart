@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppColors/colors.dart';
@@ -19,52 +20,74 @@ class SupportsRecruiterView2 extends StatelessWidget {
           SizedBox(
             height: 16.h,
           ),
-          Padding(
-              padding: EdgeInsets.only(
-                  left: 20.w, right: 27.w, top: 12.h, bottom: 12.h),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    'assets/icons/email.png',
-                    height: 32.h,
-                    width: 32.w,
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      appText(
-                        title: 'Email Support',
+          GestureDetector(
+            onTap: () async{
+            String? encodeQueryParameters(Map<String, String> params) {
+  return params.entries
+      .map((MapEntry<String, String> e) =>
+          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      .join('&');
+}
+            final Uri emailUri = Uri(
+              scheme: 'mailto',
+               path: 'support@example.com',
+               query: encodeQueryParameters(<String, String>{
+                 'subject': 'Example Subject & Symbols are allowed!',
+               })
+              
+            ); if(await canLaunchUrl(emailUri)){
+launchUrl(emailUri);
+            } else{
+              throw Exception('Could not launch $emailUri');
+            };
+          },
+            child: Padding(
+                padding: EdgeInsets.only(
+                    left: 20.w, right: 27.w, top: 12.h, bottom: 12.h),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      'assets/icons/email.png',
+                      height: 32.h,
+                      width: 32.w,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        appText(
+                          title: 'Email Support',
+                          textColor: AppColor.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        appText(
+                            title: 'Typically responds within 24\nhours',
+                            textColor: AppColor.black.withOpacity(0.50),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            textAlign: TextAlign.left),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 8.w,
+                    ),
+                    Expanded(
+                      child: appText(
+                        title: 'support@example.com',
                         textColor: AppColor.black,
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        textAlign: TextAlign.right,
+                        fontWeight: FontWeight.w500,
                       ),
-                      appText(
-                          title: 'Typically responds within 24\nhours',
-                          textColor: AppColor.black.withOpacity(0.50),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          textAlign: TextAlign.left),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  Expanded(
-                    child: appText(
-                      title: 'support@example.com',
-                      textColor: AppColor.black,
-                      fontSize: 14,
-                      textAlign: TextAlign.right,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                )),
+          ),
         ],
       ),
     );

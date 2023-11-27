@@ -29,7 +29,9 @@ class BottomNavBarRecruiter extends StatelessWidget {
           child: BottomNavigationBar(
             showUnselectedLabels: true,
             showSelectedLabels: true,
-            onTap: navBarVM.changeTabIndex,
+            onTap:(int val){
+              navBarVM.tabIndex.value = val;
+            },
             currentIndex: navBarVM.tabIndex.value,
             backgroundColor: Color(0xffD9D9D9),
             unselectedItemColor: Colors.white.withOpacity(0.5),

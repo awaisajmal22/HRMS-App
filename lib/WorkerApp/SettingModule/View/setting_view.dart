@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppColors/colors.dart';
 import '../../../Constant/AppText/app_text.dart';
+import '../../../RoutesAndBindings/app_routes.dart';
 import '../../BottomNavBarModule/ViewModel/bottom_nav_bar_view_model.dart';
 import '../ViewModel/setting_view_model.dart';
 
@@ -113,19 +116,52 @@ class SettingView extends StatelessWidget {
               GestureDetector(
                 onTap: () {},
                 child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.symmetric(
+                      horizontal: BorderSide(
+                        color: Colors.black.withOpacity(0.10),
+                        width: 1,
+                      )
+                    )
+                  ),
                   alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(color: AppColor.white, boxShadow: [
-                    BoxShadow(
-                        blurRadius: 6,
-                        spreadRadius: 0,
-                        offset: const Offset(0, 0),
-                        color: AppColor.black.withOpacity(0.10))
-                  ]),
+                 
                   padding: EdgeInsets.symmetric(vertical: 12.h),
                   child: appText(
                     title: 'Change Password',
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
+                  ),
+                ),
+              ),
+               GestureDetector(
+                onTap: ()async  {
+                 final prefs = await SharedPreferences.getInstance();
+                 prefs.clear();
+                 Get.offAllNamed(AppRoutes.loginView);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black.withOpacity(0.10),
+                        width: 1,
+                      )
+                    )
+                    ),
+                  
+                 
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      appText(
+                        title: 'Logout',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                      SvgPicture.asset('assets/icons/logout.svg')
+                    ],
                   ),
                 ),
               )

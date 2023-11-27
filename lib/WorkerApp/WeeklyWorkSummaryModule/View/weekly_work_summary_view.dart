@@ -24,7 +24,9 @@ class WeeklyWorkSummaryView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          customAppBar(
+          customAppBar(onTap: (){
+              Get.back();
+            },
             isBackButton: true,
             title: 'Weekly Summary',
           ),
