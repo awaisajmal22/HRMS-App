@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../Services/daily_total_hours_recruiter_services.dart';
@@ -108,5 +109,14 @@ class DailyTotalHoursRecruiterViewModel extends GetxController {
       jobSiteID: jobSiteID,
     );
     return isSuccess;
+  }
+  RxBool isKeyboard =false.obs;
+  @override
+  void onInit() {
+    KeyboardVisibilityController().onChange.listen((event) { 
+      isKeyboard.value = event;
+    });
+    // TODO: implement onInit
+    super.onInit();
   }
 }

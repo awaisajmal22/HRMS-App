@@ -37,15 +37,15 @@ class HomeViewModel extends GetxController {
       title: 'Check Current Summary',
       callBack: (context, check) async {
         if (check == 1) {
-            final dailyWorkVM = Get.put(DailyWorkSummaryViewModel());
-            showLoadingIndicator(context: context);
-            final result = await dailyWorkVM.getDailyWorkSummary();
-            print(result);
-            hideOpenDialog(context: context);
-            if (result != null) {
-              Get.toNamed(AppRoutes.dailySummaryView);
-            }
-          } else if (check == 0) {
+          final dailyWorkVM = Get.put(DailyWorkSummaryViewModel());
+          showLoadingIndicator(context: context);
+          final result = await dailyWorkVM.getDailyWorkSummary();
+          print(result);
+          hideOpenDialog(context: context);
+          if (result != null) {
+            Get.toNamed(AppRoutes.dailySummaryView);
+          }
+        } else if (check == 0) {
           final weeklyWorkVM = Get.put(WeeklyWorkSummaryViewModel());
           showLoadingIndicator(context: context);
           final result = await weeklyWorkVM.getweeklyWorkSummary();
@@ -96,7 +96,7 @@ class HomeViewModel extends GetxController {
   }
 
   RxString startDate = ''.obs;
- Rx<DateTime> endWeekDate = DateTime.now().obs;
+  Rx<DateTime> endWeekDate = DateTime.now().obs;
   RxString endDate = ''.obs;
   RxString startOfWeek = ''.obs;
   RxString endOfWeek = ''.obs;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,5 +37,14 @@ class LoginViewModel extends GetxController {
     pref.setString('pass', password);
     pref.setInt('check', check);
     pref.setString('email', email);
+  }
+  RxBool isKeyboard =false.obs;
+  @override
+  void onInit() {
+    KeyboardVisibilityController().onChange.listen((event) { 
+      isKeyboard.value = event;
+    });
+    // TODO: implement onInit
+    super.onInit();
   }
 }

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../AppColors/colors.dart';
 
 Widget customTextField({
+  FocusNode? focusNode,
   required String hintText,
   required TextEditingController controller,
   TextInputType textInputType = TextInputType.text,
@@ -41,6 +42,7 @@ double opacity = 0.10,
         fontSize: fontSize.sp,
         fontWeight: fontWeight,
       ),
+      focusNode: focusNode,
       controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
@@ -49,6 +51,7 @@ double opacity = 0.10,
           fontSize: fontSize.sp,
           fontWeight: fontWeight,
         ),
+        
         contentPadding: EdgeInsets.fromLTRB(horizontalPadding.w, verticalPadding.h, horizontalPadding.w, verticalPadding.h),
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -57,6 +60,7 @@ double opacity = 0.10,
             // width: 1,
           ),
         ),
+        
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           borderSide: BorderSide(
@@ -65,6 +69,7 @@ double opacity = 0.10,
           ),
         ),
         enabled: true,
+        
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           borderSide: BorderSide(

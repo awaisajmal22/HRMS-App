@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -61,5 +62,14 @@ class WeeklyTotalHoursRecruiterViewModel extends GetxController {
             generalExpImage: generalExpImage,
             parkingTravelImage: parkingTravelImage);
     return isSuccess;
+  }
+  RxBool isKeyboard =false.obs;
+  @override
+  void onInit() {
+    KeyboardVisibilityController().onChange.listen((event) { 
+      isKeyboard.value = event;
+    });
+    // TODO: implement onInit
+    super.onInit();
   }
 }

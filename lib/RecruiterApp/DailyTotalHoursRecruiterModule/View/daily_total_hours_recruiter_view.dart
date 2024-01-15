@@ -38,7 +38,7 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
       body: Column(
         children: [
           customAppBar(
-            onTap: (){
+            onTap: () {
               Get.back();
             },
             isBackButton: true,
@@ -47,475 +47,549 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
           SizedBox(
             height: 7.h,
           ),
-          Expanded(
-              child: ListView(
-            padding: const EdgeInsets.all(0),
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    appText(
-                      title: 'Please add hours worked',
-                      fontSize: 20,
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    appText(
-                      title: 'Pay Period',
-                      fontSize: 16,
-                    ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                        color: AppColor.black.withOpacity(0.16),
-                        borderRadius: BorderRadius.circular(10),
-                        border:
-                            Border.all(color: AppColor.black.withOpacity(0.3)),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.w, vertical: 18.h),
-                      child: Obx(
-                        () => appText(
-                          title:
-                              '${homeVM.startDate.value} to ${homeVM.endDate.value}',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          textColor: AppColor.black.withOpacity(0.55),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    appText(
-                      title: 'Select Date',
-                      fontSize: 16,
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        // await showDatePicker(
-                        //         context: context,
-                        //         initialDate: DateTime.now(),
-                        //         firstDate: DateTime(1950),
-                        //         lastDate: DateTime.now())
-                        //     .then((value) {
-                        //   dailytotalVM.pickedDate.value =
-                        //       "${DateFormat('yy-mm-dd').format(value!)}";
-                        //   print(dailytotalVM.pickedDate.value);
-
-                        // });
-                     showGeneralDialog(
-                          context: context,
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return Dialog(
-                              backgroundColor: AppColor.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0)),
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      left: 15.w,
-                                      right: 15.w,
-                                      top: 5.h,
-                                      bottom: 5.h),
-                                  decoration: BoxDecoration(
-                                    color: AppColor.blue.withOpacity(0.44),
-                                  ),
-                                  height: 70.h,
-                                  child: Obx(
-                                    ()=> DatePicker(
-                                      endWeekDate: homeVM.endWeekDate.value,
-                                    ),
-                                  )),
-                            );
-                          },
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.w, vertical: 12.h),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColor.black.withOpacity(0.20),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+          Obx(
+            () => SizedBox(
+                height: dailytotalVM.isKeyboard.value
+                    ? MediaQuery.of(context).size.height * 0.60
+                    : MediaQuery.of(context).size.height * 0.885,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Obx(
-                              () => appText(
-                                title: dailytotalVM.pickedDate.value != ''
-                                    ? "${DateFormat('yyyy-MMM-dd').format(DateTime.parse(dailytotalVM.pickedDate.value))}"
-                                    : '',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                textColor: AppColor.black.withOpacity(0.55),
+                            appText(
+                              title: 'Please add hours worked',
+                              fontSize: 20,
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            appText(
+                              title: 'Pay Period',
+                              fontSize: 16,
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: AppColor.black.withOpacity(0.16),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: AppColor.black.withOpacity(0.3)),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w, vertical: 18.h),
+                              child: Obx(
+                                () => appText(
+                                  title:
+                                      '${homeVM.startDate.value} to ${homeVM.endDate.value}',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                  textColor: AppColor.black.withOpacity(0.55),
+                                ),
                               ),
                             ),
-                            SvgPicture.asset(
-                              'assets/icons/calendar.svg',
-                              height: 18.h,
-                              width: 18.w,
-                              color: AppColor.blue,
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            appText(
+                              title: 'Select Date',
+                              fontSize: 16,
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                // await showDatePicker(
+                                //         context: context,
+                                //         initialDate: DateTime.now(),
+                                //         firstDate: DateTime(1950),
+                                //         lastDate: DateTime.now())
+                                //     .then((value) {
+                                //   dailytotalVM.pickedDate.value =
+                                //       "${DateFormat('yy-mm-dd').format(value!)}";
+                                //   print(dailytotalVM.pickedDate.value);
+
+                                // });
+                                showGeneralDialog(
+                                  context: context,
+                                  pageBuilder:
+                                      (context, animation, secondaryAnimation) {
+                                    return Dialog(
+                                      backgroundColor: AppColor.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(0)),
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 15.w,
+                                              right: 15.w,
+                                              top: 5.h,
+                                              bottom: 5.h),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                AppColor.blue.withOpacity(0.44),
+                                          ),
+                                          height: 70.h,
+                                          child: Obx(
+                                            () => DatePicker(
+                                              endWeekDate:
+                                                  homeVM.endWeekDate.value,
+                                            ),
+                                          )),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12.w, vertical: 12.h),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColor.black.withOpacity(0.20),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Obx(
+                                      () => appText(
+                                        title: dailytotalVM.pickedDate.value !=
+                                                ''
+                                            ? "${DateFormat('yyyy-MMM-dd').format(DateTime.parse(dailytotalVM.pickedDate.value))}"
+                                            : '',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        textColor:
+                                            AppColor.black.withOpacity(0.55),
+                                      ),
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/icons/calendar.svg',
+                                      height: 18.h,
+                                      width: 18.w,
+                                      color: AppColor.blue,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            appText(
+                              title: 'Select Job Site',
+                              fontSize: 16,
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            Obx(
+                              () => AppDropdownInput(
+                                  options: homeVM.jobSiteValue,
+                                  value: homeVM.selectedDropDownValue.value,
+                                  onChanged: (value) {
+                                    homeVM.selectedDropDownValue.value = value;
+                                    for (var data in homeVM.jobSites) {
+                                      if (data.value == value) {
+                                        homeVM.selectedJobsiteId.value =
+                                            data.id;
+                                      }
+                                    }
+                                  }),
+                            ),
+                            SizedBox(height: 20.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 148.w,
+                                  child: appText(
+                                    textAlign: TextAlign.left,
+                                    title: 'Set Start Time',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 40.w,
+                                ),
+                                SizedBox(
+                                  width: 140.w,
+                                  child: appText(
+                                    textAlign: TextAlign.left,
+                                    title: 'End Start Time',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: customTextField(
+                                    readOnly: true,
+                                    onTap: () {
+                                      dailytotalVM.selectStartTime(context);
+                                    },
+                                    hintText: 'Select a time',
+                                    controller:
+                                        dailytotalVM.startTimeController,
+                                    textInputType: TextInputType.text,
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 6.w),
+                                  height: 1.h,
+                                  width: 8.w,
+                                  color: Colors.black,
+                                ),
+                                Expanded(
+                                  child: customTextField(
+                                    readOnly: true,
+                                    onTap: () {
+                                      dailytotalVM.selectEndTime(context);
+                                    },
+                                    hintText: 'Select a time',
+                                    controller: dailytotalVM.endTimeController,
+                                    textInputType: TextInputType.text,
+                                  ),
+                                ),
+                              ],
                             )
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    appText(
-                      title: 'Select Job Site',
-                      fontSize: 16,
-                    ),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    Obx(
-                      () => AppDropdownInput(
-                          options: homeVM.jobSiteValue,
-                          value: homeVM.selectedDropDownValue.value,
-                          onChanged: (value) {
-                            homeVM.selectedDropDownValue.value = value;
-                            for (var data in homeVM.jobSites) {
-                              if (data.value == value) {
-                                homeVM.selectedJobsiteId.value = data.id;
-                              }
-                            }
-                          }),
-                    ),
-                    SizedBox(height: 20.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 148.w,
-                          child: appText(
-                            textAlign: TextAlign.left,
-                            title: 'Set Start Time',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 40.w,
-                        ),
-                        SizedBox(
-                          width: 140.w,
-                          child: appText(
-                            textAlign: TextAlign.left,
-                            title: 'End Start Time',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: customTextField(
-                            readOnly: true,
-                            onTap: () {
-                              dailytotalVM.selectStartTime(context);
-                            },
-                            hintText: 'Select a time',
-                            controller: dailytotalVM.startTimeController,
-                            textInputType: TextInputType.text,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 6.w),
-                          height: 1.h,
-                          width: 8.w,
-                          color: Colors.black,
-                        ),
-                        Expanded(
-                          child: customTextField(
-                            readOnly: true,
-                            onTap: () {
-                              dailytotalVM.selectEndTime(context);
-                            },
-                            hintText: 'Select a time',
-                            controller: dailytotalVM.endTimeController,
-                            textInputType: TextInputType.text,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(height: 11.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    appText(
-                      textAlign: TextAlign.left,
-                      title: 'Total Hours',
-                      fontSize: 16,
-                      // fontWeight: FontWeight.w400,
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Obx(
-                      () => customTextField(
-                        readOnly: true,
-                        hintText: dailytotalVM.endTime.value !=
-                                dailytotalVM.startTime.value
-                            ? "${dailytotalVM.getTime(dailytotalVM.startTime.value, dailytotalVM.endTime.value)}"
-                            : '',
-                        controller: dailytotalVM.totalHoursController,
-                        textInputType: TextInputType.number,
-                      ),
-                    ),
-                    SizedBox(height: 18.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                    text: 'Parking/Travel ',
-                                    style: GoogleFonts.roboto().copyWith(
-                                      color: AppColor.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: '(Optional)',
-                                        style: GoogleFonts.roboto().copyWith(
-                                          color: AppColor.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                    ]),
+                      SizedBox(height: 11.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            appText(
+                              textAlign: TextAlign.left,
+                              title: 'Total Hours',
+                              fontSize: 16,
+                              // fontWeight: FontWeight.w400,
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Obx(
+                              () => customTextField(
+                                readOnly: true,
+                                hintText: dailytotalVM.endTime.value !=
+                                        dailytotalVM.startTime.value
+                                    ? "${dailytotalVM.getTime(dailytotalVM.startTime.value, dailytotalVM.endTime.value)}"
+                                    : '',
+                                controller: dailytotalVM.totalHoursController,
+                                textInputType: TextInputType.number,
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: AppColor.black.withOpacity(0.10),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(6)),
-                                alignment: Alignment.centerRight,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 8.h,
-                                  horizontal: 12.w,
-                                ),
-                                width: 154.w,
-                                height: 40.h,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: customTextField(
-                                          verticalPadding: 0,
-                                          horizontalPadding: 0,
-                                          textInputType: TextInputType.number,
-                                          hintText: '',
-                                          controller: dailytotalVM
-                                              .parkingTravelController,
-                                          borderColor: Colors.transparent,
-                                          opacity: 0),
-                                    ),
-                                    Container(
-                                      width: 1.w,
-                                      color: AppColor.black.withOpacity(0.30),
-                                    ),
-                                    SizedBox(
-                                      width: 13.w,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(
-                                            AppRoutes
-                                                .uploadDocumentRecruiterView,
-                                            arguments: 0);
-                                      },
-                                      child: SvgPicture.asset(
-                                        'assets/icons/camera.svg',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 6.w,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 12.h),
-                          height: 1.h,
-                          width: 8.w,
-                          color: AppColor.black,
-                        ),
-                        SizedBox(
-                          width: 6.w,
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                    text: 'General expenses ',
-                                    style: GoogleFonts.roboto().copyWith(
-                                      color: AppColor.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                            ),
+                            SizedBox(height: 18.h),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      TextSpan(
-                                        text: '(Optional)',
-                                        style: GoogleFonts.roboto().copyWith(
-                                          color: AppColor.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w300,
+                                      RichText(
+                                        text: TextSpan(
+                                            text: 'Parking/Travel ',
+                                            style:
+                                                GoogleFonts.roboto().copyWith(
+                                              color: AppColor.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            children: [
+                                              TextSpan(
+                                                text: '(Optional)',
+                                                style: GoogleFonts.roboto()
+                                                    .copyWith(
+                                                  color: AppColor.black,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                              ),
+                                            ]),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: AppColor.black
+                                                  .withOpacity(0.10),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6)),
+                                        alignment: Alignment.centerRight,
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 8.h,
+                                          horizontal: 12.w,
                                         ),
-                                      ),
-                                    ]),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: AppColor.black.withOpacity(0.10),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(6)),
-                                alignment: Alignment.centerRight,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 8.h,
-                                  horizontal: 12.w,
+                                        width: 154.w,
+                                        height: 40.h,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Expanded(
+                                              child: customTextField(
+                                                  verticalPadding: 0,
+                                                  horizontalPadding: 0,
+                                                  textInputType:
+                                                      TextInputType.number,
+                                                  hintText: '',
+                                                  controller: dailytotalVM
+                                                      .parkingTravelController,
+                                                  borderColor:
+                                                      Colors.transparent,
+                                                  opacity: 0),
+                                            ),
+                                            Container(
+                                              width: 1.w,
+                                              color: AppColor.black
+                                                  .withOpacity(0.30),
+                                            ),
+                                            SizedBox(
+                                              width: 13.w,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.toNamed(
+                                                    AppRoutes
+                                                        .uploadDocumentRecruiterView,
+                                                    arguments: 0);
+                                              },
+                                              child: SvgPicture.asset(
+                                                'assets/icons/camera.svg',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                // width: 154.w,
-                                height: 40.h,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: customTextField(
-                                          verticalPadding: 0,
-                                          horizontalPadding: 0,
-                                          textInputType: TextInputType.number,
-                                          hintText: '',
-                                          controller:
-                                              dailytotalVM.generalExpController,
-                                          borderColor: Colors.transparent,
-                                          opacity: 0),
-                                    ),
-                                    Container(
-                                      width: 1.w,
-                                      color: AppColor.black.withOpacity(0.30),
-                                    ),
-                                    SizedBox(
-                                      width: 13.w,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(
-                                            AppRoutes
-                                                .uploadDocumentRecruiterView,
-                                            arguments: 1);
-                                      },
-                                      child: SvgPicture.asset(
-                                        'assets/icons/camera.svg',
-                                      ),
-                                    ),
-                                  ],
+                                SizedBox(
+                                  width: 6.w,
                                 ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 11.h,
-                    ),
-                    appText(title: 'Comments/Additional Notes', fontSize: 14),
-                    customCommentTextField(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      height: 66,
-                      maxLines: 3,
-                      hintText: 'Write here.....',
-                      controller: dailytotalVM.commentController,
-                      textInputType: TextInputType.text,
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    customTextButton(
-                        buttonColor: AppColor.blue,
-                        title: 'Add',
-                        onTap: () async {
-                          print("${dailytotalVM.totalHoursController.text}");
-                          if (dailytotalVM.totalHoursController.text != null &&
-                              dailytotalVM.totalHoursController.text != '0' &&
-                              dailytotalVM.endTime.value !=
-                                  dailytotalVM.startTime.value) {
-                            showLoadingIndicator(context: context);
-                            bool isSuccess =
-                                await dailytotalVM.submitDailyRecruiterHours(
-                              workerId: workerId,
-                              startTime: dailytotalVM.endTime.value !=
-                                      dailytotalVM.startTime.value
-                                  ? dailytotalVM.formatDuration(Duration(
-                                      hours: dailytotalVM.startTime.value.hour))
-                                  : '',
-                              endTime: dailytotalVM.endTime.value !=
-                                      dailytotalVM.startTime.value
-                                  ? dailytotalVM.formatDuration(Duration(
-                                      hours: dailytotalVM.endTime.value.hour))
-                                  : '',
-                              totalHours: int.parse(
-                                  dailytotalVM.totalHoursController.text),
-                              date: dailytotalVM.pickedDate.value,
-                              generalExpValue: dailytotalVM.generalExpController.text != '' ? double.parse(
-                                      dailytotalVM.generalExpController.text) :
-                                  0.0,
-                              parkingTravelValue: dailytotalVM
-                                      .parkingTravelController.text != '' ? double.parse(dailytotalVM
-                                      .parkingTravelController.text) :
-                                  0.0,
-                              generalExpImage: uploadImageVM.parkingimage.value,
-                              parkingTravelImage:
-                                  uploadImageVM.generalExpImage.value,
-                              feedBack: dailytotalVM.commentController.text,
-                              jobSiteID: homeVM.selectedJobsiteId.value,
-                            );
-                            print(isSuccess);
-                            hideOpenDialog(context: context);
-                            if (isSuccess == true) {
-                              sucessfullyHoursAddedRecruiterDialog(
-                                checkTitle: 'Check List',
-                                context: context,
-                                title:
-                                    'Your Daily Hours Successfully Added To List',
+                                Container(
+                                  margin: EdgeInsets.only(top: 12.h),
+                                  height: 1.h,
+                                  width: 8.w,
+                                  color: AppColor.black,
+                                ),
+                                SizedBox(
+                                  width: 6.w,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                            text: 'General expenses ',
+                                            style:
+                                                GoogleFonts.roboto().copyWith(
+                                              color: AppColor.black,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            children: [
+                                              TextSpan(
+                                                text: '(Optional)',
+                                                style: GoogleFonts.roboto()
+                                                    .copyWith(
+                                                  color: AppColor.black,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                              ),
+                                            ]),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: AppColor.black
+                                                  .withOpacity(0.10),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(6)),
+                                        alignment: Alignment.centerRight,
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 8.h,
+                                          horizontal: 12.w,
+                                        ),
+                                        // width: 154.w,
+                                        height: 40.h,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Expanded(
+                                              child: customTextField(
+                                                  verticalPadding: 0,
+                                                  horizontalPadding: 0,
+                                                  textInputType:
+                                                      TextInputType.number,
+                                                  hintText: '',
+                                                  controller: dailytotalVM
+                                                      .generalExpController,
+                                                  borderColor:
+                                                      Colors.transparent,
+                                                  opacity: 0),
+                                            ),
+                                            Container(
+                                              width: 1.w,
+                                              color: AppColor.black
+                                                  .withOpacity(0.30),
+                                            ),
+                                            SizedBox(
+                                              width: 13.w,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.toNamed(
+                                                    AppRoutes
+                                                        .uploadDocumentRecruiterView,
+                                                    arguments: 1);
+                                              },
+                                              child: SvgPicture.asset(
+                                                'assets/icons/camera.svg',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 11.h,
+                            ),
+                            appText(
+                                title: 'Comments/Additional Notes',
+                                fontSize: 14),
+                            customCommentTextField(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                              height: 66,
+                              maxLines: 3,
+                              hintText: 'Write here.....',
+                              controller: dailytotalVM.commentController,
+                              textInputType: TextInputType.text,
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            customTextButton(
+                                buttonColor: AppColor.blue,
+                                title: 'Add',
+                                onTap: () async {
+                                  print(
+                                      "${dailytotalVM.totalHoursController.text}");
+                                  if (dailytotalVM.totalHoursController.text !=
+                                          null &&
+                                      dailytotalVM.totalHoursController.text !=
+                                          '0' &&
+                                      dailytotalVM.endTime.value !=
+                                          dailytotalVM.startTime.value) {
+                                    showLoadingIndicator(context: context);
+                                    bool isSuccess = await dailytotalVM
+                                        .submitDailyRecruiterHours(
+                                      workerId: workerId,
+                                      startTime: dailytotalVM.endTime.value !=
+                                              dailytotalVM.startTime.value
+                                          ? dailytotalVM.formatDuration(
+                                              Duration(
+                                                  hours: dailytotalVM
+                                                      .startTime.value.hour))
+                                          : '',
+                                      endTime: dailytotalVM.endTime.value !=
+                                              dailytotalVM.startTime.value
+                                          ? dailytotalVM.formatDuration(
+                                              Duration(
+                                                  hours: dailytotalVM
+                                                      .endTime.value.hour))
+                                          : '',
+                                      totalHours: int.parse(dailytotalVM
+                                          .totalHoursController.text),
+                                      date: dailytotalVM.pickedDate.value,
+                                      generalExpValue: dailytotalVM
+                                                  .generalExpController.text !=
+                                              ''
+                                          ? double.parse(dailytotalVM
+                                              .generalExpController.text)
+                                          : 0.0,
+                                      parkingTravelValue: dailytotalVM
+                                                  .parkingTravelController
+                                                  .text !=
+                                              ''
+                                          ? double.parse(dailytotalVM
+                                              .parkingTravelController.text)
+                                          : 0.0,
+                                      generalExpImage:
+                                          uploadImageVM.parkingimage.value,
+                                      parkingTravelImage:
+                                          uploadImageVM.generalExpImage.value,
+                                      feedBack:
+                                          dailytotalVM.commentController.text,
+                                      jobSiteID: homeVM.selectedJobsiteId.value,
+                                    );
+                                    print(isSuccess);
+                                    hideOpenDialog(context: context);
+                                    if (isSuccess == true) {
+                                      sucessfullyHoursAddedRecruiterDialog(
+                                        checkTitle: 'Check List',
+                                        context: context,
+                                        title:
+                                            'Your Daily Hours Successfully Added To List',
+                                        onTap: () {
+                                          showLoadingIndicator(
+                                              context: context);
+                                          final result = dailySummaryVM
+                                              .getRecruiterDailyWorkSummary(
+                                            workerId: workerId,
+                                          );
+                                          hideOpenDialog(context: context);
+                                          if (result != null) {
+                                            Get.toNamed(
+                                                AppRoutes
+                                                    .dailySummaryRecruiterView,
+                                                arguments: workerId);
+                                          }
+                                        },
+                                      );
+                                    }
+                                  } else {
+                                    toast(msg: "please fill your all fields");
+                                  }
+                                }),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            customTextButton(
+                                buttonColor: AppColor.lightblue,
+                                title: 'Check Summary',
                                 onTap: () {
                                   showLoadingIndicator(context: context);
                                   final result = dailySummaryVM
@@ -524,42 +598,21 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                                   );
                                   hideOpenDialog(context: context);
                                   if (result != null) {
-                                    Get.toNamed(AppRoutes.dailySummaryRecruiterView,
+                                    Get.toNamed(
+                                        AppRoutes.dailySummaryRecruiterView,
                                         arguments: workerId);
                                   }
-                                },
-                              );
-                            }
-                          } else {
-                            toast(msg: "please fill your all fields");
-                          }
-                        }),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    customTextButton(
-                        buttonColor: AppColor.lightblue,
-                        title: 'Check Summary',
-                        onTap: () {
-                          showLoadingIndicator(context: context);
-                          final result =
-                              dailySummaryVM.getRecruiterDailyWorkSummary(
-                            workerId: workerId,
-                          );
-                          hideOpenDialog(context: context);
-                          if (result != null) {
-                            Get.toNamed(AppRoutes.dailySummaryRecruiterView,
-                                arguments: workerId);
-                          }
-                        }),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-            ],
-          ))
+                                }),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                    ],
+                  ),
+                )),
+          )
         ],
       ),
     );

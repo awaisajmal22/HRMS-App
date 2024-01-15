@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 
 import '../../WeeklyTotalHoursModule/Model/jobSite_model.dart';
@@ -40,5 +41,14 @@ date: date,
         generalExpImage: generalExpImage,
         parkingTravelImage: parkingTravelImage);
     return isSuccess;
+  }
+   RxBool isKeyboard =false.obs;
+  @override
+  void onInit() {
+    KeyboardVisibilityController().onChange.listen((event) { 
+      isKeyboard.value = event;
+    });
+    // TODO: implement onInit
+    super.onInit();
   }
 }

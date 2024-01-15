@@ -13,7 +13,7 @@ Widget customAppBar(
     required VoidCallback onTap,
     double opacity = 0.12}) {
   return Container(
-    padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 0.h, bottom: 12.h),
+    padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 30.h, bottom: 12.h),
     height: height.h,
     decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
