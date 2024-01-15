@@ -121,15 +121,15 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                         child: appText(
                           textAlign: TextAlign.left,
                           title: 'Total Hours',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          // fontWeight: FontWeight.w400,
                         ),
                       ),
                       SizedBox(
                         height: 2.h,
                       ),
                       customTextField(
-                        hintText: '10:00 hrs',
+                        hintText: '',
                         controller: weeklytotalVM.totalHoursController,
                         textInputType: TextInputType.number,
                       ),
@@ -328,6 +328,8 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                       bool isSuccess =
                           await weeklytotalVM.submitWeeklyRecruiterHour(
                         workerId: workerId,
+                        generalExpValue: weeklytotalVM.generalExpController.text != '' ? double.parse(weeklytotalVM.generalExpController.text) : 0.0,
+                        parkingTravelValue: weeklytotalVM.parkingTravelController != '' ? double.parse(weeklytotalVM.parkingTravelController.text) : 0.0,
                         jobSiteID: homeVM.selectedJobsiteId.value,
                         startDate: weeklytotalVM.startDate.value,
                         endDate: weeklytotalVM.endDate.value,

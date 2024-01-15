@@ -56,8 +56,8 @@ class EditWeeklyRecruiterServices {
         FormData data = FormData.fromMap({
           "Id": id,
           "Thours": totalHours,
-          "Parking": parkingTravelValue,
-          "Genexpence": generalExpValue,
+          "Parking": parkingTravelValue ?? 0.0,
+          "Genexpence": generalExpValue ?? 0.0,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
         });

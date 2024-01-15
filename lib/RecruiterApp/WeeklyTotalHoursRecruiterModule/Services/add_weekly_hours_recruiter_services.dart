@@ -67,8 +67,8 @@ class WeeklyRecruiterServices {
         FormData data = FormData.fromMap({
           "WorkerId": workerId.toString(),
           "Thours": totalHours,
-          "Parking": parkingTravelValue,
-          "Genexpence": generalExpValue,
+          "Parking": parkingTravelValue ?? 0.0,
+          "Genexpence": generalExpValue ?? 0.0,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
         });

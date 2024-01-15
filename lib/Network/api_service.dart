@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart' as DIO;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../Constant/Toast/fllutter_toast.dart';
 import '../RoutesAndBindings/app_routes.dart';
@@ -150,7 +151,7 @@ class API {
     // }
   }
 
-  Future postRequest(String apiurl, var data) async {
+  Future postRequest(String apiurl, var data,) async {
     // if (await connectivityServices.onConnectivity()) {
     try {
       var dio = DIO.Dio();
@@ -169,8 +170,10 @@ class API {
         debugPrint("POST Complete:");
       
       }).catchError((onError) {
+        
         if (ServerError.withError(error: onError).getErrorCode() == 500) {
           toast(msg:"SomeThing Went Wrong");
+
         }
         debugPrint("POST Error: $onError");
         if (onError is SocketException) {
@@ -178,7 +181,9 @@ class API {
         } else {
           if (onError is DIO.DioError) {
             if (ServerError.withError(error: onError).getErrorCode() == 401) {
-              onSessionExpirePopUp();
+              // onSessionExpirePopUp();
+           
+              
             } else {
               toast(msg:
                   ServerError.withError(error: onError)

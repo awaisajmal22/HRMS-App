@@ -113,18 +113,29 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                         //   print(dailytotalVM.pickedDate.value);
 
                         // });
-                        showGeneralDialog(
+                     showGeneralDialog(
                           context: context,
                           pageBuilder:
                               (context, animation, secondaryAnimation) {
                             return Dialog(
                               backgroundColor: AppColor.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0)),
                               child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  color: AppColor.blue.withOpacity(0.44),
-                                  height: 65.h,
-                                  child: DatePicker()),
+                                  padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      top: 5.h,
+                                      bottom: 5.h),
+                                  decoration: BoxDecoration(
+                                    color: AppColor.blue.withOpacity(0.44),
+                                  ),
+                                  height: 70.h,
+                                  child: Obx(
+                                    ()=> DatePicker(
+                                      endWeekDate: homeVM.endWeekDate.value,
+                                    ),
+                                  )),
                             );
                           },
                         );
@@ -147,7 +158,7 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                               () => appText(
                                 title: dailytotalVM.pickedDate.value != ''
                                     ? "${DateFormat('yyyy-MMM-dd').format(DateTime.parse(dailytotalVM.pickedDate.value))}"
-                                    : '(show only 7 days in current pay period)',
+                                    : '',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 textColor: AppColor.black.withOpacity(0.55),
@@ -257,8 +268,8 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                     appText(
                       textAlign: TextAlign.left,
                       title: 'Total Hours',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      // fontWeight: FontWeight.w400,
                     ),
                     SizedBox(
                       height: 2.h,
@@ -269,7 +280,7 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                         hintText: dailytotalVM.endTime.value !=
                                 dailytotalVM.startTime.value
                             ? "${dailytotalVM.getTime(dailytotalVM.startTime.value, dailytotalVM.endTime.value)}"
-                            : '10:00 hrs',
+                            : '',
                         controller: dailytotalVM.totalHoursController,
                         textInputType: TextInputType.number,
                       ),
@@ -464,9 +475,6 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                         onTap: () async {
                           print("${dailytotalVM.totalHoursController.text}");
                           if (dailytotalVM.totalHoursController.text != null &&
-                              dailytotalVM.generalExpController.text != null &&
-                              dailytotalVM.parkingTravelController.text !=
-                                  null &&
                               dailytotalVM.totalHoursController.text != '0' &&
                               dailytotalVM.endTime.value !=
                                   dailytotalVM.startTime.value) {
@@ -487,11 +495,12 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                               totalHours: int.parse(
                                   dailytotalVM.totalHoursController.text),
                               date: dailytotalVM.pickedDate.value,
-                              generalExpValue: double.parse(
-                                      dailytotalVM.generalExpController.text) ??
+                              generalExpValue: dailytotalVM.generalExpController.text != '' ? double.parse(
+                                      dailytotalVM.generalExpController.text) :
                                   0.0,
-                              parkingTravelValue: double.parse(dailytotalVM
-                                      .parkingTravelController.text) ??
+                              parkingTravelValue: dailytotalVM
+                                      .parkingTravelController.text != '' ? double.parse(dailytotalVM
+                                      .parkingTravelController.text) :
                                   0.0,
                               generalExpImage: uploadImageVM.parkingimage.value,
                               parkingTravelImage:

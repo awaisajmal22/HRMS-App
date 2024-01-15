@@ -29,9 +29,9 @@ class UserModel {
 
     factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         token: json["token"]??"",
-        expiration: DateTime.parse(json["expiration"]?? DateTime.now().toIso8601String()),
+        expiration: json["expiration"] == null ? DateTime.parse(json["expiration"]?? DateTime.now().toIso8601String()) : DateTime.parse(DateTime.now().toIso8601String()),
         email: json["email"]??"",
-        userRoles: json["userRoles"] != null ? List<String>.from(json["userRoles"].map((x) => x)): null,
+        userRoles: json["userRoles"] != null ? List<String>.from(json["userRoles"].map((x) => x)): [],
         phonenumber: json["phonenumber"]??"",
         fname: json["fname"]??"",
         lname: json["lname"]??"",

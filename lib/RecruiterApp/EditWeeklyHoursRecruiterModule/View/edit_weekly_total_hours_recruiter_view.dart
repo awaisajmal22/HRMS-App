@@ -125,15 +125,15 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                           child: appText(
                             textAlign: TextAlign.left,
                             title: 'Total Hours',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            // fontWeight: FontWeight.w400,
                           ),
                         ),
                         SizedBox(
                           height: 2.h,
                         ),
                         customTextField(
-                          hintText: '10:00 hrs',
+                          hintText: '',
                           controller: editWeeklyHoursVM.totalHoursController
                             ..text = summary.hours.toString(),
                           textInputType: TextInputType.number,
@@ -331,10 +331,12 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                   buttonColor: AppColor.blue,
                   title: 'Add',
                   onTap: () async {
-                    if (editWeeklyHoursVM.totalHoursController.text != null) {
+                    if (editWeeklyHoursVM.totalHoursController.text != null || editWeeklyHoursVM.totalHoursController.text != '') {
                       showLoadingIndicator(context: context);
                       bool isSuccess =
                           await editWeeklyHoursVM.editRecruiterWeeklyHours(
+                            parkingTravelValue: editWeeklyHoursVM.parkingTravelController.text != '' ? double.parse(editWeeklyHoursVM.parkingTravelController.text) : 0.0,
+                            generalExpValue: editWeeklyHoursVM.generalExpController.text != ''? double.parse(editWeeklyHoursVM.generalExpController.text) : 0.0,
                         id: summary.id,
                         jobSiteID: homeVM.selectedJobsiteId.value == ''
                             ? summary.id

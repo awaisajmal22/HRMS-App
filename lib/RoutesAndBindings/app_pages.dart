@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
+import 'package:hrmsapp/AuthModule/ChangePassword/View/change_password_view.dart';
+import 'package:hrmsapp/AuthModule/ChangePassword/ViewModel/change_password_view_model.dart';
 import 'package:hrmsapp/AuthModule/Forgetpassword/View/forget_password_view.dart';
 import 'package:hrmsapp/AuthModule/Forgetpassword/ViewModel/forget_password_view_model.dart';
+import 'package:hrmsapp/AuthModule/OtpModule/View/otp_view.dart';
+import 'package:hrmsapp/AuthModule/OtpModule/ViewModel/otp_view_model.dart';
 
 import '../AuthModule/Login/View/login_view.dart';
 import '../AuthModule/Login/ViewModel/login_view_model.dart';
@@ -220,7 +224,7 @@ class AppPages {
           Get.lazyPut(() => UploadDocumentRecruiterViewModel());
         })),
     GetPage(
-        name: AppRoutes.weeklyTotalView,
+        name: AppRoutes.weeklyTotalRecruiterView,
         transition: Transition.fadeIn,
         page: () => WeeklyTotalHoursRecruiterView(),
         binding: BindingsBuilder(() {
@@ -246,6 +250,16 @@ class AppPages {
         GetPage(name: AppRoutes.forgetPasswordView, page: ()=>ForgetPasswordView(),
         binding: BindingsBuilder(() {
           Get.lazyPut(() => ForgetPasswordViewModel());
-        }))
+        })),
+        GetPage(name: AppRoutes.otpView, page: ()=>OtpView(),
+        binding: BindingsBuilder(() {
+          Get.lazyPut(() => OtpViewModel());
+
+        })),
+        GetPage(name: AppRoutes.changePasswordView, page: ()=>ChangePasswordView(),
+        binding: BindingsBuilder(() {
+          Get.lazyPut(() => ChangePasswordViewModel());
+
+        })),
   ];
 }

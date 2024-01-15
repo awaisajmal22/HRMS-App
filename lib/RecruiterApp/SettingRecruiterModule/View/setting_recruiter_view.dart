@@ -28,7 +28,6 @@ class SettingRecruiterView extends StatelessWidget {
           onTap: () {
             print('back to home');
             navBarVM.tabIndex.value = 0;
-            
           },
         ),
         Padding(
@@ -62,12 +61,15 @@ class SettingRecruiterView extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      appText(title: 'John Doe', fontSize: 16),
-                      appText(
-                        title: 'johndoe@example.com',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        textColor: AppColor.black.withOpacity(0.50),
+                      Obx(() => appText(
+                          title: settingVM.userName.value, fontSize: 16)),
+                      Obx(
+                        () => appText(
+                          title: settingVM.userEmail.value,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          textColor: AppColor.black.withOpacity(0.50),
+                        ),
                       ),
                     ],
                   )
@@ -117,15 +119,12 @@ class SettingRecruiterView extends StatelessWidget {
                 onTap: () {},
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.symmetric(
-                      horizontal: BorderSide(
-                        color: Colors.black.withOpacity(0.10),
-                        width: 1,
-                      )
-                    )
-                  ),
+                      border: Border.symmetric(
+                          horizontal: BorderSide(
+                    color: Colors.black.withOpacity(0.10),
+                    width: 1,
+                  ))),
                   alignment: Alignment.centerLeft,
-                 
                   padding: EdgeInsets.symmetric(vertical: 12.h),
                   child: appText(
                     title: 'Change Password',
@@ -134,23 +133,19 @@ class SettingRecruiterView extends StatelessWidget {
                   ),
                 ),
               ),
-               GestureDetector(
-                onTap: ()async  {
-                 final prefs = await SharedPreferences.getInstance();
-                 prefs.clear();
-                 Get.offAllNamed(AppRoutes.loginView);
+              GestureDetector(
+                onTap: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.clear();
+                  Get.offAllNamed(AppRoutes.loginView);
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.10),
-                        width: 1,
-                      )
-                    )
-                    ),
-                  
-                 
+                      border: Border(
+                          bottom: BorderSide(
+                    color: Colors.black.withOpacity(0.10),
+                    width: 1,
+                  ))),
                   padding: EdgeInsets.symmetric(vertical: 12.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

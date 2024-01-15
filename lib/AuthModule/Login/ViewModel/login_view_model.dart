@@ -14,7 +14,8 @@ class LoginViewModel extends GetxController {
     required String username,
     required String password,
   }) async {
-    UserModel userModel = await loginServices(
+    UserModel userModel = await LoginService().loginServices(
+      context: context,
         username: username, password: password, );
     return userModel;
   }

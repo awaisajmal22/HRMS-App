@@ -58,16 +58,26 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                   readOnly: true,
                   onTap: () {
                     showGeneralDialog(
-                      context: context,
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return Dialog(
-                          backgroundColor: AppColor.white,
-                          child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 5),
-                              color: AppColor.blue.withOpacity(0.44),
-                              height: 65.h,
-                              child: UnpaidDatePicker()),
+                          context: context,
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return Dialog(
+                              backgroundColor: AppColor.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0)),
+                              child: Container(
+                                  padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      top: 5.h,
+                                      bottom: 5.h),
+                                  decoration: BoxDecoration(
+                                    color: AppColor.blue.withOpacity(0.44),
+                                  ),
+                                  height: 70.h,
+                              child: Obx(()=> UnpaidDatePicker(
+                                endWeekDate: homeVM.endWeekDate.value,
+                              ))),
                         );
                       },
                     );
@@ -75,7 +85,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                   hintText: unpaidHoursVM.pickedDate.value != ''
                       ? DateFormat("yyyy-MMM-dd").format(
                           DateTime.parse(unpaidHoursVM.pickedDate.value))
-                      : '(show only days before current pay period)',
+                      : '',
                   controller: unpaidHoursVM.dateController,
                 ),
               ),
@@ -113,7 +123,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                 height: 5.h,
               ),
               customTextField(
-                  hintText: '10:00 hrs',
+                  hintText: '',
                   controller: unpaidHoursVM.unpaidHoursController,
                   fontSize: 14),
               SizedBox(
@@ -233,18 +243,19 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
               customTextButton(
                   buttonColor: AppColor.blue,
                   onTap: () async {
-                    if (unpaidHoursVM.generalExpController.text != '' &&
-                        unpaidHoursVM.unpaidHoursController.text != '' &&
-                        unpaidHoursVM.parkingTravelController.text != '') {
+                    if (
+                        unpaidHoursVM.unpaidHoursController.text != '' ) {
                       showLoadingIndicator(context: context);
 
                       bool isSuccess =
                           await unpaidHoursVM.submitUnpaidRecruiterHours(
                               workerId: workerId,
-                              generalExpValue: double.parse(
-                                  unpaidHoursVM.generalExpController.text),
-                              parkingTravelValue: double.parse(
-                                  unpaidHoursVM.parkingTravelController.text),
+                              generalExpValue: 
+                                  unpaidHoursVM.generalExpController.text != '' ? double.parse(
+                                  unpaidHoursVM.generalExpController.text) : 0.0,
+                              parkingTravelValue: 
+                                  unpaidHoursVM.parkingTravelController.text != '' ? double.parse(
+                                  unpaidHoursVM.parkingTravelController.text) : 0.0,
                               unpaidHours: int.parse(
                                   unpaidHoursVM.unpaidHoursController.text),
                               jobSite: homeVM.selectedDropDownValue.value,

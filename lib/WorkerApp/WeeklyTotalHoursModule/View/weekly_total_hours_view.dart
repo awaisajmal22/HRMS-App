@@ -118,15 +118,15 @@ class WeeklyTotalHoursView extends StatelessWidget {
                         child: appText(
                           textAlign: TextAlign.left,
                           title: 'Total Hours',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          // fontWeight: FontWeight.w400,
                         ),
                       ),
                       SizedBox(
                         height: 2.h,
                       ),
                       customTextField(
-                        hintText: '10:00 hrs',
+                        hintText: '',
                         controller: weeklytotalVM.totalHoursController,
                         textInputType: TextInputType.number,
                       ),
@@ -322,6 +322,8 @@ class WeeklyTotalHoursView extends StatelessWidget {
                           weeklytotalVM.totalHoursController.text != "") {
                         showLoadingIndicator(context: context);
                         bool isSuccess = await weeklytotalVM.submitWeeklyHour(
+                          parkingTravelValue: weeklytotalVM.parkingTravelController.text != ''? double.parse(weeklytotalVM.parkingTravelController.text): 0.0,
+                          generalExpValue: weeklytotalVM.generalExpController.text != ''? double.parse(weeklytotalVM.generalExpController.text) : 0.0,
                           jobSiteID: homeVM.selectedJobsiteId.value,
                           startDate: weeklytotalVM.startDate.value,
                           endDate: weeklytotalVM.endDate.value,
@@ -340,6 +342,7 @@ class WeeklyTotalHoursView extends StatelessWidget {
                         hideOpenDialog(context: context);
                         if (isSuccess == true) {
                           sucessfullyHoursAddedDialog(
+                             isCheckButton: false,
                             checkTitle: 'Check Summary',
                             context: context,
                             title: 'Your Hours Have Been Successfully Added',

@@ -26,9 +26,9 @@ class HomeViewModel extends GetxController {
     HomeModel(
       title: 'Submit Hours',
       callBack: (context, check) async {
-        if (check == 0) {
+        if (check == 1) {
           Get.toNamed(AppRoutes.dailyTotalHoursView);
-        } else if (check == 1) {
+        } else if (check == 0) {
           Get.toNamed(AppRoutes.weeklyTotalView);
         }
       },
@@ -36,7 +36,7 @@ class HomeViewModel extends GetxController {
     HomeModel(
       title: 'Check Current Summary',
       callBack: (context, check) async {
-        if (check == 0) {
+        if (check == 1) {
             final dailyWorkVM = Get.put(DailyWorkSummaryViewModel());
             showLoadingIndicator(context: context);
             final result = await dailyWorkVM.getDailyWorkSummary();
@@ -45,7 +45,7 @@ class HomeViewModel extends GetxController {
             if (result != null) {
               Get.toNamed(AppRoutes.dailySummaryView);
             }
-          } else if (check == 1) {
+          } else if (check == 0) {
           final weeklyWorkVM = Get.put(WeeklyWorkSummaryViewModel());
           showLoadingIndicator(context: context);
           final result = await weeklyWorkVM.getweeklyWorkSummary();
@@ -96,11 +96,13 @@ class HomeViewModel extends GetxController {
   }
 
   RxString startDate = ''.obs;
+ Rx<DateTime> endWeekDate = DateTime.now().obs;
   RxString endDate = ''.obs;
   RxString startOfWeek = ''.obs;
   RxString endOfWeek = ''.obs;
   getCurrentWeek() async {
     CurrentWeekDateModel date = await HomeServices().getCurrentWeekDate();
+    endWeekDate.value = date.endDate!;
     final startDay = DateFormat.EEEE()
         .format(DateTime.parse(date.startDate!.toIso8601String()));
     startOfWeek.value =

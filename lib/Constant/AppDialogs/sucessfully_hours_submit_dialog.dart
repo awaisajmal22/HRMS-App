@@ -157,7 +157,7 @@ sucessfullyHoursAddedRecruiterDialog(
                             ? AppColor.blue.withOpacity(0.37)
                             : AppColor.blue,
                         onTap: () {
-                          Get.offAllNamed(AppRoutes.navBarView);
+                          Get.offAllNamed(AppRoutes.navBarRecruiterView);
                         },
                         title: 'Close',
                       ),

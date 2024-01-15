@@ -114,18 +114,27 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                         //       "${DateFormat('yy-mm-dd').format(value!)}";
                         //   print(editDailyTotalVM.pickedDate.value);
                         // });
-                        showGeneralDialog(
+                      showGeneralDialog(
                           context: context,
                           pageBuilder:
                               (context, animation, secondaryAnimation) {
                             return Dialog(
                               backgroundColor: AppColor.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0)),
                               child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  color: AppColor.blue.withOpacity(0.44),
-                                  height: 65.h,
-                                  child: EditDatePicker()),
+                                  padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      top: 5.h,
+                                      bottom: 5.h),
+                                  decoration: BoxDecoration(
+                                    color: AppColor.blue.withOpacity(0.44),
+                                  ),
+                                  height: 70.h,
+                                  child: Obx(()=> EditDatePicker(
+                                    endWeekDate: homeVM.endWeekDate.value,
+                                  ))),
                             );
                           },
                         );
@@ -260,8 +269,8 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                     appText(
                       textAlign: TextAlign.left,
                       title: 'Total Hours',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      // fontWeight: FontWeight.w400,
                     ),
                     SizedBox(
                       height: 2.h,
@@ -470,7 +479,7 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                           print(
                               'PickedDate is : ${editDailyTotalVM.pickedDate.value}');
                           if (editDailyTotalVM.totalHoursController.text !=
-                              null) {
+                              null && editDailyTotalVM.totalHoursController.text != '0' && editDailyTotalVM.endTime != editDailyTotalVM.startTime) {
                             showLoadingIndicator(context: context);
                             bool isSuccess = await editDailyTotalVM
                                 .EditsubmitDailyRecruiterHours(
@@ -486,10 +495,11 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                               date: editDailyTotalVM.pickedDate.value == ''
                                   ? model.date!.toString()
                                   : editDailyTotalVM.pickedDate.value,
-                              generalExpValue: double.parse(
-                                  editDailyTotalVM.generalExpController.text),
-                              parkingTravelValue: double.parse(editDailyTotalVM
-                                  .parkingTravelController.text),
+                              generalExpValue: editDailyTotalVM.generalExpController.text != '' ?double.parse(
+                                  editDailyTotalVM.generalExpController.text) : 0.0,
+                              parkingTravelValue: editDailyTotalVM
+                                  .parkingTravelController.text != '' ? double.parse(editDailyTotalVM
+                                  .parkingTravelController.text) : 0.0,
                               generalExpImage: uploadImageVM.parkingimage.value,
                               parkingTravelImage:
                                   uploadImageVM.generalExpImage.value,

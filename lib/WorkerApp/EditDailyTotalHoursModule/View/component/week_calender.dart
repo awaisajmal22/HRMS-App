@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hrmsapp/WorkerApp/EditDailyTotalHoursModule/View/edit_daily_total_hours_view.dart';
+import 'package:hrmsapp/WorkerApp/EditDailyTotalHoursModule/ViewModel/edit_daily_total_hours_view_model.dart';
+import 'package:hrmsapp/WorkerApp/HomeModule/ViewModel/home_view_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../Constant/AppColors/colors.dart';
-import '../../ViewModel/edit_daily_total_hours_view_model.dart';
 
 extension DateTimeExt on DateTime {
   DateTime get monthStart => DateTime(year, month);
@@ -24,7 +26,8 @@ extension DateTimeExt on DateTime {
 }
 
 class EditDatePicker extends StatefulWidget {
-  EditDatePicker({super.key});
+  final DateTime startingDate;
+  EditDatePicker({super.key, required this.startingDate});
 
   @override
   State<EditDatePicker> createState() => _EditDatePickerState();
@@ -44,106 +47,34 @@ class _EditDatePickerState extends State<EditDatePicker> {
   @override
   Widget build(BuildContext context) {
     return
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: [
-        //     _Header(
-        //       selectedMonth: selectedMonth,
-        //       selectedDate: selectedDate,
-        //       onChange: (value) => setState(() => selectedMonth = value),
-        //     ),
-        //     Expanded(
-        //       child:
+      
         _Body(
+          startingDate: widget.startingDate,
       selectedDate: selectedDate,
       selectedMonth: selectedMonth,
       selectDate: (DateTime value) => setState(() {
         selectedDate = value;
       }),
     );
-    //     _Bottom(
-    //       selectedDate: selectedDate,
-    //     )
-    //   ],
-    // ),
+    
   }
 }
 
-// class _Body extends StatelessWidget {
-// const _Body({
-//   required this.selectedMonth,
-//   required this.selectedDate,
-//   required this.selectDate,
-// });
 
-// final DateTime selectedMonth;
-// final DateTime? selectedDate;
-
-// final ValueChanged<DateTime> selectDate;
-
-// @override
-// Widget build(BuildContext context) {
-//   var weekStartDate = CalendarMonthData(
-//     year: selectedMonth.year,
-//     month: selectedMonth.month,
-//   );
-
-//   return  Column(
-//     children: [
-//       Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//         children: const [
-//           Text('M'),
-//           Text('T'),
-//           Text('W'),
-//           Text('T'),
-//           Text('F'),
-//           Text('S'),
-//           Text('S'),
-//         ],
-//       ),
-//       const SizedBox(height: 10),
-//       Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           const SizedBox(
-//             height: 1,
-//           ),
-//           Row(
-//             children: List.generate(7, (index) {
-//               final date = da.add(Duration(days: index));
-//               return Expanded(
-//                 child: _RowItem(
-//                   hasRightBorder: false,
-//                   date: date,
-//                   isActiveMonth:
-//                       true, // All dates in the current week are from the current month
-//                   onTap: () {
-//                     selectDate(date);
-//                     Get.back();
-//                     print(selectedDate);
-//                   },
-//                   isSelected:
-//                       selectedDate != null && selectedDate!.isSameDate(date),
-//                 ),
-//               );
-//             }),
-//           ),
-//         ],
-//       ),
-//     ],
-//   );
 class _Body extends StatelessWidget {
   _Body({
     required this.selectedMonth,
     required this.selectedDate,
     required this.selectDate,
+    required this.startingDate,
   });
 
   final DateTime selectedMonth;
   final DateTime? selectedDate;
   final dailyTotalVM = Get.put(EditDailyTotalHoursViewModel());
+  final homeVM =Get.put(HomeViewModel());
   final ValueChanged<DateTime> selectDate;
+  final DateTime startingDate;
 
   @override
   Widget build(BuildContext context) {
@@ -153,38 +84,38 @@ class _Body extends StatelessWidget {
     );
 
     // Calculate the start and end of the current week
-    final DateTime now = DateTime.now();
-    final DateTime startOfWeek = now.subtract(Duration(days: now.weekday + 1));
-    final DateTime endOfWeek = now.add(Duration(days: 6 - now.weekday));
+    final DateTime now = startingDate.dayStart;
+    final DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    final DateTime endOfWeek = now.add(Duration(days: 7 - now.weekday));
 
     return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: const [
-            Text('S'),
-            Text('M'),
-            Text('T'),
-            Text('W'),
-            Text('T'),
-            Text('F'),
-            Text('S'),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 1,
-            ),
-            for (var week in data.weeks)
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          Text('M'),
+          Text('T'),
+          Text('W'),
+          Text('T'),
+          Text('F'),
+          Text('S'),
+          Text('S'),
+        ],
+      ),
+      const SizedBox(height: 10),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 1,
+          ),
+          for (var week in data.weeks)
               Row(
                 children: week.map((d) {
                   // Filter out days that are not in the current week
                   if (d.date.isBefore(startOfWeek) ||
                       d.date.isAfter(endOfWeek)) {
-                    return SizedBox(
+                    return const SizedBox(
                         width: 35); // Empty space for days outside the week
                   }
 
@@ -208,55 +139,13 @@ class _Body extends StatelessWidget {
                   );
                 }).toList(),
               ),
-          ],
-        ),
-      ],
-    );
+        ],
+      ),
+    ],
+  );
+   
   }
 }
-// Column(
-//   children: [
-//     Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceAround,
-//       children: const [
-//         Text('M'),
-//         Text('T'),
-//         Text('W'),
-//         Text('T'),
-//         Text('F'),
-//         Text('S'),
-//         Text('S'),
-//       ],
-//     ),
-//     const SizedBox(height: 10),
-//     Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Container(
-//           height: 1,
-//           color: Colors.pink[200],
-//         ),
-//         for (var week in data.weeks)
-//           Row(
-//             children: week.map((d) {
-//               return Expanded(
-//                 child: _RowItem(
-//                   hasRightBorder: false,
-//                   date: d.date,
-//                   isActiveMonth: d.isActiveMonth,
-//                   onTap: () => selectDate(d.date),
-//                   isSelected: selectedDate != null &&
-//                       selectedDate!.isSameDate(d.date),
-//                 ),
-//               );
-//             }).toList(),
-//           ),
-//       ],
-//     ),
-//   ],
-// );
-//   }
-// }
 
 class _RowItem extends StatelessWidget {
   const _RowItem({
@@ -283,9 +172,9 @@ class _RowItem extends StatelessWidget {
     if (isSelected) {
       textColor = Colors.red;
     } else if (isPassed) {
-      textColor = isActiveMonth ? Colors.black : Colors.grey;
+      textColor = isActiveMonth ? Colors.black : Colors.black;
     } else {
-      textColor = isActiveMonth ? Colors.black : Colors.grey;
+      textColor = isActiveMonth ? Colors.black : Colors.black;
     }
     return GestureDetector(
       onTap: onTap,
@@ -293,29 +182,11 @@ class _RowItem extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         height: 35,
-        // decoration:
-        // isSelected
-        //     ? const BoxDecoration(color: Colors.pink, shape: BoxShape.circle)
-        //     : isToday
-        //         ? BoxDecoration(
-        //             borderRadius: BorderRadius.circular(35),
-        //             border: Border.all(
-        //               color: Colors.pink,
-        //             ),
-        //           )
-        //         : null,
+      
         child: Text(
           number.toString(),
           style: TextStyle(fontSize: 14, color: textColor
-              //  isPassed
-              //     ? isActiveMonth
-              //         ? Colors.black
-              //         : isSelected
-              //             ? Color(0xffB63131)
-              //             : Colors.transparent
-              //     : isActiveMonth
-              //         ? Colors.black
-              //         : Colors.grey,
+             
               ),
         ),
       ),
@@ -323,79 +194,79 @@ class _RowItem extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({
-    required this.selectedMonth,
-    required this.selectedDate,
-    required this.onChange,
-  });
+// class _Header extends StatelessWidget {
+//   const _Header({
+//     required this.selectedMonth,
+//     required this.selectedDate,
+//     required this.onChange,
+//   });
 
-  final DateTime selectedMonth;
-  final DateTime? selectedDate;
+//   final DateTime selectedMonth;
+//   final DateTime? selectedDate;
 
-  final ValueChanged<DateTime> onChange;
+//   final ValueChanged<DateTime> onChange;
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Text(
-              'Selected date: ${selectedDate == null ? 'non' : "${selectedDate!.day}.${selectedDate!.month}.${selectedDate!.year}"}'),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Month: ${selectedMonth.month + 1}/${selectedMonth.year}',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  onChange(selectedMonth.addMonth(-1));
-                },
-                icon: const Icon(Icons.arrow_left_sharp),
-              ),
-              IconButton(
-                onPressed: () {
-                  onChange(selectedMonth.addMonth(1));
-                },
-                icon: const Icon(Icons.arrow_right_sharp),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: Column(
+//         children: [
+//           Text(
+//               'Selected date: ${selectedDate == null ? 'non' : "${selectedDate!.day}.${selectedDate!.month}.${selectedDate!.year}"}'),
+//           Row(
+//             children: [
+//               Expanded(
+//                 child: Text(
+//                   'Month: ${selectedMonth.month + 1}/${selectedMonth.year}',
+//                   textAlign: TextAlign.center,
+//                 ),
+//               ),
+//               IconButton(
+//                 onPressed: () {
+//                   onChange(selectedMonth.addMonth(-1));
+//                 },
+//                 icon: const Icon(Icons.arrow_left_sharp),
+//               ),
+//               IconButton(
+//                 onPressed: () {
+//                   onChange(selectedMonth.addMonth(1));
+//                 },
+//                 icon: const Icon(Icons.arrow_right_sharp),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-class _Bottom extends StatelessWidget {
-  const _Bottom({
-    required this.selectedDate,
-  });
+// class _Bottom extends StatelessWidget {
+//   const _Bottom({
+//     required this.selectedDate,
+//   });
 
-  final DateTime? selectedDate;
+//   final DateTime? selectedDate;
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            print(selectedDate);
-          },
-          child: const Text('save'),
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text('cancel'),
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         ElevatedButton(
+//           onPressed: () {
+//             print(selectedDate);
+//           },
+//           child: const Text('save'),
+//         ),
+//         ElevatedButton(
+//           onPressed: () {},
+//           child: const Text('cancel'),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class CalendarMonthData {
   final int year;
@@ -412,10 +283,10 @@ class CalendarMonthData {
   });
 
   int get firstDayOffset {
-    final int weekdayFromMonday =
-        DateTime(year, month).weekday - DateTime.sunday;
-
-    return (weekdayFromMonday - ((firstDayOfWeekIndex) % 7)) % 7;
+    // final int weekdayFromMonday =
+    //     DateTime(year, month).weekday - DateTime.sunday;
+final int weekdayFromMonday = DateTime(year, month).weekday - 1;
+    return (weekdayFromMonday - ((firstDayOfWeekIndex - 1) % 7)) % 7 - 1;
   }
 
   List<List<CalendarDayData>> get weeks {

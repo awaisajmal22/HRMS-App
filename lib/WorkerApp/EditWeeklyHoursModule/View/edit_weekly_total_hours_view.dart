@@ -15,6 +15,7 @@ import '../../../Constant/AppText/app_text.dart';
 import '../../../Constant/AppTextField/app_textfield.dart';
 import '../../../Constant/AppTextField/comment_formfield.dart';
 import '../../../Constant/DropDownFormField/drop_down_form_field.dart';
+import '../../../Constant/Toast/fllutter_toast.dart';
 import '../../../RoutesAndBindings/app_routes.dart';
 import '../../../Utils/spint_kit_view_spinner.dart';
 import '../../HomeModule/ViewModel/home_view_model.dart';
@@ -123,15 +124,15 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                           child: appText(
                             textAlign: TextAlign.left,
                             title: 'Total Hours',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            // fontWeight: FontWeight.w400,
                           ),
                         ),
                         SizedBox(
                           height: 2.h,
                         ),
                         customTextField(
-                          hintText: '10:00 hrs',
+                          hintText: '',
                           controller: editWeeklyHoursVM.totalHoursController
                             ..text = summary.hours.toString(),
                           textInputType: TextInputType.number,
@@ -328,10 +329,14 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                     buttonColor: AppColor.blue,
                     title: 'Add',
                     onTap: () async {
-                      if (editWeeklyHoursVM.totalHoursController.text != null) {
+                      if (editWeeklyHoursVM.totalHoursController.text != null && editWeeklyHoursVM.totalHoursController.text != '' && homeVM.selectedDropDownValue.value != null) {
                         showLoadingIndicator(context: context);
                         bool isSuccess =
                             await editWeeklyHoursVM.editWeeklyHours(
+                              parkingTravelValue: editWeeklyHoursVM.parkingTravelController.text != ''?
+                              double.parse(editWeeklyHoursVM.parkingTravelController.text) : 0.0,
+                              generalExpValue: editWeeklyHoursVM.generalExpController.text != ''?
+                              double.parse(editWeeklyHoursVM.generalExpController.text): 0.0,
                           id: summary.id,
                           jobSiteID: homeVM.selectedJobsiteId.value == ''
                               ? summary.jobId
@@ -361,7 +366,9 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                             },
                           );
                         }
-                      }
+                      }  else if(homeVM.selectedDropDownValue.value == ''){
+                      toast(msg: 'Please select job site.');
+                    }
                     },
                   ),
                 ),

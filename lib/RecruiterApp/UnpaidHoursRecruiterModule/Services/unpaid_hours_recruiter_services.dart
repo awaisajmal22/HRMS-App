@@ -58,8 +58,8 @@ class UnpaidHoursRecruiterServices {
           "Date":
               DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
           "Unpaidhours": unpaidHours,
-          "Parking": parkingTravelValue,
-          "Genexpence": generalExpValue,
+          "Parking": parkingTravelValue ?? 0.0,
+          "Genexpence": generalExpValue  ?? 0.0,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
         });

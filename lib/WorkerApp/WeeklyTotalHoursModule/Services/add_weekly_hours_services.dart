@@ -64,8 +64,8 @@ class WeeklyServices {
       } else {
         FormData data = FormData.fromMap({
           "Thours": totalHours,
-          "Parking": parkingTravelValue.toDouble(),
-          "Genexpence": generalExpValue.toDouble(),
+          "Parking": parkingTravelValue.toDouble() ?? 0.0,
+          "Genexpence": generalExpValue.toDouble() ?? 0.0,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
         });

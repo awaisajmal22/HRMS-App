@@ -11,17 +11,17 @@ class WorkerViewModel extends GetxController {
     WorkerModel(
       title: 'Submit Hours',
       callBack: (context, check, id) async {
-        if (check == 0) {
+        if (check == 1) {
           Get.toNamed(AppRoutes.dailyTotalHoursRecruiterView, arguments: id);
-        } else if (check == 1) {
-          Get.toNamed(AppRoutes.weeklyTotalView, arguments: id);
+        } else if (check == 0) {
+          Get.toNamed(AppRoutes.weeklyTotalRecruiterView, arguments: id);
         }
       },
     ),
     WorkerModel(
       title: 'Check Current Summary',
       callBack: (context, check, id) async {
-        if (check == 0) {
+        if (check == 1) {
           final dailyWorkVM = Get.put(DailyWorkSummaryRecruiterViewModel());
           showLoadingIndicator(context: context);
           final result =
@@ -31,7 +31,7 @@ class WorkerViewModel extends GetxController {
           if (result != null) {
             Get.toNamed(AppRoutes.dailySummaryRecruiterView, arguments: id);
           }
-        } else if (check == 1) {
+        } else if (check == 0) {
           final weeklyWorkVM = Get.put(WeeklyWorkSummaryRecruiterViewModel());
           showLoadingIndicator(context: context);
           final result = await weeklyWorkVM.getRecruiterweeklyWorkSummary(workerId: id);

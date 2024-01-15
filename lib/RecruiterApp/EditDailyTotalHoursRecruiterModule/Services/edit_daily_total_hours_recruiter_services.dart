@@ -62,8 +62,8 @@ class EditDailyHoursRecruiterServices {
           "EndTime": endTime,
           "Date": date,
           "Thours": totalHours,
-          "Parking": parkingTravelValue,
-          "Genexpence": generalExpValue,
+          "Parking": parkingTravelValue ?? 0.0,
+          "Genexpence": generalExpValue ?? 0.0,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
         });

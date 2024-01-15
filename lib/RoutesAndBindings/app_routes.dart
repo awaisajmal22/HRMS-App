@@ -29,4 +29,6 @@ abstract class AppRoutes {
   static const editWeeklyTotalHoursRecruiterView =
       '/EditWeeklyTotalHoursRecruiterView';
       static const forgetPasswordView = '/forgetPasswordView';
+      static const otpView = '/otpView';
+      static const changePasswordView = '/changePasswordView';
 }

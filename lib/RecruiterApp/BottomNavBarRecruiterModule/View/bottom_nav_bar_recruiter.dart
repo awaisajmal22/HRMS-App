@@ -115,7 +115,7 @@ class BottomNavBarRecruiter extends StatelessWidget {
                         width: 4.w,
                       ),
                       appText(
-                        title: 'Setting',
+                        title: 'Settings',
                         fontSize: 14,
                         textColor: navBarVM.tabIndex.value == 2
                             ? AppColor.blue

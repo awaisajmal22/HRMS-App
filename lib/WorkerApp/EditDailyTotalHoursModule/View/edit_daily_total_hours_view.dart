@@ -16,6 +16,7 @@ import '../../../Constant/AppText/app_text.dart';
 import '../../../Constant/AppTextField/app_textfield.dart';
 import '../../../Constant/AppTextField/comment_formfield.dart';
 import '../../../Constant/DropDownFormField/drop_down_form_field.dart';
+import '../../../Constant/Toast/fllutter_toast.dart';
 import '../../../RoutesAndBindings/app_routes.dart';
 import '../../../Utils/spint_kit_view_spinner.dart';
 import '../../DailyWorkSummaryModule/Model/daily_work_summary_model.dart';
@@ -111,18 +112,29 @@ class EditDailyTotalHoursView extends StatelessWidget {
                         //       "${DateFormat('yy-mm-dd').format(value!)}";
                         //   print(editDailyTotalVM.pickedDate.value);
                         // });
-                        showGeneralDialog(
+                     showGeneralDialog(
                           context: context,
                           pageBuilder:
                               (context, animation, secondaryAnimation) {
                             return Dialog(
                               backgroundColor: AppColor.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0)),
                               child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  color: AppColor.blue.withOpacity(0.44),
-                                  height: 65.h,
-                                  child: EditDatePicker()),
+                                  padding: EdgeInsets.only(
+                                      left: 15.w,
+                                      right: 15.w,
+                                      top: 5.h,
+                                      bottom: 5.h),
+                                  decoration: BoxDecoration(
+                                    color: AppColor.blue.withOpacity(0.44),
+                                  ),
+                                  height: 70.h,
+                                  child: Obx(
+                                    ()=> EditDatePicker(
+                                      startingDate: homeVM.endWeekDate.value,
+                                    ),
+                                  )),
                             );
                           },
                         );
@@ -257,8 +269,8 @@ class EditDailyTotalHoursView extends StatelessWidget {
                     appText(
                       textAlign: TextAlign.left,
                       title: 'Total Hours',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      // fontWeight: FontWeight.w400,
                     ),
                     SizedBox(
                       height: 2.h,
@@ -469,7 +481,8 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                     'PickedDate is : ${editDailyTotalVM.pickedDate.value}');
                                 if (editDailyTotalVM
                                         .totalHoursController.text !=
-                                    null) {
+                                    null && editDailyTotalVM.totalHoursController.text != '' && editDailyTotalVM.endTime != editDailyTotalVM
+                                    .startTime) {
                                   showLoadingIndicator(context: context);
                                   bool isSuccess = await editDailyTotalVM
                                       .EditsubmitDailyHours(
@@ -488,12 +501,14 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                         editDailyTotalVM.pickedDate.value == ''
                                             ? model.date!.toString()
                                             : editDailyTotalVM.pickedDate.value,
-                                    generalExpValue: double.parse(
+                                    generalExpValue:  editDailyTotalVM
+                                            .generalExpController.text != '' ?double.parse(
                                         editDailyTotalVM
-                                            .generalExpController.text),
-                                    parkingTravelValue: double.parse(
+                                            .generalExpController.text) : 0.0,
+                                    parkingTravelValue: editDailyTotalVM
+                                            .parkingTravelController.text != '' ?double.parse(
                                         editDailyTotalVM
-                                            .parkingTravelController.text),
+                                            .parkingTravelController.text) : 0.0,
                                     generalExpImage:
                                         uploadImageVM.parkingimage.value,
                                     parkingTravelImage:
@@ -525,6 +540,8 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                       },
                                     );
                                   }
+                                }else {
+                                  toast(msg: "please fill your all fields");
                                 }
                               }),
                         ),

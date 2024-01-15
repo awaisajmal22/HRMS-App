@@ -1,4 +1,4 @@
-package com.example.hrmsapp
+package com.vconekt.hrmsapp
 
 import io.flutter.embedding.android.FlutterActivity
 

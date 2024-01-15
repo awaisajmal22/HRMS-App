@@ -67,9 +67,11 @@ class HomeRecruiterViewModel extends GetxController {
   RxString endDate = ''.obs;
   RxString startOfWeek = ''.obs;
   RxString endOfWeek = ''.obs;
+  Rx<DateTime> endWeekDate = DateTime.now().obs;
   getCurrentWeek() async {
     CurrentWeekRecruiterDateModel date =
         await HomeRecruiterServices().getCurrentWeekDate();
+        endWeekDate.value = date.endDate!;
     final startDay = DateFormat.EEEE()
         .format(DateTime.parse(date.startDate!.toIso8601String()));
     startOfWeek.value =

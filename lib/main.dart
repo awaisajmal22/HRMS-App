@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       builder: (context, _) {
         return GetMaterialApp(
+          useInheritedMediaQuery: true,
           title: 'Flutter Demo',
           theme: ThemeData(
             scaffoldBackgroundColor: AppColor.white

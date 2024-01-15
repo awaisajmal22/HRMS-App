@@ -9,12 +9,11 @@ import '../AppText/app_text.dart';
 Widget customAppBar(
     {String title = '',
     bool isBackButton = false,
-    
     double height = 72,
     required VoidCallback onTap,
     double opacity = 0.12}) {
   return Container(
-    padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 36.h, bottom: 12.h),
+    padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 0.h, bottom: 12.h),
     height: height.h,
     decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -28,7 +27,7 @@ Widget customAppBar(
               color: AppColor.black.withOpacity(opacity))
         ]),
     child: Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         isBackButton == true

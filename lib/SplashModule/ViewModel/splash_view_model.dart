@@ -32,15 +32,27 @@ class SplashViewModel extends GetxController {
      Get.offAllNamed(AppRoutes.loginView);
     } else {
       
-       final userModel = await loginServices(
+       final userModel = await LoginService().loginServices(
         username: email,
-        password: password!,
+        password: password!, 
       );
       if (userModel.token == '' || userModel.token == null) {
-      
-       Get.offAllNamed(AppRoutes.loginView);
+        prefs.setString('token', userModel.token);
+        prefs.setInt('check', userModel.timeSheettype);
+      if(userModel.userRoles![0] == "RECRUITER"){
+            Get.offAllNamed(AppRoutes.onBoardingRecruiterView, arguments: userModel.token);
+          }
+          else if(userModel.userRoles![0] == "WORKER"){
+         Get.offAllNamed(
+          AppRoutes.onBoardingView,
+          arguments: userModel.token,
+        );
+          } else {
+            Get.offAllNamed(AppRoutes.loginView);
+          }
       } else {
           prefs.setString('token', userModel.token);
+          prefs.setInt('check', userModel.timeSheettype);
           if(userModel.userRoles![0] == "RECRUITER"){
             Get.offAllNamed(AppRoutes.onBoardingRecruiterView, arguments: userModel.token);
           }
