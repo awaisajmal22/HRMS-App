@@ -168,7 +168,8 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                     appText(
-                                        title: '\$0.00',
+                                        title: '\$${weeklySummaryVM
+                                          .weeklyWorkList[index].parking}',
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ],
@@ -185,7 +186,8 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                     appText(
-                                        title: '\$0.00',
+                                        title: '\$${weeklySummaryVM
+                                          .weeklyWorkList[index].generalexpence}',
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ],
