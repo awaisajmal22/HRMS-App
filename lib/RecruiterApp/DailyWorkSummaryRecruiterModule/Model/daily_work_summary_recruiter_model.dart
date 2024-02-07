@@ -10,13 +10,13 @@ String DailyWorkSummaryRecruiterModelToJson(
 
 class DailyWorkSummaryRecruiterModel {
   int? id;
-  String? jobSiteName;
-  String? startTime;
-  String? endTime;
-  int? hours;
-  DateTime? date;
-  double? genexpence;
-  double? parking;
+  dynamic? jobSiteName;
+  dynamic? startTime;
+  dynamic? endTime;
+  dynamic? hours;
+  dynamic? date;
+  dynamic? genexpence;
+  dynamic? parking;
 
   DailyWorkSummaryRecruiterModel({
     this.id,
@@ -63,12 +63,12 @@ String DailyWorkSummaryRecruiterByIdModelToJson(
 
 class DailyWorkSummaryRecruiterByIdModel {
   int? id;
-  String? jobSiteName;
+  dynamic? jobSiteName;
   int? jobsiteId;
-  String? startTime;
-  String? endTime;
-  int? hours;
-  DateTime? date;
+  dynamic? startTime;
+  dynamic? endTime;
+  dynamic? hours;
+  dynamic? date;
   double? genexpence;
   double? parking;
   String? feefback;
@@ -108,7 +108,7 @@ class DailyWorkSummaryRecruiterByIdModel {
         "startTime": startTime,
         "endTime": endTime,
         "hours": hours,
-        "date": date?.toIso8601String(),
+        "date": date,
         "genexpence": genexpence,
         "parking": parking,
         "feefback": feefback,

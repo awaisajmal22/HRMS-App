@@ -71,22 +71,17 @@ class UnpaidHoursView extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(0)),
                                     child: Container(
-                                        padding: EdgeInsets.only(
-                                            left: 15.w,
-                                            right: 15.w,
-                                            top: 5.h,
-                                            bottom: 5.h),
-                                        decoration: BoxDecoration(
-                                          color:
-                                              AppColor.blue.withOpacity(0.44),
-                                        ),
-                                        height: 70.h,
-                                        child: Obx(
-                                          () => UnpaidDatePicker(
-                                            endWeekDate:
-                                                homeVM.endWeekDate.value,
-                                          ),
-                                        )),
+                                      padding: EdgeInsets.only(
+                                          left: 15.w,
+                                          right: 15.w,
+                                          top: 5.h,
+                                          bottom: 5.h),
+                                      decoration: BoxDecoration(
+                                        color: AppColor.blue.withOpacity(0.44),
+                                      ),
+                                      height: 100.h,
+                                      child: UnpaidDatePicker(),
+                                    ),
                                   );
                                 },
                               );
@@ -262,7 +257,26 @@ class UnpaidHoursView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.blue,
                             onTap: () async {
-                              if (unpaidHoursVM.unpaidHoursController.text !=
+                              if (unpaidHoursVM.pickedDate.value == '') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('Please select the date')));
+                              } else if (unpaidHoursVM
+                                  .unpaidHoursController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Please fill the required fields')));
+                              } else if (unpaidHoursVM
+                                      .unpaidHoursController.text ==
+                                  '0') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Total hours must be greater than 0')));
+                              } else if (unpaidHoursVM
+                                          .unpaidHoursController.text !=
                                       '' &&
                                   unpaidHoursVM.pickedDate.value != '' &&
                                   homeVM.selectedDropDownValue.value != '') {
@@ -271,30 +285,31 @@ class UnpaidHoursView extends StatelessWidget {
                                 bool isSuccess =
                                     await unpaidHoursVM.submitUnpaidHours(
                                         generalExpValue: unpaidHoursVM
-                                                    .generalExpController
-                                                    .text !=
-                                                ''
+                                                .generalExpController
+                                                .text
+                                                .isNotEmpty
                                             ? double.parse(unpaidHoursVM
                                                 .generalExpController.text)
                                             : 0.0,
                                         parkingTravelValue: unpaidHoursVM
-                                                    .parkingTravelController
-                                                    .text !=
-                                                ''
+                                                .parkingTravelController
+                                                .text
+                                                .isNotEmpty
                                             ? double.parse(
                                                 unpaidHoursVM
                                                     .parkingTravelController
                                                     .text,
                                               )
                                             : 0.0,
-                                        unpaidHours: int.parse(unpaidHoursVM
+                                        unpaidHours: double.parse(unpaidHoursVM
                                             .unpaidHoursController.text),
                                         jobSite:
                                             homeVM.selectedDropDownValue.value,
-                                        feedBack:
-                                            unpaidHoursVM.commentController.text,
+                                        feedBack: unpaidHoursVM
+                                            .commentController.text,
                                         date: unpaidHoursVM.pickedDate.value,
-                                        jobSiteID: homeVM.selectedJobsiteId.value,
+                                        jobSiteID:
+                                            homeVM.selectedJobsiteId.value,
                                         generalExpImage: uploadDocVM.generalExpImage.value,
                                         parkingTravelImage: uploadDocVM.parkingimage.value);
 

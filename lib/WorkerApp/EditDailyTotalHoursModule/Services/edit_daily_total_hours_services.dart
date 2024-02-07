@@ -11,7 +11,7 @@ class EditDailyHourServices {
     required int id,
     required String startTime,
     required String endTime,
-    required int totalHours,
+    required double totalHours,
     required String date,
     required double generalExpValue,
     required double parkingTravelValue,

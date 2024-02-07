@@ -39,26 +39,22 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   void initState() {
-    selectedMonth = DateTime.now().monthStart;
+    selectedMonth = widget.startingDate;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return
-      
-        _Body(
-          startingDate: widget.startingDate,
+    return _Body(
+      startingDate: widget.startingDate,
       selectedDate: selectedDate,
       selectedMonth: selectedMonth,
       selectDate: (DateTime value) => setState(() {
         selectedDate = value;
       }),
     );
-    
   }
 }
-
 
 class _Body extends StatelessWidget {
   _Body({
@@ -71,7 +67,7 @@ class _Body extends StatelessWidget {
   final DateTime selectedMonth;
   final DateTime? selectedDate;
   final dailyTotalVM = Get.put(DailyTotalHoursViewModel());
-  final homeVM =Get.put(HomeViewModel());
+  final homeVM = Get.put(HomeViewModel());
   final ValueChanged<DateTime> selectDate;
   final DateTime startingDate;
 
@@ -88,27 +84,27 @@ class _Body extends StatelessWidget {
     final DateTime endOfWeek = now.add(Duration(days: 7 - now.weekday));
 
     return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: const [
-          Text('M'),
-          Text('T'),
-          Text('W'),
-          Text('T'),
-          Text('F'),
-          Text('S'),
-          Text('S'),
-        ],
-      ),
-      const SizedBox(height: 10),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 1,
-          ),
-          for (var week in data.weeks)
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            Text('M'),
+            Text('T'),
+            Text('W'),
+            Text('T'),
+            Text('F'),
+            Text('S'),
+            Text('S'),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 1,
+            ),
+            for (var week in data.weeks)
               Row(
                 children: week.map((d) {
                   // Filter out days that are not in the current week
@@ -138,11 +134,10 @@ class _Body extends StatelessWidget {
                   );
                 }).toList(),
               ),
-        ],
-      ),
-    ],
-  );
-   
+          ],
+        ),
+      ],
+    );
   }
 }
 
@@ -181,12 +176,9 @@ class _RowItem extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         height: 35,
-      
         child: Text(
           number.toString(),
-          style: TextStyle(fontSize: 14, color: textColor
-             
-              ),
+          style: TextStyle(fontSize: 14, color: textColor),
         ),
       ),
     );
@@ -284,7 +276,7 @@ class CalendarMonthData {
   int get firstDayOffset {
     // final int weekdayFromMonday =
     //     DateTime(year, month).weekday - DateTime.sunday;
-final int weekdayFromMonday = DateTime(year, month).weekday - 1;
+    final int weekdayFromMonday = DateTime(year, month).weekday - 1;
     return (weekdayFromMonday - ((firstDayOfWeekIndex - 1) % 7)) % 7 - 1;
   }
 

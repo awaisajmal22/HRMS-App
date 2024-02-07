@@ -17,11 +17,11 @@ class DailyWorkSummaryServices {
       if (response == null) {}
       if (response.statusCode == 200) {
         final data = ApiResponse.withSuccess(response);
-
+        print(data.response!.data);
         isSuccess = true;
         data.response!.data.forEach(
             (d) => dailyWorkSummaryList.add(DailyWorkSummaryModel.fromJson(d)));
-
+        print('Data added successfully');
         // print(jobSites.length);
       }
       // response.data.forEach((d) =>
@@ -35,20 +35,20 @@ class DailyWorkSummaryServices {
 
   Future<DailyWorkSummaryByIdModel> getDailyWorkSummaryServicesByID(
       {required int id}) async {
-    Rx<DailyWorkSummaryByIdModel> dailyWorkSummaryModel =
-        DailyWorkSummaryByIdModel().obs;
+    DailyWorkSummaryByIdModel dailyWorkSummaryModel =
+        DailyWorkSummaryByIdModel.fromJson({});
     try {
       var response = await API().getRequestHeader(
         "${ApiUrl.getDailySummaryById}$id",
       );
-      // print(response);
+      print(response);
       if (response == null) {}
       if (response.statusCode == 200) {
         final data = ApiResponse.withSuccess(response);
-        dailyWorkSummaryModel.value =
+        dailyWorkSummaryModel =
             DailyWorkSummaryByIdModel.fromJson(data.response!.data);
 
-        // print(jobSites.length);
+        print("Daily Summary data ${dailyWorkSummaryModel}");
       }
       // response.data.forEach((d) =>
       //     jobSiteModel.add(JobSiteModel.fromJson(d)));
@@ -56,7 +56,7 @@ class DailyWorkSummaryServices {
     } catch (e) {
       ApiResponse.withError('error');
     }
-    return dailyWorkSummaryModel.value;
+    return dailyWorkSummaryModel;
   }
 
   Future<bool> submitDailyWorkSummary() async {

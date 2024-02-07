@@ -6,11 +6,11 @@ String dailyWorkSummaryModelToJson(List<DailyWorkSummaryModel> data) => json.enc
 
 class DailyWorkSummaryModel {
     int id;
-    String jobSiteName;
-    String startTime;
-    String endTime;
-    int hours;
-    DateTime date;
+    dynamic jobSiteName;
+    dynamic startTime;
+    dynamic endTime;
+    dynamic hours;
+    dynamic date;
 
     DailyWorkSummaryModel({
         required this.id,
@@ -48,15 +48,15 @@ String dailyWorkSummaryByIdModelToJson(DailyWorkSummaryByIdModel data) => json.e
 
 class DailyWorkSummaryByIdModel {
     int? id;
-    String? jobSiteName;
-    int? jobsiteId;
-    String? startTime;
-    String? endTime;
-    int? hours;
-    DateTime? date;
-    double? genexpence;
-    double? parking;
-    String? feefback;
+    dynamic? jobSiteName;
+    dynamic? jobsiteId;
+    dynamic? startTime;
+    dynamic? endTime;
+    dynamic? hours;
+    dynamic? date;
+    dynamic? genexpence;
+    dynamic? parking;
+    dynamic? feefback;
 
     DailyWorkSummaryByIdModel({
          this.id,
@@ -78,7 +78,7 @@ class DailyWorkSummaryByIdModel {
         startTime: json["startTime"],
         endTime: json["endTime"],
         hours: json["hours"],
-        date: DateTime.parse(json["date"]),
+        date: json["date"],
         genexpence: json["genexpence"]?.toDouble(),
         parking: json["parking"]?.toDouble(),
         feefback: json["feefback"],
@@ -91,7 +91,7 @@ class DailyWorkSummaryByIdModel {
         "startTime": startTime,
         "endTime": endTime,
         "hours": hours,
-        "date": date?.toIso8601String(),
+        "date": date,
         "genexpence": genexpence,
         "parking": parking,
         "feefback": feefback,

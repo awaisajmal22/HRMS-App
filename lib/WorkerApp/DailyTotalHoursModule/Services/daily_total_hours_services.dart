@@ -10,7 +10,7 @@ class DailyHourServices {
   Future<bool> dailySubmitHoursServices({
     required String startTime,
     required String endTime,
-    required int totalHours,
+    required double totalHours,
     required String date,
     required double generalExpValue,
     required double parkingTravelValue,

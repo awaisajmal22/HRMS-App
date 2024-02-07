@@ -49,6 +49,7 @@ class HomeRecruiterViewModel extends GetxController {
     print(selectedDropDownValue.value);
     if (response.isNotEmpty) {
       selectedDropDownValue.value = response[0].value;
+      selectedJobsiteId.value = response[0].id;
       for (var a in response) {
         _jobSiteValue.add(a.value);
         _jobSites.add(a);
@@ -71,7 +72,7 @@ class HomeRecruiterViewModel extends GetxController {
   getCurrentWeek() async {
     CurrentWeekRecruiterDateModel date =
         await HomeRecruiterServices().getCurrentWeekDate();
-        endWeekDate.value = date.endDate!;
+    endWeekDate.value = date.endDate!;
     final startDay = DateFormat.EEEE()
         .format(DateTime.parse(date.startDate!.toIso8601String()));
     startOfWeek.value =

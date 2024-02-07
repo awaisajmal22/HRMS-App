@@ -36,7 +36,7 @@ class EditDailyTotalHoursRecruiterViewModel extends GetxController {
     final _onlyMinutes = hours == 0;
     final hourText = _onlyMinutes ? '' : '$hours';
     final minutesText = _onlyHours ? '' : '$minutes';
-    totalHoursController.text = hourText + minutesText;
+    // totalHoursController.text = hourText + minutesText;
     return hourText + minutesText;
   }
 
@@ -84,7 +84,7 @@ class EditDailyTotalHoursRecruiterViewModel extends GetxController {
     required int id,
     required String startTime,
     required String endTime,
-    required int totalHours,
+    required double totalHours,
     required String date,
     required double generalExpValue,
     required double parkingTravelValue,

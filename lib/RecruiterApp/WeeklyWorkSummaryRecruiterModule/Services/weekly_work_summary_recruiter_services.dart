@@ -4,34 +4,30 @@ import '../../../Network/Server/response.dart';
 import '../../../Network/api_service.dart';
 import '../../../Network/api_url.dart';
 import '../Model/weekly_work_summary_recruiter_model.dart';
-
+import 'package:http/http.dart' as http;
 class WeeklyWorkSummaryRecruiterServices {
   Future<List<WeeklyWorkSummaryRecruiterModel>>
       getWeeklyWorkSummaryRecruiterServices({required int workerId}) async {
     bool? isSuccess = false;
     List<WeeklyWorkSummaryRecruiterModel> weeklyWorkSummaryList = [];
     try {
-      var response = await API()
-          .getRequestHeader("${ApiUrl.recruiterweeklyworksummaryURL}$workerId");
-      print(response);
+      var response = await http.get(Uri.parse("${ApiUrl.recruiterweeklyworksummaryURL}$workerId"));
+     
       if (response == null) {}
       if (response.statusCode == 200) {
-        final data = ApiResponse.withSuccess(response);
         isSuccess = true;
-        // print(jobSites.length);
-
-        String encodedData = jsonEncode(data.response!.data);
-        print('encoded');
-        List<dynamic> decodedData = jsonDecode(encodedData);
-        List<WeeklyWorkSummaryRecruiterModel> dataList = decodedData
-            .map((map) => WeeklyWorkSummaryRecruiterModel.fromJson(map))
-            .toList();
-        // weeklyWorkSummaryList.add(WeeklyWorkSummaryRecruiterModelFromJson(encodedData));
-
-        dataList.forEach((d) {
-          weeklyWorkSummaryList.add(d);
-        });
-        print('ok');
+        
+        var decodedData = jsonDecode(response.body);
+        for (var data in decodedData) {
+          weeklyWorkSummaryList.add(WeeklyWorkSummaryRecruiterModel(
+              id: data['id'],
+              jobSiteName: data['jobSiteName'],
+              hours: data['hours'],
+              date: data['date'],
+              parking: data['parking'],
+              generalexpence: data['generalexpence']));
+        }
+        print("weekly Length ${weeklyWorkSummaryList.length}");
       }
       // response.data.forEach((d) =>
       //     JobSiteRecruiterModel.add(JobSiteRecruiterModel.fromJson(d)));

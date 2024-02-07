@@ -24,7 +24,8 @@ class WeeklyWorkSummaryView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          customAppBar(onTap: (){
+          customAppBar(
+            onTap: () {
               Get.back();
             },
             isBackButton: true,
@@ -101,10 +102,13 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   appText(
-                                      title: weeklySummaryVM.weeklyWorkList !=
+                                      title: weeklySummaryVM
+                                                  .weeklyWorkList[index].date !=
                                               null
-                                          ? "${DateFormat('yyyy-MMM-dd').format(weeklySummaryVM.weeklyWorkList[index].date)}"
-                                          : '17-Aug-2023',
+                                          ? DateFormat('yyyy-MMM-dd').format(
+                                              DateTime.parse(weeklySummaryVM
+                                                  .weeklyWorkList[index].date))
+                                          : '',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
                                   SizedBox(
@@ -168,8 +172,8 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                     appText(
-                                        title: '\$${weeklySummaryVM
-                                          .weeklyWorkList[index].parking}',
+                                        title:
+                                            '\$${weeklySummaryVM.weeklyWorkList[index].parking}',
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ],
@@ -186,8 +190,8 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                     appText(
-                                        title: '\$${weeklySummaryVM
-                                          .weeklyWorkList[index].generalexpence}',
+                                        title:
+                                            '\$${weeklySummaryVM.weeklyWorkList[index].generalexpence}',
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),
                                   ],

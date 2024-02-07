@@ -35,7 +35,7 @@ class EditWeeklyTotalHoursRecruiterViewModel extends GetxController {
   Future<bool> editRecruiterWeeklyHours(
       {required String startDate,
       required String endDate,
-      required int totalHours,
+      required double totalHours,
       required String jobSite,
       required String feedBack,
       double generalExpValue = 0.0,

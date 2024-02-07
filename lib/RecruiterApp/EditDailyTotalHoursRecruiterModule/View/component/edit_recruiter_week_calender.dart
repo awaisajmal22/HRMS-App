@@ -38,7 +38,7 @@ class _EditDatePickerState extends State<EditDatePicker> {
 
   @override
   void initState() {
-    selectedMonth = DateTime.now().monthStart;
+    selectedMonth = widget.endWeekDate;
     super.initState();
   }
 
@@ -56,7 +56,7 @@ class _EditDatePickerState extends State<EditDatePicker> {
         //     Expanded(
         //       child:
         _Body(
-          startingDate: widget.endWeekDate,
+      startingDate: widget.endWeekDate,
       selectedDate: selectedDate,
       selectedMonth: selectedMonth,
       selectDate: (DateTime value) => setState(() {
@@ -98,27 +98,27 @@ class _Body extends StatelessWidget {
     final DateTime endOfWeek = now.add(Duration(days: 7 - now.weekday));
 
     return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: const [
-          Text('M'),
-          Text('T'),
-          Text('W'),
-          Text('T'),
-          Text('F'),
-          Text('S'),
-          Text('S'),
-        ],
-      ),
-      const SizedBox(height: 10),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 1,
-          ),
-          for (var week in data.weeks)
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            Text('M'),
+            Text('T'),
+            Text('W'),
+            Text('T'),
+            Text('F'),
+            Text('S'),
+            Text('S'),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 1,
+            ),
+            for (var week in data.weeks)
               Row(
                 children: week.map((d) {
                   // Filter out days that are not in the current week
@@ -148,11 +148,10 @@ class _Body extends StatelessWidget {
                   );
                 }).toList(),
               ),
-        ],
-      ),
-    ],
-  );
-   
+          ],
+        ),
+      ],
+    );
   }
 }
 
@@ -191,12 +190,9 @@ class _RowItem extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         height: 35,
-      
         child: Text(
           number.toString(),
-          style: TextStyle(fontSize: 14, color: textColor
-             
-              ),
+          style: TextStyle(fontSize: 14, color: textColor),
         ),
       ),
     );
@@ -294,7 +290,7 @@ class CalendarMonthData {
   int get firstDayOffset {
     // final int weekdayFromMonday =
     //     DateTime(year, month).weekday - DateTime.sunday;
-final int weekdayFromMonday = DateTime(year, month).weekday - 1;
+    final int weekdayFromMonday = DateTime(year, month).weekday - 1;
     return (weekdayFromMonday - ((firstDayOfWeekIndex - 1) % 7)) % 7 - 1;
   }
 

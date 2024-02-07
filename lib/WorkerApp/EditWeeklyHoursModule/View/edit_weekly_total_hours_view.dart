@@ -138,10 +138,10 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                                   height: 2.h,
                                 ),
                                 customTextField(
-                                  hintText: '',
+                                  hintText: summary.hours.toString(),
                                   controller:
                                       editWeeklyHoursVM.totalHoursController
-                                        ..text = summary.hours.toString(),
+                                      ,
                                   textInputType: TextInputType.number,
                                 ),
                                 SizedBox(height: 18.h),
@@ -200,11 +200,11 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                                                 horizontalPadding: 0,
                                                 textInputType:
                                                     TextInputType.number,
-                                                hintText: '',
+                                                hintText: summary.parking
+                                                      .toString(),
                                                 controller: editWeeklyHoursVM
                                                     .parkingTravelController
-                                                  ..text = summary.parking
-                                                      .toString(),
+                                                  ,
                                                 borderColor: Colors.transparent,
                                                 opacity: 0),
                                           ),
@@ -292,12 +292,11 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                                                 horizontalPadding: 0,
                                                 textInputType:
                                                     TextInputType.number,
-                                                hintText: '',
-                                                controller: editWeeklyHoursVM
-                                                    .generalExpController
-                                                  ..text = summary
+                                                hintText: summary
                                                       .generalexpence
                                                       .toString(),
+                                                controller: editWeeklyHoursVM
+                                                    .generalExpController ,
                                                 borderColor: Colors.transparent,
                                                 opacity: 0),
                                           ),
@@ -355,7 +354,16 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                     buttonColor: AppColor.blue,
                     title: 'Add',
                     onTap: () async {
-                      if (editWeeklyHoursVM.totalHoursController.text != null &&
+                      if(editWeeklyHoursVM.totalHoursController.text.isEmpty){
+                       
+  
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fill the required fields')));
+                                    }else if(editWeeklyHoursVM.totalHoursController.text =='0'){
+  
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Total hours must be greater than 0')));
+                                    }
+                      
+                    else  if (editWeeklyHoursVM.totalHoursController.text != null &&
                           editWeeklyHoursVM.totalHoursController.text != '' &&
                           homeVM.selectedDropDownValue.value != null) {
                         showLoadingIndicator(context: context);
@@ -379,7 +387,7 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                               : homeVM.selectedJobsiteId.value,
                           startDate: editWeeklyHoursVM.startDate.value,
                           endDate: editWeeklyHoursVM.endDate.value,
-                          totalHours: int.parse(
+                          totalHours: double.parse(
                               editWeeklyHoursVM.totalHoursController.text),
                           jobSite: homeVM.selectedDropDownValue.value == ''
                               ? summary.jobSiteName

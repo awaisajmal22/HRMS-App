@@ -5,10 +5,10 @@ String EditWeeklyHoursModelToJson(List<EditWeeklyHoursModel> data) =>
 
 class EditWeeklyHoursModel {
   int jobsiteId;
-  int hours;
-  double parking;
-  double generalexpence;
-  String feedback;
+  dynamic hours;
+  dynamic parking;
+  dynamic generalexpence;
+  dynamic feedback;
 
   EditWeeklyHoursModel({
     required this.jobsiteId,

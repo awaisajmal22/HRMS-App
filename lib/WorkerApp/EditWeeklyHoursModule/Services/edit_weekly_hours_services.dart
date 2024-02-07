@@ -11,7 +11,7 @@ class EditWeeklyServices {
   Future<bool> editweeklyHoursServices({
     required String startDate,
     required String endDate,
-    required int totalHours,
+    required double totalHours,
     required String jobSite,
     required double generalExpValue,
     required double parkingTravelValue,

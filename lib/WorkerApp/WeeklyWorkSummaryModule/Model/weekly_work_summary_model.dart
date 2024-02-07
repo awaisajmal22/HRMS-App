@@ -8,10 +8,10 @@ class WeeklyWorkSummaryModel {
     int id;
     String jobSiteName;
     int jobId;
-    int hours;
-    DateTime date;
-    double parking;
-    double generalexpence;
+    dynamic hours;
+    dynamic date;
+    dynamic parking;
+    dynamic generalexpence;
 
     WeeklyWorkSummaryModel({
         required this.id,

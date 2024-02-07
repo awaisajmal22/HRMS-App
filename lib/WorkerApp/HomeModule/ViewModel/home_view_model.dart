@@ -49,7 +49,7 @@ class HomeViewModel extends GetxController {
           final weeklyWorkVM = Get.put(WeeklyWorkSummaryViewModel());
           showLoadingIndicator(context: context);
           final result = await weeklyWorkVM.getweeklyWorkSummary();
-          print(result);
+          print("data is here $result");
           hideOpenDialog(context: context);
           if (result != null) {
             Get.toNamed(AppRoutes.weeklySummaryView);
@@ -85,6 +85,7 @@ class HomeViewModel extends GetxController {
     }
     final response = await ApiServices().getjobSiteServices();
     selectedDropDownValue.value = response[0].value;
+    selectedJobsiteId.value = response[0].id;
     print(selectedDropDownValue.value);
     for (var a in response) {
       _jobSiteValue.add(a.value);

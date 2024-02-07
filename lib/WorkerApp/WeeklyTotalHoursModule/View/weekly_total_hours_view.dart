@@ -341,8 +341,16 @@ class WeeklyTotalHoursView extends StatelessWidget {
                     buttonColor: AppColor.blue,
                     title: 'Add',
                     onTap: () async {
-                      if (weeklytotalVM.totalHoursController.text != null ||
-                          weeklytotalVM.totalHoursController.text != "") {
+                      if (
+                                  weeklytotalVM.totalHoursController.text.isEmpty){
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fill the required fields')));
+                                    } else if(weeklytotalVM.totalHoursController.text =='0'){
+  
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Total hours must be greater than 0')));
+                                    }
+                                    else
+                      if (weeklytotalVM.totalHoursController.text.isNotEmpty ||
+                          weeklytotalVM.totalHoursController.text != "0") {
                         showLoadingIndicator(context: context);
                         bool isSuccess = await weeklytotalVM.submitWeeklyHour(
                           parkingTravelValue: weeklytotalVM
@@ -361,7 +369,7 @@ class WeeklyTotalHoursView extends StatelessWidget {
                           endDate: weeklytotalVM.endDate.value,
                           totalHours:
                               weeklytotalVM.totalHoursController.text != ""
-                                  ? int.parse(
+                                  ? double.parse(
                                       weeklytotalVM.totalHoursController.text)
                                   : 0,
                           jobSite: homeVM.selectedDropDownValue.value,

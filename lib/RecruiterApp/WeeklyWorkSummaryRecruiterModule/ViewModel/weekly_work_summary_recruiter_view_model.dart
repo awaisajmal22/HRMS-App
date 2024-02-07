@@ -13,7 +13,7 @@ class WeeklyWorkSummaryRecruiterViewModel extends GetxController {
     if (data != null) {
       weeklyWorkList.value = data;
 
-      print(weeklyWorkList.length);
+      print(data);
     }
     return data;
   }

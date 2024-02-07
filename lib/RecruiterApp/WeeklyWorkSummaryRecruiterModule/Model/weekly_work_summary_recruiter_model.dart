@@ -11,10 +11,10 @@ String WeeklyWorkSummaryRecruiterModelToJson(
 class WeeklyWorkSummaryRecruiterModel {
   int id;
   String jobSiteName;
-  int hours;
-  DateTime date;
-  double parking;
-  double generalexpence;
+  dynamic hours;
+  dynamic date;
+  dynamic parking;
+  dynamic generalexpence;
 
   WeeklyWorkSummaryRecruiterModel({
     required this.id,

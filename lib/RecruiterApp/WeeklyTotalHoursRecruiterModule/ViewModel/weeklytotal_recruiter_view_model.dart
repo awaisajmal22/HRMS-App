@@ -40,7 +40,7 @@ class WeeklyTotalHoursRecruiterViewModel extends GetxController {
       {required String startDate,
       required int workerId,
       required String endDate,
-      required int totalHours,
+      required double totalHours,
       required String jobSite,
       required String feedBack,
       double generalExpValue = 0.0,

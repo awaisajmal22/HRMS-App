@@ -60,7 +60,7 @@ class DailyTotalHoursViewModel extends GetxController {
     final _onlyMinutes = hours == 0;
     final hourText = _onlyMinutes ? '' : '$hours';
     final minutesText = _onlyHours ? '' : '$minutes';
-    totalHoursController.text = hourText + minutesText;
+    // totalHoursController.text = hourText + minutesText;
    
     return hourText + minutesText;
   }
@@ -93,7 +93,7 @@ class DailyTotalHoursViewModel extends GetxController {
   Future<bool> submitDailyHours({
     required String startTime,
     required String endTime,
-    required int totalHours,
+    required double totalHours,
     required String date,
     required double generalExpValue,
     required double parkingTravelValue,

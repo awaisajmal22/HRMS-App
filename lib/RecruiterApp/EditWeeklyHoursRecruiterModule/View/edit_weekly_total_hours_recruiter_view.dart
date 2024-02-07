@@ -50,7 +50,7 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
             () => SizedBox(
               height: editWeeklyHoursVM.isKeyboard.value
                   ? MediaQuery.of(context).size.height * 0.60
-                  : MediaQuery.of(context).size.height * 0.75,
+                  : MediaQuery.of(context).size.height * 0.885,
               child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: Column(
@@ -138,10 +138,9 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                   height: 2.h,
                                 ),
                                 customTextField(
-                                  hintText: '',
+                                  hintText: summary.hours.toString(),
                                   controller:
-                                      editWeeklyHoursVM.totalHoursController
-                                        ..text = summary.hours.toString(),
+                                      editWeeklyHoursVM.totalHoursController ,
                                   textInputType: TextInputType.number,
                                 ),
                                 SizedBox(height: 18.h),
@@ -200,11 +199,10 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                                 horizontalPadding: 0,
                                                 textInputType:
                                                     TextInputType.number,
-                                                hintText: '',
-                                                controller: editWeeklyHoursVM
-                                                    .parkingTravelController
-                                                  ..text = summary.parking
+                                                hintText: summary.parking
                                                       .toString(),
+                                                controller: editWeeklyHoursVM
+                                                    .parkingTravelController,
                                                 borderColor: Colors.transparent,
                                                 opacity: 0),
                                           ),
@@ -292,12 +290,11 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                                 horizontalPadding: 0,
                                                 textInputType:
                                                     TextInputType.number,
-                                                hintText: '',
-                                                controller: editWeeklyHoursVM
-                                                    .generalExpController
-                                                  ..text = summary
+                                                hintText: summary
                                                       .generalexpence
                                                       .toString(),
+                                                controller: editWeeklyHoursVM
+                                                    .generalExpController ,
                                                 borderColor: Colors.transparent,
                                                 opacity: 0),
                                           ),
@@ -341,85 +338,111 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                             textInputType: TextInputType.text,
                           ),
                         ],
-                      )
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      SizedBox(
+                        // padding: EdgeInsets.only(
+                        //     left: 18.w, right: 18.w, bottom: 32.h),
+                        child: Column(
+                          children: [
+                            customTextButton(
+                              buttonColor: AppColor.blue,
+                              title: 'Add',
+                              onTap: () async {
+                                if (editWeeklyHoursVM
+                                    .totalHoursController.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Please fill the required fields')));
+                                } else if(editWeeklyHoursVM.totalHoursController.text =='0'){
+  
+                                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Total hours must be greater than 0')));
+                                    }
+                                else if (editWeeklyHoursVM
+                                    .totalHoursController.text.isNotEmpty) {
+                                  showLoadingIndicator(context: context);
+                                  bool isSuccess = await editWeeklyHoursVM
+                                      .editRecruiterWeeklyHours(
+                                    parkingTravelValue: editWeeklyHoursVM
+                                                .parkingTravelController.text.isNotEmpty
+                                        ? double.parse(editWeeklyHoursVM
+                                            .parkingTravelController.text)
+                                        : 0.0,
+                                    generalExpValue: editWeeklyHoursVM
+                                                .generalExpController.text.isNotEmpty
+                                        ? double.parse(editWeeklyHoursVM
+                                            .generalExpController.text)
+                                        : 0.0,
+                                    id: summary.id,
+                                    jobSiteID:
+                                        homeVM.selectedJobsiteId.value == ''
+                                            ? summary.id
+                                            : homeVM.selectedJobsiteId.value,
+                                    startDate:
+                                        editWeeklyHoursVM.startDate.value,
+                                    endDate: editWeeklyHoursVM.endDate.value,
+                                    totalHours: double.parse(editWeeklyHoursVM
+                                        .totalHoursController.text),
+                                    jobSite:
+                                        homeVM.selectedDropDownValue.value == ''
+                                            ? summary.jobSiteName
+                                            : homeVM
+                                                .selectedDropDownValue.value,
+                                    feedBack: editWeeklyHoursVM
+                                        .commentController.text,
+                                    generalExpImage:
+                                        uploadImageVM.parkingimage.value,
+                                    parkingTravelImage:
+                                        uploadImageVM.generalExpImage.value,
+                                  );
+                                  print(isSuccess);
+                                  hideOpenDialog(context: context);
+                                  if (isSuccess == true) {
+                                    sucessfullyHoursAddedRecruiterDialog(
+                                      checkTitle: 'Check Summary',
+                                      context: context,
+                                      title:
+                                          'Your Hours Have Been Successfully Added',
+                                      onTap: () {
+                                        weeklySummaryVM
+                                            .getRecruiterweeklyWorkSummary(
+                                                workerId: workerId);
+                                        Get.toNamed(
+                                            AppRoutes
+                                                .weeklySummaryRecruiterView,
+                                            arguments: workerId);
+                                      },
+                                    );
+                                  }
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            customTextButton(
+                                buttonColor: AppColor.lightblue,
+                                title: 'Check Summary',
+                                onTap: () {
+                                  showLoadingIndicator(context: context);
+                                  final result = weeklySummaryVM
+                                      .getRecruiterweeklyWorkSummary(
+                                          workerId: workerId);
+                                  hideOpenDialog(context: context);
+                                  if (result != null) {
+                                    Get.toNamed(
+                                        AppRoutes.weeklySummaryRecruiterView,
+                                        arguments: workerId);
+                                  }
+                                })
+                          ],
+                        ),
+                      ),
                     ],
                   )),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 18.w, right: 18.w, bottom: 32.h),
-            child: Column(
-              children: [
-                customTextButton(
-                  buttonColor: AppColor.blue,
-                  title: 'Add',
-                  onTap: () async {
-                    if (editWeeklyHoursVM.totalHoursController.text != null ||
-                        editWeeklyHoursVM.totalHoursController.text != '') {
-                      showLoadingIndicator(context: context);
-                      bool isSuccess =
-                          await editWeeklyHoursVM.editRecruiterWeeklyHours(
-                        parkingTravelValue: editWeeklyHoursVM
-                                    .parkingTravelController.text !=
-                                ''
-                            ? double.parse(
-                                editWeeklyHoursVM.parkingTravelController.text)
-                            : 0.0,
-                        generalExpValue:
-                            editWeeklyHoursVM.generalExpController.text != ''
-                                ? double.parse(
-                                    editWeeklyHoursVM.generalExpController.text)
-                                : 0.0,
-                        id: summary.id,
-                        jobSiteID: homeVM.selectedJobsiteId.value == ''
-                            ? summary.id
-                            : homeVM.selectedJobsiteId.value,
-                        startDate: editWeeklyHoursVM.startDate.value,
-                        endDate: editWeeklyHoursVM.endDate.value,
-                        totalHours: int.parse(
-                            editWeeklyHoursVM.totalHoursController.text),
-                        jobSite: homeVM.selectedDropDownValue.value == ''
-                            ? summary.jobSiteName
-                            : homeVM.selectedDropDownValue.value,
-                        feedBack: editWeeklyHoursVM.commentController.text,
-                        generalExpImage: uploadImageVM.parkingimage.value,
-                        parkingTravelImage: uploadImageVM.generalExpImage.value,
-                      );
-                      print(isSuccess);
-                      hideOpenDialog(context: context);
-                      if (isSuccess == true) {
-                        sucessfullyHoursAddedRecruiterDialog(
-                          checkTitle: 'Check Summary',
-                          context: context,
-                          title: 'Your Hours Have Been Successfully Added',
-                          onTap: () {
-                            weeklySummaryVM.getRecruiterweeklyWorkSummary(
-                                workerId: workerId);
-                            Get.toNamed(AppRoutes.weeklySummaryRecruiterView,
-                                arguments: workerId);
-                          },
-                        );
-                      }
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                customTextButton(
-                    buttonColor: AppColor.lightblue,
-                    title: 'Check Summary',
-                    onTap: () {
-                      showLoadingIndicator(context: context);
-                      final result = weeklySummaryVM
-                          .getRecruiterweeklyWorkSummary(workerId: workerId);
-                      hideOpenDialog(context: context);
-                      if (result != null) {
-                        Get.toNamed(AppRoutes.weeklySummaryRecruiterView,
-                            arguments: workerId);
-                      }
-                    })
-              ],
             ),
           ),
         ],

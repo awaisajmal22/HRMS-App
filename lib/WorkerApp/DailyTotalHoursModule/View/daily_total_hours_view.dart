@@ -291,21 +291,25 @@ class DailyTotalHoursView extends StatelessWidget {
                             SizedBox(
                               height: 2.h,
                             ),
-                            Obx(
-                              () => customTextField(
-                                focusNode: focusNode,
-                                onTap: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(focusNode);
-                                },
-                                readOnly: true,
-                                hintText: dailytotalVM.endTime.value !=
-                                        dailytotalVM.startTime.value
-                                    ? "${dailytotalVM.getTime(dailytotalVM.startTime.value, dailytotalVM.endTime.value)}"
-                                    : '',
-                                controller: dailytotalVM.totalHoursController,
-                                textInputType: TextInputType.number,
-                              ),
+                            customTextField(
+                              focusNode: focusNode,
+                              onTap: () {
+                                FocusScope.of(context).requestFocus(focusNode);
+                              },
+                              readOnly: false,
+                              hintText: '',
+                              //  dailytotalVM.endTime.value ==
+                              //         TimeOfDay.now()
+                              //     ? ''
+                              //     : dailytotalVM.endTime.value ==
+                              //             dailytotalVM.startTime.value
+                              //         ? ''
+                              //         : dailytotalVM.endTime.value !=
+                              //                 dailytotalVM.startTime.value
+                              //             ? "${dailytotalVM.getTime(dailytotalVM.startTime.value, dailytotalVM.endTime.value)}"
+                              //             : '',
+                              controller: dailytotalVM.totalHoursController,
+                              textInputType: TextInputType.number,
                             ),
                             SizedBox(height: 18.h),
                             Row(
@@ -518,11 +522,37 @@ class DailyTotalHoursView extends StatelessWidget {
                                       buttonColor: AppColor.blue,
                                       title: 'Add',
                                       onTap: () async {
-                                        print(
-                                            "${dailytotalVM.totalHoursController.text}");
-                                        if (dailytotalVM.totalHoursController
-                                                    .text !=
-                                                null &&
+                                        if (dailytotalVM.pickedDate.value ==
+                                            '') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'Please select the date')));
+                                        } else if (dailytotalVM
+                                            .totalHoursController
+                                            .text
+                                            .isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'Please fill the required fields')));
+                                        } else if (dailytotalVM.endTime.value ==
+                                            dailytotalVM.startTime.value) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      'Picked Hours date time must be different')));
+                                        } else if (dailytotalVM
+                                                .totalHoursController.text ==
+                                            '0') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      'Total hours must be greater than 0')));
+                                        } else if (dailytotalVM
+                                                .totalHoursController
+                                                .text
+                                                .isNotEmpty &&
                                             dailytotalVM.totalHoursController
                                                     .text !=
                                                 '0' &&
@@ -552,20 +582,21 @@ class DailyTotalHoursView extends StatelessWidget {
                                                             .value
                                                             .hour))
                                                 : '',
-                                            totalHours: int.parse(dailytotalVM
-                                                .totalHoursController.text),
+                                            totalHours: double.parse(
+                                                dailytotalVM
+                                                    .totalHoursController.text),
                                             date: dailytotalVM.pickedDate.value,
                                             generalExpValue: dailytotalVM
-                                                        .generalExpController
-                                                        .text !=
-                                                    ''
+                                                    .generalExpController
+                                                    .text
+                                                    .isNotEmpty
                                                 ? double.parse(dailytotalVM
                                                     .generalExpController.text)
                                                 : 0.0,
                                             parkingTravelValue: dailytotalVM
-                                                        .parkingTravelController
-                                                        .text !=
-                                                    ''
+                                                    .parkingTravelController
+                                                    .text
+                                                    .isNotEmpty
                                                 ? double.parse(dailytotalVM
                                                     .parkingTravelController
                                                     .text)

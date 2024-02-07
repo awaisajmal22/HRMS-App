@@ -44,4 +44,5 @@ class ApiUrl {
       static const forgetPasswordUrl = "${ApiUrl.baseUrl}/Authentication/ForgetPassword?Email=";
       static const codeVerificationUrl = "${ApiUrl.baseUrl}/Authentication/VerificationCode";
       static const changeUserPasswordUrl = "${ApiUrl.baseUrl}/Authentication/ChangeUserPassword";
+      static const last12WeeksUrl = "${ApiUrl.baseUrl}/GetLast12week";
 }
