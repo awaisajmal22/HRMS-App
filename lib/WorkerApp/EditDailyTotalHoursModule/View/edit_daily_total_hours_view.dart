@@ -237,10 +237,10 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                 onTap: () {
                                   editDailyTotalVM.selectStartTime(context);
                                 },
-                                hintText:  '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.startTime!))}',
-                                controller: editDailyTotalVM.startTimeController,
-                                
-                                     
+                                hintText:
+                                    '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.startTime!))}',
+                                controller:
+                                    editDailyTotalVM.startTimeController,
                                 textInputType: TextInputType.text,
                               ),
                             ),
@@ -256,9 +256,9 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                 onTap: () {
                                   editDailyTotalVM.selectEndTime(context);
                                 },
-                                hintText:  '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.endTime!))}',
+                                hintText:
+                                    '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.endTime!))}',
                                 controller: editDailyTotalVM.endTimeController,
-                                     
                                 textInputType: TextInputType.text,
                               ),
                             ),
@@ -442,8 +442,7 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                                   TextInputType.number,
                                               hintText: '${model.genexpence}',
                                               controller: editDailyTotalVM
-                                                  .generalExpController
-                                                ,
+                                                  .generalExpController,
                                               borderColor: Colors.transparent,
                                               opacity: 0),
                                         ),
@@ -580,13 +579,14 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                           context: context,
                                           title:
                                               'Your Daily Hours Successfully Added To List',
-                                          onTap: () {
+                                          onTap: () async {
                                             showLoadingIndicator(
                                                 context: context);
-                                            final result = dailySummaryVM
-                                                .getDailyWorkSummary();
+                                            List<DailyWorkSummaryModel> result =
+                                                await dailySummaryVM
+                                                    .getDailyWorkSummary();
                                             hideOpenDialog(context: context);
-                                            if (result != null) {
+                                            if (result.isNotEmpty) {
                                               Get.toNamed(
                                                   AppRoutes.dailySummaryView);
                                             }
@@ -605,12 +605,13 @@ class EditDailyTotalHoursView extends StatelessWidget {
                               child: customTextButton(
                                   buttonColor: AppColor.blue,
                                   title: 'Check Summary',
-                                  onTap: () {
+                                  onTap: () async {
                                     showLoadingIndicator(context: context);
-                                    final result =
-                                        dailySummaryVM.getDailyWorkSummary();
+                                    List<DailyWorkSummaryModel> result =
+                                        await dailySummaryVM
+                                            .getDailyWorkSummary();
                                     hideOpenDialog(context: context);
-                                    if (result != null) {
+                                    if (result.isNotEmpty) {
                                       Get.toNamed(AppRoutes.dailySummaryView);
                                     }
                                   }),

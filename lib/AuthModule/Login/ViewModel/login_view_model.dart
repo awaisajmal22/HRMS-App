@@ -28,6 +28,7 @@ class LoginViewModel extends GetxController {
       required String token,
       required String password,
       required String userRole,
+      required String lastName,
       required int check}) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('id', id);
@@ -37,6 +38,7 @@ class LoginViewModel extends GetxController {
     pref.setString('pass', password);
     pref.setInt('check', check);
     pref.setString('email', email);
+    pref.setString('lastname', lastName);
   }
   RxBool isKeyboard =false.obs;
   @override

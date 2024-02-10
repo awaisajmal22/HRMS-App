@@ -404,9 +404,10 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                             checkTitle: 'Check Summary',
                             context: context,
                             title: 'Your Hours Have Been Successfully Added',
-                            onTap: () {
-                              weeklySummaryVM.getweeklyWorkSummary();
-                              Get.toNamed(AppRoutes.weeklySummaryView);
+                            onTap: () async{
+                            List<WeeklyWorkSummaryModel> result = await  weeklySummaryVM.getweeklyWorkSummary();
+                              if(result.isNotEmpty){
+                              Get.toNamed(AppRoutes.weeklySummaryView);}
                             },
                           );
                         }
@@ -423,11 +424,11 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                   child: customTextButton(
                       buttonColor: AppColor.blue,
                       title: 'Check Summary',
-                      onTap: () {
+                      onTap: () async{
                         showLoadingIndicator(context: context);
-                        final result = weeklySummaryVM.getweeklyWorkSummary();
+                        List<WeeklyWorkSummaryModel> result =await weeklySummaryVM.getweeklyWorkSummary();
                         hideOpenDialog(context: context);
-                        if (result != null) {
+                        if (result.isNotEmpty) {
                           Get.toNamed(AppRoutes.weeklySummaryView);
                         }
                       }),

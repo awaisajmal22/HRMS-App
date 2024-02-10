@@ -35,7 +35,7 @@ class HomeView extends StatelessWidget {
                   children: [
                     Obx(
                       () => appText(
-                          title: 'Welcome ${homeVM.name.value}',
+                          title: 'Welcome ${homeVM.name.value} ${homeVM.lastName.value}',
                           fontSize: 24,
                           textAlign: TextAlign.start),
                     ),

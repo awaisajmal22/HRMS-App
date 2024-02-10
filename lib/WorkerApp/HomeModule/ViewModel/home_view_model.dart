@@ -71,10 +71,12 @@ class HomeViewModel extends GetxController {
   RxString name = ''.obs;
   RxString id = ''.obs;
   RxInt check = 0.obs;
+  RxString lastName = ''.obs;
   getUserData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     id.value = pref.getString('id') ?? '';
     name.value = pref.getString('name') ?? '';
+    lastName.value = pref.getString('lastname')??'';
     check.value = pref.getInt('check') ?? 0;
   }
 

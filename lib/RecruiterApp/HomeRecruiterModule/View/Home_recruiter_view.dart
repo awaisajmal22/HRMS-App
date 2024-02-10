@@ -63,7 +63,8 @@ class HomeRecruiterView extends StatelessWidget {
                         ),
                         child: Obx(
                           () => appText(
-                              title: homeVM.workerList[index].firstName,
+                              title:
+                                  "${homeVM.workerList[index].firstName} ${homeVM.workerList[index].lastName} ",
                               fontSize: 16,
                               textColor: AppColor.white),
                         ),

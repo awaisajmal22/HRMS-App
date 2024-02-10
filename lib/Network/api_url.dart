@@ -14,6 +14,8 @@ class ApiUrl {
   static const getJobSiteUrl = "${ApiUrl.baseUrl}/GetJobSite";
   static const dailyWorkSummarySubmit =
       "${ApiUrl.baseUrl}/Dailyworksummarysubmit";
+      static const weeklyRecruiterWorkSummarySubmit = "${ApiUrl.baseUrl}/RecruiterWeeklySubmitHours";
+  static const dailyRecruiterWorkSummarySubmit ='${ApiUrl.baseUrl}/RecruiterDailyworksummarysubmit';
   static const reportUnpaidHours = "${ApiUrl.baseUrl}/ReportUnpaidHours";
   static const getDailySummaryById =
       "${ApiUrl.baseUrl}/DailyworksummaryGetbyId?Id=";
@@ -28,8 +30,8 @@ class ApiUrl {
       "${ApiUrl.baseUrl}/RecruiterDailyworksummaryGetbyId?Id=";
   static const getRecruiterDailyHoursSummaryURL =
       "${ApiUrl.baseUrl}/GetRecruiterDailyHoursSummary";
-  static const recruiterGetweeklySubmitHoursUrl =
-      "${ApiUrl.baseUrl}/RecruiterWeeklySubmitHours";
+static const unpaidRecruiterSummaryUri = "${ApiUrl.baseUrl}/RecruiterReportUnpaidHourssummary";
+static const unpaidWorkSummaryUri ="${ApiUrl.baseUrl}/ReportUnpaidHourssummary";
   static const recruiterweeklyworksummaryURL =
       "${ApiUrl.baseUrl}/Recruiterweeklyworksummary?workerid=";
   static const getRecruiterJobSiteByworkerIdUrl =

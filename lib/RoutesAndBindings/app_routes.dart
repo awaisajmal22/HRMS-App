@@ -31,4 +31,6 @@ abstract class AppRoutes {
       static const forgetPasswordView = '/forgetPasswordView';
       static const otpView = '/otpView';
       static const changePasswordView = '/changePasswordView';
+      static const unpaidRecruiterWorkSummaryView ='/unpaidRecruiterWorkSummaryView';
+      static const unpaidWorkSummaryView ='/unpaidWorkSummaryView';
 }

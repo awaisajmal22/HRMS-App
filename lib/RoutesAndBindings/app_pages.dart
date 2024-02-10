@@ -5,6 +5,10 @@ import 'package:hrmsapp/AuthModule/Forgetpassword/View/forget_password_view.dart
 import 'package:hrmsapp/AuthModule/Forgetpassword/ViewModel/forget_password_view_model.dart';
 import 'package:hrmsapp/AuthModule/OtpModule/View/otp_view.dart';
 import 'package:hrmsapp/AuthModule/OtpModule/ViewModel/otp_view_model.dart';
+import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/View/unpaid_recruiter_summary_view.dart';
+import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/View/unpaid_recruiter_summary_view.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
 
 import '../AuthModule/Login/View/login_view.dart';
 import '../AuthModule/Login/ViewModel/login_view_model.dart';
@@ -259,6 +263,24 @@ class AppPages {
         GetPage(name: AppRoutes.changePasswordView, page: ()=>ChangePasswordView(),
         binding: BindingsBuilder(() {
           Get.lazyPut(() => ChangePasswordViewModel());
+
+        })),
+        GetPage(
+          name: AppRoutes.unpaidRecruiterWorkSummaryView, 
+        transition: Transition.fadeIn,
+        page: ()=>UnpaidRecruiterSummaryView(),
+        binding: BindingsBuilder(() {
+          Get.lazyPut(() => HomeRecruiterViewModel());
+          Get.lazyPut(() => UnpaidRecruiterSummaryViewModel());
+
+        })),
+        GetPage(
+          name: AppRoutes.unpaidWorkSummaryView, 
+        transition: Transition.fadeIn,
+        page: ()=>UnpaidWorkSummaryView(),
+        binding: BindingsBuilder(() {
+          Get.lazyPut(() => HomeViewModel());
+          Get.lazyPut(() => UnpaidSummaryViewModel());
 
         })),
   ];

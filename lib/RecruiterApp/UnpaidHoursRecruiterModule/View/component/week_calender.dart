@@ -51,7 +51,7 @@ class UnpaidDatePicker extends StatelessWidget {
                       textColor: Colors.white,
                       fontSize: 12,
                       title:
-                          'Weeek ${controller.last12WeekList[controller.selectedWeekIndex.value].weekNumber}'),
+                          'Week ${controller.last12WeekList[controller.selectedWeekIndex.value].weekNumber}'),
                 ),
                 SizedBox(
                   width: size.width * 0.020,

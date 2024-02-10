@@ -4,6 +4,7 @@ import '../Model/weekly_work_summary_recruiter_model.dart';
 import '../Services/weekly_work_summary_recruiter_services.dart';
 
 class WeeklyWorkSummaryRecruiterViewModel extends GetxController {
+  RxInt selectCurrentSummaryIndex = (-1).obs;
   RxList<WeeklyWorkSummaryRecruiterModel> weeklyWorkList =
       <WeeklyWorkSummaryRecruiterModel>[].obs;
   Future<List<WeeklyWorkSummaryRecruiterModel>> getRecruiterweeklyWorkSummary(
@@ -17,7 +18,11 @@ class WeeklyWorkSummaryRecruiterViewModel extends GetxController {
     }
     return data;
   }
-
+Future<bool> submitWeeklyRecruiterHours({required int workerId}) async {
+    bool isSuccess = await WeeklyWorkSummaryRecruiterServices()
+        .submitWeeklyRecruiterHours(workerID: workerId);
+    return isSuccess;
+  }
   @override
   void onInit() {
     // TODO: implement onInit

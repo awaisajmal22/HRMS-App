@@ -1,40 +1,40 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:hrmsapp/Constant/AppBar/custom_app_bar.dart';
+import 'package:hrmsapp/Constant/AppButton/text_button.dart';
+import 'package:hrmsapp/Constant/AppDialogs/sucessfully_hours_submit_dialog.dart';
+import 'package:hrmsapp/RecruiterApp/HomeRecruiterModule/ViewModel/home_recruiter_view_model.dart';
+import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
+import 'package:hrmsapp/RoutesAndBindings/app_routes.dart';
+import 'package:hrmsapp/Utils/spint_kit_view_spinner.dart';
 
-import '../../../Constant/AppBar/custom_app_bar.dart';
-import '../../../Constant/AppButton/text_button.dart';
 import '../../../Constant/AppColors/colors.dart';
-import '../../../Constant/AppDialogs/sucessfully_hours_submit_dialog.dart';
 import '../../../Constant/AppText/app_text.dart';
-import '../../../RoutesAndBindings/app_routes.dart';
-import '../../../Utils/spint_kit_view_spinner.dart';
-import '../../HomeModule/ViewModel/home_view_model.dart';
-import '../ViewModel/weekly_work_summary_view_model.dart';
 
-class WeeklyWorkSummaryView extends StatelessWidget {
-  WeeklyWorkSummaryView({super.key});
-  final weeklySummaryVM = Get.find<WeeklyWorkSummaryViewModel>();
-  final homeVM = Get.find<HomeViewModel>();
+class UnpaidRecruiterSummaryView extends StatelessWidget {
+  UnpaidRecruiterSummaryView({super.key});
+  final unPaidSummaryVM = Get.find<UnpaidRecruiterSummaryViewModel>();
+  final homeVM = Get.find<HomeRecruiterViewModel>();
+  final workerId = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PopScope(
         canPop: false,
         onPopInvoked: (val) {
-          Get.offAllNamed(AppRoutes.navBarView);
+          Get.offAllNamed(AppRoutes.navBarRecruiterView);
         },
         child: Column(
           children: [
             customAppBar(
               onTap: () {
-                Get.offAllNamed(AppRoutes.navBarView);
+                Get.offAllNamed(AppRoutes.navBarRecruiterView);
               },
               isBackButton: true,
-              title: 'Weekly Summary',
+              title: 'Unpaid Summary',
             ),
             SizedBox(
               height: 20.h,
@@ -43,7 +43,7 @@ class WeeklyWorkSummaryView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: appText(title: 'Weekly Work Summary', fontSize: 20),
+                child: appText(title: 'Unpaid Work Summary', fontSize: 20),
               ),
             ),
             SizedBox(
@@ -90,21 +90,25 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                     ),
                     Column(
                       children: List.generate(
-                          weeklySummaryVM.weeklyWorkList.length, (index) {
+                          unPaidSummaryVM.unpaidWorkList.length, (index) {
                         return GestureDetector(
                           onTap: () {
-                            weeklySummaryVM.selectedCurrentSummaryIndex.value =
-                                index;
-                            Get.toNamed(
-                              AppRoutes.editWeeklyTotalHoursView,
-                              arguments: weeklySummaryVM.weeklyWorkList[index],
-                            );
+                            // Get.toNamed(
+                            //   AppRoutes.editWeeklyTotalHoursRecruiterView,
+                            //   arguments: [
+                            //     unPaidSummaryVM.unpaidWorkList[index],
+                            //     workerId
+                            //   ],
+                            // );
+
+                            // unPaidSummaryVM.selectCurrentSummaryIndex.value =
+                            //     index;
                           },
                           child: Obx(
                             () => Container(
                               decoration: BoxDecoration(
-                                  color: weeklySummaryVM
-                                              .selectedCurrentSummaryIndex
+                                  color: unPaidSummaryVM
+                                              .selectCurrentSummaryIndex
                                               .value ==
                                           index
                                       ? Colors.blue
@@ -118,10 +122,10 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                     children: [
                                       appText(
                                           title:
-                                              weeklySummaryVM.weeklyWorkList !=
+                                              unPaidSummaryVM.unpaidWorkList !=
                                                       null
-                                                  ? weeklySummaryVM
-                                                      .weeklyWorkList[index]
+                                                  ? unPaidSummaryVM
+                                                      .unpaidWorkList[index]
                                                       .jobSiteName
                                                   : 'Job Site',
                                           fontSize: 16,
@@ -129,35 +133,39 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                       // Row(
                                       //   mainAxisSize: MainAxisSize.min,
                                       //   children: [
-                                      //     appText(
-                                      //         title: weeklySummaryVM
-                                      //                     .weeklyWorkList[index]
-                                      //                     .date !=
-                                      //                 null
-                                      //             ? DateFormat('yyyy-MMM-dd').format(
-                                      //                 DateTime.parse(weeklySummaryVM
-                                      //                     .weeklyWorkList[index]
-                                      //                     .date))
-                                      //             : '',
-                                      //         fontSize: 16,
-                                      //         fontWeight: FontWeight.w400),
-                                      //     SizedBox(
-                                      //       width: 5.w,
-                                      //     ),
-                                      //     GestureDetector(
-                                      //       onTap: () {
-                                      //         Get.toNamed(
-                                      //           AppRoutes.editWeeklyTotalHoursView,
-                                      //           arguments: weeklySummaryVM
-                                      //               .weeklyWorkList[index],
-                                      //         );
-                                      //       },
-                                      //       child: Image.asset(
-                                      //         'assets/icons/create.png',
-                                      //         height: 22.h,
-                                      //         width: 22.w,
-                                      //       ),
-                                      //     ),
+                                      // appText(
+                                      //     title: weeklySummaryVM
+                                      //                 .weeklyWorkList[index]
+                                      //                 .date !=
+                                      //             null
+                                      //         ? DateFormat('yyyy-MMM-dd').format(
+                                      //             DateTime.parse(weeklySummaryVM
+                                      //                 .weeklyWorkList[index]
+                                      //                 .date))
+                                      //         : '',
+                                      //     fontSize: 16,
+                                      //     fontWeight: FontWeight.w400),
+                                      // SizedBox(
+                                      //   width: 5.w,
+                                      // ),
+                                      // GestureDetector(
+                                      //   onTap: () {
+                                      //     Get.toNamed(
+                                      //       AppRoutes
+                                      //           .editWeeklyTotalHoursRecruiterView,
+                                      //       arguments: [
+                                      //         weeklySummaryVM
+                                      //             .weeklyWorkList[index],
+                                      //         workerId
+                                      //       ],
+                                      //     );
+                                      //   },
+                                      //   child: Image.asset(
+                                      //     'assets/icons/create.png',
+                                      //     height: 22.h,
+                                      //     width: 22.w,
+                                      //   ),
+                                      // ),
                                       // ],
                                       // )
                                     ],
@@ -185,7 +193,7 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w400),
                                             appText(
                                                 title:
-                                                    '${weeklySummaryVM.weeklyWorkList[index].hours} hrs',
+                                                    '${unPaidSummaryVM.unpaidWorkList[index].hours} hrs',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
                                           ],
@@ -203,7 +211,7 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w400),
                                             appText(
                                                 title:
-                                                    '\$${weeklySummaryVM.weeklyWorkList[index].parking}',
+                                                    '\$${unPaidSummaryVM.unpaidWorkList[index].parking}',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
                                           ],
@@ -221,7 +229,7 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w400),
                                             appText(
                                                 title:
-                                                    '\$${weeklySummaryVM.weeklyWorkList[index].generalexpence}',
+                                                    '\$${unPaidSummaryVM.unpaidWorkList[index].generalexpence}',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
                                           ],
@@ -249,10 +257,10 @@ class WeeklyWorkSummaryView extends StatelessWidget {
             //       onTap: () {
             //         showLoadingIndicator(context: context);
             //         // bool isSuccess =
-            //         //     await dailyworkSummaryVM.submitDailyHours();
+            //         //     await dailyworkSummaryVM.submitDailyRecruiterHours();
             //         hideOpenDialog(context: context);
             //         // if (isSuccess == true) {
-            //         sucessfullyHoursAddedDialog(
+            //         sucessfullyHoursAddedRecruiterDialog(
             //           isCheckButton: false,
             //           checkTitle: 'Check List',
             //           context: context,
@@ -269,11 +277,38 @@ class WeeklyWorkSummaryView extends StatelessWidget {
             SizedBox(
               height: 15.h,
             ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+            //   child: customTextButton(
+            //     onTap: () async {
+            //       // showLoadingIndicator(context: context);
+            //       // bool isSuccess = await unPaidSummaryVM
+            //       //     .submitWeeklyRecruiterHours(workerId: workerId);
+            //       // hideOpenDialog(context: context);
+            //       // if (isSuccess == true) {
+            //         sucessfullyHoursAddedRecruiterDialog(
+            //           isCheckButton: false,
+            //           checkTitle: 'Check List',
+            //           context: context,
+            //           title: 'Summary Successfully Submitted',
+            //           onTap: () {
+            //             Get.toNamed(AppRoutes.weeklySummaryRecruiterView);
+            //           },
+            //         );
+            //       }
+            //     },
+            //     title: 'Submit',
+            //     buttonColor: AppColor.blue,
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 10.h,
+            // ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: customTextButton(
                 onTap: () {
-                  Get.offAllNamed(AppRoutes.navBarView);
+                  Get.offAllNamed(AppRoutes.navBarRecruiterView);
                 },
                 title: 'Close',
                 buttonColor: AppColor.blue.withOpacity(0.37),

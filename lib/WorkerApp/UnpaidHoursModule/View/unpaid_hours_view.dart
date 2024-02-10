@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/Model/unpaid_recruiter_summary_model.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
+import 'package:hrmsapp/WorkerApp/WeeklyWorkSummaryModule/Model/weekly_work_summary_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
@@ -31,7 +34,7 @@ class UnpaidHoursView extends StatelessWidget {
   final unpaidHoursVM = Get.find<UnpaidHoursViewModel>();
   final uploadDocVM = Get.find<UploadDocumentViewModel>();
   final homeVM = Get.find<HomeViewModel>();
-  final weeklySummaryVM = Get.put(WeeklyWorkSummaryViewModel());
+  final unpaidSummaryVM = Get.put(UnpaidSummaryViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -320,14 +323,15 @@ class UnpaidHoursView extends StatelessWidget {
                                       title:
                                           'Your Unpaid Hours Have Been Successfully Submitted',
                                       checkTitle: 'Check Summary',
-                                      onTap: () {
+                                      onTap: () async {
                                         showLoadingIndicator(context: context);
-                                        final result = weeklySummaryVM
-                                            .getweeklyWorkSummary();
+                                        List<UnpaidWorkSummaryModel> result =
+                                            await unpaidSummaryVM
+                                                .getUnpaidWorkSummary();
                                         hideOpenDialog(context: context);
-                                        if (result != null) {
+                                        if (result.isNotEmpty) {
                                           Get.toNamed(
-                                              AppRoutes.weeklySummaryView);
+                                              AppRoutes.unpaidWorkSummaryView);
                                         }
                                       });
                                 }
@@ -341,6 +345,25 @@ class UnpaidHoursView extends StatelessWidget {
                               }
                             },
                             title: 'Submit'),
+                            SizedBox(
+                          height: 12.h,
+                        ),
+                        customTextButton(
+                            buttonColor: AppColor.lightblue,
+                            title: 'Check Summary',
+                            onTap: () async {
+                              showLoadingIndicator(context: context);
+                              List<UnpaidWorkSummaryModel> result =
+                                  await unpaidSummaryVM
+                                      .getUnpaidWorkSummary(
+                                          );
+                              hideOpenDialog(context: context);
+                              if (result.isNotEmpty) {
+                                Get.toNamed(
+                                    AppRoutes.unpaidWorkSummaryView,
+                                   );
+                              }
+                            })
                       ],
                     ),
                   ),

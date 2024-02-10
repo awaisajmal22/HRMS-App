@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hrmsapp/WorkerApp/WeeklyWorkSummaryModule/Model/weekly_work_summary_model.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppButton/text_button.dart';
@@ -386,12 +387,12 @@ class WeeklyTotalHoursView extends StatelessWidget {
                             checkTitle: 'Check Summary',
                             context: context,
                             title: 'Your Hours Have Been Successfully Added',
-                            onTap: () {
+                            onTap: () async{
                               showLoadingIndicator(context: context);
-                              final result =
+                              List<WeeklyWorkSummaryModel> result =await 
                                   weeklySummaryVM.getweeklyWorkSummary();
                               hideOpenDialog(context: context);
-                              if (result != null) {
+                              if (result.isNotEmpty) {
                                 Get.toNamed(AppRoutes.weeklySummaryView);
                               }
                             },
@@ -408,11 +409,11 @@ class WeeklyTotalHoursView extends StatelessWidget {
                   child: customTextButton(
                       buttonColor: AppColor.blue,
                       title: 'Check Summary',
-                      onTap: () {
+                      onTap: () async{
                         showLoadingIndicator(context: context);
-                        final result = weeklySummaryVM.getweeklyWorkSummary();
+                        List<WeeklyWorkSummaryModel> result =await weeklySummaryVM.getweeklyWorkSummary();
                         hideOpenDialog(context: context);
-                        if (result != null) {
+                        if (result.isNotEmpty) {
                           Get.toNamed(AppRoutes.weeklySummaryView);
                         }
                       }),

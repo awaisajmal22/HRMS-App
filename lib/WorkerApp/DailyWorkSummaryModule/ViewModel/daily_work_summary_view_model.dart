@@ -6,15 +6,18 @@ import '../Model/daily_work_summary_model.dart';
 import '../Services/daily_work_summary_services.dart';
 
 class DailyWorkSummaryViewModel extends GetxController {
+  RxInt selectedDailySummaryIndex = (-1).obs;
   final pageController = PageController();
   RxString week = 'Week 1'.obs;
   RxInt pageChanged = 0.obs;
   RxList weekList = [
     'Week 1',
   ].obs;
+
   bool isSuccess = false;
   RxList<DailyWorkSummaryModel> dailyWorkList = <DailyWorkSummaryModel>[].obs;
   Future<List<DailyWorkSummaryModel>> getDailyWorkSummary() async {
+  
     final data = await DailyWorkSummaryServices().getDailyWorkSummaryServices();
     if (data != null) {
       dailyWorkList.value = data;

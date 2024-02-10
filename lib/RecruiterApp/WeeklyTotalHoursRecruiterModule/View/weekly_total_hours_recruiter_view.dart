@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hrmsapp/RecruiterApp/WeeklyWorkSummaryRecruiterModule/Model/weekly_work_summary_recruiter_model.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppButton/text_button.dart';
@@ -342,14 +343,20 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                               buttonColor: AppColor.blue,
                               title: 'Add',
                               onTap: () async {
-                                if (
-                                  weeklytotalVM.totalHoursController.text.isEmpty){
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fill the required fields')));
-                                    }else if(weeklytotalVM.totalHoursController.text =='0'){
-  
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Total hours must be greater than 0')));
-                                    }
-                                    else {
+                                if (weeklytotalVM
+                                    .totalHoursController.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Please fill the required fields')));
+                                } else if (weeklytotalVM
+                                        .totalHoursController.text ==
+                                    '0') {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Total hours must be greater than 0')));
+                                } else {
                                   showLoadingIndicator(context: context);
                                   bool isSuccess = await weeklytotalVM
                                       .submitWeeklyRecruiterHour(
@@ -360,16 +367,20 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                                         ? double.parse(weeklytotalVM
                                             .generalExpController.text)
                                         : 0.0,
-                                    parkingTravelValue:
-                                        weeklytotalVM.parkingTravelController.text.isNotEmpty
-                                            ? double.parse(weeklytotalVM
-                                                .parkingTravelController.text)
-                                            : 0.0,
+                                    parkingTravelValue: weeklytotalVM
+                                            .parkingTravelController
+                                            .text
+                                            .isNotEmpty
+                                        ? double.parse(weeklytotalVM
+                                            .parkingTravelController.text)
+                                        : 0.0,
                                     jobSiteID: homeVM.selectedJobsiteId.value,
                                     startDate: weeklytotalVM.startDate.value,
                                     endDate: weeklytotalVM.endDate.value,
                                     totalHours: weeklytotalVM
-                                                .totalHoursController.text.isNotEmpty
+                                            .totalHoursController
+                                            .text
+                                            .isNotEmpty
                                         ? double.parse(weeklytotalVM
                                             .totalHoursController.text)
                                         : 0.0,
@@ -389,15 +400,16 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                                       context: context,
                                       title:
                                           'Your Hours Have Been Successfully Added',
-                                      onTap: () {
+                                      onTap: () async {
                                         showLoadingIndicator(context: context);
-                                        final result = weeklySummaryVM
-                                            .getRecruiterweeklyWorkSummary(
-                                                workerId: workerId);
+                                        List<WeeklyWorkSummaryRecruiterModel>
+                                            result = await weeklySummaryVM
+                                                .getRecruiterweeklyWorkSummary(
+                                                    workerId: workerId);
                                         hideOpenDialog(context: context);
-                                        if (result != null) {
+                                        if (result.isNotEmpty) {
                                           Get.toNamed(AppRoutes
-                                              .weeklySummaryRecruiterView);
+                                              .weeklySummaryRecruiterView,arguments: workerId);
                                         }
                                       },
                                     );
@@ -411,30 +423,31 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                             customTextButton(
                                 buttonColor: AppColor.lightblue,
                                 title: 'Check Summary',
-                                onTap: () {
-                                  if (weeklytotalVM.parkingTravelController.text
-                                          .isEmpty ||
-                                      weeklytotalVM
-                                          .payPeriodController.text.isEmpty ||
-                                      weeklytotalVM
-                                          .generalExpController.text.isEmpty ||
-                                      weeklytotalVM
-                                          .startTimeController.text.isEmpty ||
-                                      weeklytotalVM
-                                          .endTimeController.text.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                'Please fill the required fields')));
-                                  }
+                                onTap: () async {
+                                  // if (weeklytotalVM.parkingTravelController.text
+                                  //         .isEmpty ||
+                                  //     weeklytotalVM
+                                  //         .payPeriodController.text.isEmpty ||
+                                  //     weeklytotalVM
+                                  //         .generalExpController.text.isEmpty ||
+                                  //     weeklytotalVM
+                                  //         .startTimeController.text.isEmpty ||
+                                  //     weeklytotalVM
+                                  //         .endTimeController.text.isEmpty) {
+                                  //   ScaffoldMessenger.of(context).showSnackBar(
+                                  //       SnackBar(
+                                  //           content: Text(
+                                  //               'Please fill the required fields')));
+                                  // }
                                   showLoadingIndicator(context: context);
-                                  final result = weeklySummaryVM
-                                      .getRecruiterweeklyWorkSummary(
-                                          workerId: workerId);
+                                  List<WeeklyWorkSummaryRecruiterModel> result =
+                                      await weeklySummaryVM
+                                          .getRecruiterweeklyWorkSummary(
+                                              workerId: workerId);
                                   hideOpenDialog(context: context);
-                                  if (result != null) {
+                                  if (result.isNotEmpty) {
                                     Get.toNamed(
-                                        AppRoutes.weeklySummaryRecruiterView);
+                                        AppRoutes.weeklySummaryRecruiterView, arguments: workerId);
                                   }
                                 })
                           ],

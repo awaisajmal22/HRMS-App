@@ -406,14 +406,15 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                       context: context,
                                       title:
                                           'Your Hours Have Been Successfully Added',
-                                      onTap: () {
-                                        weeklySummaryVM
+                                      onTap: () async{
+                                      List<WeeklyWorkSummaryRecruiterModel> result = await  weeklySummaryVM
                                             .getRecruiterweeklyWorkSummary(
                                                 workerId: workerId);
+                                                if(result.isNotEmpty){
                                         Get.toNamed(
                                             AppRoutes
                                                 .weeklySummaryRecruiterView,
-                                            arguments: workerId);
+                                            arguments: workerId);}
                                       },
                                     );
                                   }
@@ -426,13 +427,13 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                             customTextButton(
                                 buttonColor: AppColor.lightblue,
                                 title: 'Check Summary',
-                                onTap: () {
+                                onTap: ()async {
                                   showLoadingIndicator(context: context);
-                                  final result = weeklySummaryVM
+                                  List<WeeklyWorkSummaryRecruiterModel> result = await weeklySummaryVM
                                       .getRecruiterweeklyWorkSummary(
                                           workerId: workerId);
                                   hideOpenDialog(context: context);
-                                  if (result != null) {
+                                  if (result.isNotEmpty) {
                                     Get.toNamed(
                                         AppRoutes.weeklySummaryRecruiterView,
                                         arguments: workerId);

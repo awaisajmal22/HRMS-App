@@ -24,7 +24,7 @@ class WorkerView extends StatelessWidget {
       body: Column(
         children: [
           customAppBar(
-              title: worker.firstName,
+              title: "${worker.firstName} ${worker.lastName}",
               isBackButton: true,
               onTap: () {
                 Get.back();

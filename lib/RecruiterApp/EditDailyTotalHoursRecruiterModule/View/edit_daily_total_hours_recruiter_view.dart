@@ -567,13 +567,13 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                     context: context,
                                     title:
                                         'Your Daily Hours Successfully Added To List',
-                                    onTap: () {
+                                    onTap: ()async {
                                       showLoadingIndicator(context: context);
-                                      final result = dailySummaryVM
+                                      List<DailyWorkSummaryRecruiterModel> result = await  dailySummaryVM
                                           .getRecruiterDailyWorkSummary(
                                               workerId: workerId);
                                       hideOpenDialog(context: context);
-                                      if (result != null) {
+                                      if (result.isNotEmpty) {
                                         Get.toNamed(
                                             AppRoutes.dailySummaryRecruiterView,
                                             arguments: workerId);
@@ -589,13 +589,13 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.lightblue,
                             title: 'Check Summary',
-                            onTap: () {
+                            onTap: () async{
                               showLoadingIndicator(context: context);
-                              final result =
+                              List<DailyWorkSummaryRecruiterModel> result = await 
                                   dailySummaryVM.getRecruiterDailyWorkSummary(
                                       workerId: workerId);
                               hideOpenDialog(context: context);
-                              if (result != null) {
+                              if (result.isNotEmpty) {
                                 Get.toNamed(AppRoutes.dailySummaryRecruiterView,
                                     arguments: workerId);
                               }

@@ -19,6 +19,7 @@ import '../../../Constant/DropDownFormField/drop_down_form_field.dart';
 import '../../../Constant/Toast/fllutter_toast.dart';
 import '../../../RoutesAndBindings/app_routes.dart';
 import '../../../Utils/spint_kit_view_spinner.dart';
+import '../../DailyWorkSummaryRecruiterModule/Model/daily_work_summary_recruiter_model.dart';
 import '../../DailyWorkSummaryRecruiterModule/ViewModel/daily_work_summary_recruiter_view_model.dart';
 import '../../HomeRecruiterModule/ViewModel/home_recruiter_view_model.dart';
 import '../../UploadDocumentRecruiterModule/ViewModel/upload_document_recruiter_view_model.dart';
@@ -591,15 +592,15 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                                         context: context,
                                         title:
                                             'Your Daily Hours Successfully Added To List',
-                                        onTap: () {
+                                        onTap: () async{
                                           showLoadingIndicator(
                                               context: context);
-                                          final result = dailySummaryVM
+                                      List<DailyWorkSummaryRecruiterModel> result = await dailySummaryVM
                                               .getRecruiterDailyWorkSummary(
                                             workerId: workerId,
                                           );
                                           hideOpenDialog(context: context);
-                                          if (result != null) {
+                                          if (result.isNotEmpty) {
                                             Get.toNamed(
                                                 AppRoutes
                                                     .dailySummaryRecruiterView,
@@ -618,14 +619,14 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                             customTextButton(
                                 buttonColor: AppColor.lightblue,
                                 title: 'Check Summary',
-                                onTap: () {
+                                onTap: ()async {
                                   showLoadingIndicator(context: context);
-                                  final result = dailySummaryVM
+                                  List<DailyWorkSummaryRecruiterModel> result = await dailySummaryVM
                                       .getRecruiterDailyWorkSummary(
                                     workerId: workerId,
                                   );
                                   hideOpenDialog(context: context);
-                                  if (result != null) {
+                                  if (result.isNotEmpty) {
                                     Get.toNamed(
                                         AppRoutes.dailySummaryRecruiterView,
                                         arguments: workerId);

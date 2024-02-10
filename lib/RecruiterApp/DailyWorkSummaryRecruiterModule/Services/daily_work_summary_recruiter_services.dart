@@ -68,11 +68,12 @@ class DailyWorkSummaryRecruiterServices {
     return DailyWorkSummaryRecruiterModel.value;
   }
 
-  Future<bool> submitDailyRecruiterWorkSummary() async {
+  Future<bool> submitDailyRecruiterWorkSummary({required int workerID}) async {
     bool isSuccess = false;
     try {
+     
       final response =
-          await API().postRequestHeader(ApiUrl.dailyWorkSummarySubmit, '');
+          await API().postRequest("${ApiUrl.dailyRecruiterWorkSummarySubmit}?workerid?=$workerID", '');
       if (response == null) {
       } else if (response.statusCode == 200) {
         isSuccess = true;

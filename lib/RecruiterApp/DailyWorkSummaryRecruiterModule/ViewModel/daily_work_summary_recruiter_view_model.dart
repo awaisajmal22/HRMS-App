@@ -6,6 +6,7 @@ import '../Model/daily_work_summary_recruiter_model.dart';
 import '../Services/daily_work_summary_recruiter_services.dart';
 
 class DailyWorkSummaryRecruiterViewModel extends GetxController {
+  RxInt selectedDailySummaryIndex = (-1).obs;
   final pageController = PageController();
   RxString week = 'Week 1'.obs;
   RxInt pageChanged = 0.obs;
@@ -29,9 +30,9 @@ class DailyWorkSummaryRecruiterViewModel extends GetxController {
     return data;
   }
 
-  Future<bool> submitDailyRecruiterHours() async {
+  Future<bool> submitDailyRecruiterHours({required int workerId}) async {
     bool isSuccess = await DailyWorkSummaryRecruiterServices()
-        .submitDailyRecruiterWorkSummary();
+        .submitDailyRecruiterWorkSummary(workerID: workerId);
     return isSuccess;
   }
 

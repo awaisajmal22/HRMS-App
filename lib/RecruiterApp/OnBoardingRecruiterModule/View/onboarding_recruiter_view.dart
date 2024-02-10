@@ -38,7 +38,7 @@ class OnBoardingRecruiterView extends StatelessWidget {
                   Center(
                     child: Obx(
                       () => appText(
-                          title: 'Welcome ${onBVM.name.value}',
+                          title: 'Welcome ${onBVM.name.value} ${onBVM.lastname.value}',
                           fontSize: 24,
                           textColor: AppColor.white),
                     ),

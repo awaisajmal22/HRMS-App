@@ -5,6 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/Model/unpaid_recruiter_summary_model.dart';
+import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/Model/unpaid_recruiter_summary_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
@@ -22,6 +26,7 @@ import '../../../Utils/spint_kit_view_spinner.dart';
 import '../../DailyTotalHoursRecruiterModule/View/component/recruiter_week_calender.dart';
 import '../../HomeRecruiterModule/ViewModel/home_recruiter_view_model.dart';
 import '../../UploadDocumentRecruiterModule/ViewModel/upload_document_recruiter_view_model.dart';
+import '../../WeeklyWorkSummaryRecruiterModule/Model/weekly_work_summary_recruiter_model.dart';
 import '../../WeeklyWorkSummaryRecruiterModule/ViewModel/weekly_work_summary_recruiter_view_model.dart';
 import '../ViewModel/unpaid_hours_recruiter_view_model.dart';
 import 'component/week_calender.dart';
@@ -33,7 +38,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
   final uploadDocVM = Get.find<UploadDocumentRecruiterViewModel>();
   int workerId = Get.arguments;
   final homeVM = Get.find<HomeRecruiterViewModel>();
-  final weeklySummaryVM = Get.put(WeeklyWorkSummaryRecruiterViewModel());
+  final unpaidSummaryVM = Get.put(UnpaidRecruiterSummaryViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,6 +138,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                         ),
                         customTextField(
                             hintText: '',
+                            textInputType: TextInputType.number,
                             controller: unpaidHoursVM.unpaidHoursController,
                             fontSize: 14),
                         SizedBox(
@@ -309,16 +315,17 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                       title:
                                           'Your Unpaid Hours Have Been Successfully Submitted',
                                       checkTitle: 'Check Summary',
-                                      onTap: () {
+                                      onTap: () async {
                                         showLoadingIndicator(context: context);
-                                        final result = weeklySummaryVM
-                                            .getRecruiterweeklyWorkSummary(
-                                                workerId: workerId);
+                                        List<UnpaidRecruiterWorkSummaryModel>
+                                            result = await unpaidSummaryVM
+                                                .getRecruiterUnpaidWorkSummary(
+                                                    workerId: workerId);
                                         hideOpenDialog(context: context);
-                                        if (result != null) {
+                                        if (result.isNotEmpty) {
                                           Get.toNamed(
                                               AppRoutes
-                                                  .weeklySummaryRecruiterView,
+                                                  .unpaidRecruiterWorkSummaryView,
                                               arguments: workerId);
                                         }
                                       });
@@ -328,6 +335,25 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                               }
                             },
                             title: 'Submit'),
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        customTextButton(
+                            buttonColor: AppColor.lightblue,
+                            title: 'Check Summary',
+                            onTap: () async {
+                              showLoadingIndicator(context: context);
+                              List<UnpaidRecruiterWorkSummaryModel> result =
+                                  await unpaidSummaryVM
+                                      .getRecruiterUnpaidWorkSummary(
+                                          workerId: workerId);
+                              hideOpenDialog(context: context);
+                              if (result.isNotEmpty) {
+                                Get.toNamed(
+                                    AppRoutes.unpaidRecruiterWorkSummaryView,
+                                    arguments: workerId);
+                              }
+                            })
                       ],
                     ),
                   ),

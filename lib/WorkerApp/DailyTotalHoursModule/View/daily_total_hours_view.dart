@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hrmsapp/WorkerApp/DailyWorkSummaryModule/Model/daily_work_summary_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
@@ -618,14 +619,14 @@ class DailyTotalHoursView extends StatelessWidget {
                                               context: context,
                                               title:
                                                   'Your Daily Hours Successfully Added To List',
-                                              onTap: () {
+                                              onTap: () async {
                                                 showLoadingIndicator(
                                                     context: context);
-                                                final result = dailySummaryVM
+                                                List<DailyWorkSummaryModel> result = await dailySummaryVM
                                                     .getDailyWorkSummary();
                                                 hideOpenDialog(
                                                     context: context);
-                                                if (result != null) {
+                                                if (result.isNotEmpty) {
                                                   Get.toNamed(AppRoutes
                                                       .dailySummaryView);
                                                 }
@@ -646,12 +647,12 @@ class DailyTotalHoursView extends StatelessWidget {
                                   child: customTextButton(
                                       buttonColor: AppColor.blue,
                                       title: 'Check Summary',
-                                      onTap: () {
+                                      onTap: ()async {
                                         showLoadingIndicator(context: context);
-                                        final result = dailySummaryVM
+                                        List<DailyWorkSummaryModel> result = await dailySummaryVM
                                             .getDailyWorkSummary();
                                         hideOpenDialog(context: context);
-                                        if (result != null) {
+                                        if (result.isNotEmpty) {
                                           Get.toNamed(
                                               AppRoutes.dailySummaryView);
                                         }
