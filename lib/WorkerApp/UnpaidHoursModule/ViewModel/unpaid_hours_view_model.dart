@@ -8,17 +8,19 @@ import '../../WeeklyTotalHoursModule/Services/jobsite_services.dart';
 import '../Services/unpaid_hours_services.dart';
 
 class UnpaidHoursViewModel extends GetxController {
-  RxInt selectedWeekIndex = 11.obs;
+  RxInt selectedWeekIndex = 0.obs;
+  RxInt weekNumber = 0.obs;
   final dateController = TextEditingController();
   final unpaidHoursController = TextEditingController();
   final commentController = TextEditingController();
   final parkingTravelController = TextEditingController();
   final generalExpController = TextEditingController();
 
-  RxString pickedDate = ''.obs;
+  RxString pickedDate = DateTime.now().toIso8601String().obs;
 
   Future<bool> submitUnpaidHours(
-      {required double unpaidHours,
+      {required int weeknumber,
+      required double unpaidHours,
       required String jobSite,
       required String feedBack,
       double generalExpValue = 0.0,
@@ -28,6 +30,7 @@ class UnpaidHoursViewModel extends GetxController {
       required String generalExpImage,
       required String parkingTravelImage}) async {
     bool isSuccess = await UnpaidHoursServices().unpaidSubmitHoursServices(
+        weekNumber: weeknumber,
         date: date,
         generalExpValue: generalExpValue,
         jobSiteID: jobSiteID,

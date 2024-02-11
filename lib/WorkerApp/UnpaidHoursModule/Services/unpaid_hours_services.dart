@@ -10,7 +10,7 @@ import '../../../Utils/toast_message.dart';
 
 class UnpaidHoursServices{
   Future<bool> unpaidSubmitHoursServices({
-   
+   required int weekNumber,
     required double unpaidHours,
     required String jobSite,
     required double generalExpValue,
@@ -25,13 +25,14 @@ class UnpaidHoursServices{
     try {
       if (parkingTravelImage.isNotEmpty && generalExpImage.isNotEmpty) {
         FormData data = FormData.fromMap({
-          "Date": 
-              DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
+          // "Date": 
+              // DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
           "Unpaidhours": unpaidHours,
           "Parking": parkingTravelValue,
           "Genexpence": generalExpValue,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
+          "WeekNumber":weekNumber,
           "Parkingdoc": await MultipartFile.fromFile(
             parkingTravelImage,
             filename: parkingTravelImage.split('/').last,
@@ -55,13 +56,14 @@ class UnpaidHoursServices{
         }
       } else {
         FormData data = FormData.fromMap({
-          "Date": 
-              DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
+          // "Date": 
+          //     DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
           "Unpaidhours": unpaidHours,
           "Parking": parkingTravelValue ?? 0.0,
           "Genexpence": generalExpValue ?? 0.0,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
+          "WeekNumber":weekNumber,
         });
         print(generalExpImage);
         print(parkingTravelImage);

@@ -59,7 +59,7 @@ class UnpaidHoursView extends StatelessWidget {
                       children: [
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: appText(title: 'Select Date', fontSize: 18),
+                          child: appText(title: 'Select Week', fontSize: 18),
                         ),
                         Obx(
                           () => customTextField(
@@ -89,11 +89,15 @@ class UnpaidHoursView extends StatelessWidget {
                                 },
                               );
                             },
-                            hintText: unpaidHoursVM.pickedDate.value != ''
-                                ? DateFormat("yyyy-MMM-dd").format(
-                                    DateTime.parse(
-                                        unpaidHoursVM.pickedDate.value))
+                            hintText: unpaidHoursVM.selectedWeekIndex.value != 0
+                                ?
+                                // unpaidHoursVM.pickedDate.value != ''
+                                //     ? DateFormat("yyyy-MMM-dd").format(
+                                //         DateTime.parse(
+                                unpaidHoursVM.weekNumber.value.toString()
                                 : '',
+                            // ))
+                            // : '',
                             controller: unpaidHoursVM.dateController,
                           ),
                         ),
@@ -137,6 +141,7 @@ class UnpaidHoursView extends StatelessWidget {
                           height: 5.h,
                         ),
                         customTextField(
+                            textInputType: TextInputType.number,
                             hintText: '',
                             controller: unpaidHoursVM.unpaidHoursController,
                             fontSize: 14),
@@ -260,11 +265,11 @@ class UnpaidHoursView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.blue,
                             onTap: () async {
-                              if (unpaidHoursVM.pickedDate.value == '') {
+                              if (unpaidHoursVM.selectedWeekIndex.value == 0) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:
-                                            Text('Please select the date')));
+                                            Text('Please select the Week')));
                               } else if (unpaidHoursVM
                                   .unpaidHoursController.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -287,6 +292,8 @@ class UnpaidHoursView extends StatelessWidget {
 
                                 bool isSuccess =
                                     await unpaidHoursVM.submitUnpaidHours(
+                                        weeknumber:
+                                            unpaidHoursVM.weekNumber.value,
                                         generalExpValue: unpaidHoursVM
                                                 .generalExpController
                                                 .text
@@ -330,7 +337,7 @@ class UnpaidHoursView extends StatelessWidget {
                                                 .getUnpaidWorkSummary();
                                         hideOpenDialog(context: context);
                                         if (result.isNotEmpty) {
-                                          Get.toNamed(
+                                          Get.offAndToNamed(
                                               AppRoutes.unpaidWorkSummaryView);
                                         }
                                       });
@@ -345,7 +352,7 @@ class UnpaidHoursView extends StatelessWidget {
                               }
                             },
                             title: 'Submit'),
-                            SizedBox(
+                        SizedBox(
                           height: 12.h,
                         ),
                         customTextButton(
@@ -354,14 +361,12 @@ class UnpaidHoursView extends StatelessWidget {
                             onTap: () async {
                               showLoadingIndicator(context: context);
                               List<UnpaidWorkSummaryModel> result =
-                                  await unpaidSummaryVM
-                                      .getUnpaidWorkSummary(
-                                          );
+                                  await unpaidSummaryVM.getUnpaidWorkSummary();
                               hideOpenDialog(context: context);
                               if (result.isNotEmpty) {
                                 Get.toNamed(
-                                    AppRoutes.unpaidWorkSummaryView,
-                                   );
+                                  AppRoutes.unpaidWorkSummaryView,
+                                );
                               }
                             })
                       ],

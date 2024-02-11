@@ -20,6 +20,7 @@ class UnpaidHoursRecruiterServices {
     required String feedBack,
     required String date,
     required int jobSiteID,
+    required int weekNumber,
   }) async {
     bool isSuccess = false;
     try {
@@ -33,6 +34,7 @@ class UnpaidHoursRecruiterServices {
           "Genexpence": generalExpValue,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
+          "weekNumber":weekNumber,
           "Parkingdoc": await MultipartFile.fromFile(
             parkingTravelImage,
             filename: parkingTravelImage.split('/').last,
@@ -63,6 +65,7 @@ class UnpaidHoursRecruiterServices {
           "Parking": parkingTravelValue ?? 0.0,
           "Genexpence": generalExpValue  ?? 0.0,
           "Feedback": feedBack,
+          "weekNumber": weekNumber,
           "JobsiteId": jobSiteID,
         });
         print(generalExpImage);

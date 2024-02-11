@@ -63,7 +63,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                       children: [
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: appText(title: 'Select Date', fontSize: 18),
+                          child: appText(title: 'Select Week', fontSize: 18),
                         ),
                         Obx(
                           () => customTextField(
@@ -93,10 +93,12 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                 },
                               );
                             },
-                            hintText: unpaidHoursVM.pickedDate.value != ''
-                                ? DateFormat("yyyy-MMM-dd").format(
-                                    DateTime.parse(
-                                        unpaidHoursVM.pickedDate.value))
+                            hintText: unpaidHoursVM.selectedWeekIndex.value != 0
+                                ?
+                                //  unpaidHoursVM.pickedDate.value != ''
+                                //     ? DateFormat("yyyy-MMM-dd").format(
+                                //         DateTime.parse(
+                                unpaidHoursVM.weekNumber.value.toString()
                                 : '',
                             controller: unpaidHoursVM.dateController,
                           ),
@@ -263,11 +265,11 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.blue,
                             onTap: () async {
-                              if (unpaidHoursVM.pickedDate.value == '') {
+                              if (unpaidHoursVM.selectedWeekIndex.value == 0) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:
-                                            Text('Please select the date')));
+                                            Text('Please select the week')));
                               } else if (unpaidHoursVM
                                   .unpaidHoursController.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -286,6 +288,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                 showLoadingIndicator(context: context);
 
                                 bool isSuccess = await unpaidHoursVM.submitUnpaidRecruiterHours(
+                                    weeknum: unpaidHoursVM.weekNumber.value,
                                     workerId: workerId,
                                     generalExpValue:
                                         unpaidHoursVM.generalExpController.text.isNotEmpty
@@ -323,7 +326,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                                     workerId: workerId);
                                         hideOpenDialog(context: context);
                                         if (result.isNotEmpty) {
-                                          Get.toNamed(
+                                          Get.offAndToNamed(
                                               AppRoutes
                                                   .unpaidRecruiterWorkSummaryView,
                                               arguments: workerId);

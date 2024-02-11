@@ -27,6 +27,7 @@ List weekDays = [
                   onTap: () {
                     if (controller.selectedWeekIndex.value > 0) {
                       controller.selectedWeekIndex.value--;
+                      controller.weekNumber.value = controller.last12WeekList[controller.selectedWeekIndex.value].weekNumber!;
                     }
                   },
                   child: Icon(Icons.keyboard_arrow_left),
@@ -52,9 +53,11 @@ List weekDays = [
                 ),
                 GestureDetector(
                   onTap: () {
+                    
                     print(controller.selectedWeekIndex.value);
                     if (controller.selectedWeekIndex.value < 11) {
                       controller.selectedWeekIndex++;
+                      controller.weekNumber.value = controller.last12WeekList[controller.selectedWeekIndex.value].weekNumber!;
                     }
                   },
                   child: Icon(Icons.keyboard_arrow_right),
@@ -79,34 +82,31 @@ List weekDays = [
             // SizedBox(
             //   height: size.height * 0.010,
             // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  controller.last12WeekList[controller.selectedWeekIndex.value]
-                      .dates!.length, (index) {
-                return Column(
-                  children: [
-                    Text(weekDays[index]),
-                    SizedBox(
-              height: size.height * 0.010,
-            ),
-                    GestureDetector(
-                      onTap: () {
-                        controller.pickedDate.value = controller
-                            .last12WeekList[controller.selectedWeekIndex.value]
-                            .dates![index]
-                            .toIso8601String();
-                        Get.back();
-                      },
-                      child: Text(controller
+            GestureDetector(
+              onTap: (){
+                 controller.weekNumber.value = controller.last12WeekList[controller.selectedWeekIndex.value].weekNumber!;
+                 Get.back();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(
+                    controller.last12WeekList[controller.selectedWeekIndex.value]
+                        .dates!.length, (index) {
+                  return Column(
+                    children: [
+                      Text(weekDays[index]),
+                      SizedBox(
+                height: size.height * 0.010,
+              ),
+                      Text(controller
                           .last12WeekList[controller.selectedWeekIndex.value]
                           .dates![index]
                           .day
                           .toString()),
-                    ),
-                  ],
-                );
-              }),
+                    ],
+                  );
+                }),
+              ),
             )
           ],
         );
