@@ -73,11 +73,12 @@ class DailyWorkSummaryRecruiterServices {
     try {
      
       final response =
-          await API().postRequest("${ApiUrl.dailyRecruiterWorkSummarySubmit}?workerid?=$workerID", '');
+          await API().postRequest("${ApiUrl.dailyRecruiterWorkSummarySubmit}?workerid=$workerID", '');
       if (response == null) {
       } else if (response.statusCode == 200) {
         isSuccess = true;
       }
+      
     } catch (e) {
       ApiResponse.withError('error');
     }
