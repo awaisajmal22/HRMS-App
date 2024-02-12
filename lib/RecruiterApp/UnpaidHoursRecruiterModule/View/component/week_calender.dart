@@ -33,9 +33,36 @@ class UnpaidDatePicker extends StatelessWidget {
                   onTap: () {
                     if (controller.selectedWeekIndex.value > 0) {
                       controller.selectedWeekIndex.value--;
-                      controller.weekNumber.value = controller
-                          .last12WeekList[controller.selectedWeekIndex.value]
-                          .weekNumber!;
+                      controller.weekNumber.value = DateTime.parse(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0]
+                              .toIso8601String())
+                          .weekday;
+                      controller.startDate.value = DateFormat.yMMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0])
+                          .toString();
+                      controller.endDate.value = DateFormat.yMMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![6])
+                          .toString();
+                      controller.startweek.value = DateFormat.MMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0])
+                          .toString();
+                      controller.endWeek.value = DateFormat.MMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![6])
+                          .toString();
                     }
                   },
                   child: Icon(Icons.keyboard_arrow_left),
@@ -54,19 +81,49 @@ class UnpaidDatePicker extends StatelessWidget {
                       textColor: Colors.white,
                       fontSize: 12,
                       title:
-                          'Week ${controller.last12WeekList[controller.selectedWeekIndex.value].weekNumber}'),
+                          '${controller.startweek.value} to ${controller.endWeek.value}'),
                 ),
                 SizedBox(
                   width: size.width * 0.020,
                 ),
                 GestureDetector(
                   onTap: () {
-                    print(controller.selectedWeekIndex.value);
                     if (controller.selectedWeekIndex.value < 11) {
                       controller.selectedWeekIndex++;
-                      controller.weekNumber.value = controller
-                          .last12WeekList[controller.selectedWeekIndex.value]
-                          .weekNumber!;
+                      controller.weekNumber.value = DateTime.parse(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0]
+                              .toIso8601String())
+                          .weekday;
+                      print(controller.weekNumber.value);
+                      // controller.weekNumber.value = controller
+                      //     .last12WeekList[controller.selectedWeekIndex.value]
+                      //     .weekNumber!;
+                      controller.startDate.value = DateFormat.yMMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0])
+                          .toString();
+                      controller.endDate.value = DateFormat.yMMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![6])
+                          .toString();
+                      controller.startweek.value = DateFormat.MMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0])
+                          .toString();
+                      controller.endWeek.value = DateFormat.MMMMd()
+                          .format(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![6])
+                          .toString();
                     }
                   },
                   child: Icon(Icons.keyboard_arrow_right),

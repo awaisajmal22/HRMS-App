@@ -9,7 +9,11 @@ import '../Services/unpaid_hours_services.dart';
 
 class UnpaidHoursViewModel extends GetxController {
   RxInt selectedWeekIndex = 0.obs;
-  RxInt weekNumber = 0.obs;
+  RxInt weekNumber = (0).obs;
+  RxString startDate = ''.obs;
+  RxString endDate = ''.obs;
+    RxString startweek = ''.obs;
+  RxString endWeek =''.obs;
   final dateController = TextEditingController();
   final unpaidHoursController = TextEditingController();
   final commentController = TextEditingController();

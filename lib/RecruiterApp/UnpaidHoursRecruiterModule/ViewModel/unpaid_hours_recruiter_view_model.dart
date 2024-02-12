@@ -14,8 +14,12 @@ class UnpaidHoursRecruiterViewModel extends GetxController {
   final parkingTravelController = TextEditingController();
   final generalExpController = TextEditingController();
   RxInt weekNumber = 0.obs;
+  RxString startDate =''.obs;
+  RxString endDate =''.obs;
   RxString pickedDate = DateTime.now().toIso8601String().obs;
   RxInt selectedWeekIndex = 0.obs;
+  RxString startweek = ''.obs;
+  RxString endWeek =''.obs;
   Future<bool> submitUnpaidRecruiterHours(
       {required int workerId,
       required double unpaidHours,

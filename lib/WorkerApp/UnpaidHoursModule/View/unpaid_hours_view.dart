@@ -65,6 +65,14 @@ class UnpaidHoursView extends StatelessWidget {
                           () => customTextField(
                             readOnly: true,
                             onTap: () {
+                              unpaidHoursVM.startweek.value = DateFormat.MMMMd()
+                                  .format(DateTime.parse(unpaidHoursVM
+                                      .last12WeekList[0].dates![0]
+                                      .toString()));
+                              unpaidHoursVM.endWeek.value = DateFormat.MMMMd()
+                                  .format(DateTime.parse(unpaidHoursVM
+                                      .last12WeekList[0].dates![6]
+                                      .toString()));
                               showGeneralDialog(
                                 context: context,
                                 pageBuilder:
@@ -89,12 +97,12 @@ class UnpaidHoursView extends StatelessWidget {
                                 },
                               );
                             },
-                            hintText: unpaidHoursVM.selectedWeekIndex.value != 0
+                            hintText: unpaidHoursVM.weekNumber.value != 0
                                 ?
                                 // unpaidHoursVM.pickedDate.value != ''
                                 //     ? DateFormat("yyyy-MMM-dd").format(
                                 //         DateTime.parse(
-                                unpaidHoursVM.weekNumber.value.toString()
+                                "${unpaidHoursVM.startweek.value} to ${unpaidHoursVM.endWeek.value}"
                                 : '',
                             // ))
                             // : '',
@@ -265,7 +273,7 @@ class UnpaidHoursView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.blue,
                             onTap: () async {
-                              if (unpaidHoursVM.selectedWeekIndex.value == 0) {
+                              if (unpaidHoursVM.weekNumber.value == 0) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:
