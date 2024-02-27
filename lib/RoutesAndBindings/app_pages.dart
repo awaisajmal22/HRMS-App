@@ -7,8 +7,8 @@ import 'package:hrmsapp/AuthModule/OtpModule/View/otp_view.dart';
 import 'package:hrmsapp/AuthModule/OtpModule/ViewModel/otp_view_model.dart';
 import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/View/unpaid_recruiter_summary_view.dart';
 import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
-import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/View/unpaid_recruiter_summary_view.dart';
-import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/View/unpaid_work_summary_view.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/ViewModel/unpaid_work_summary_view_model.dart';
 
 import '../AuthModule/Login/View/login_view.dart';
 import '../AuthModule/Login/ViewModel/login_view_model.dart';

@@ -68,7 +68,8 @@ sucessfullyHoursAddedDialog(
                             ? AppColor.blue.withOpacity(0.37)
                             : AppColor.blue,
                         onTap: () {
-                          Get.offAllNamed(AppRoutes.navBarView);
+                          // Get.offAllNamed(AppRoutes.navBarView);
+                          Get.back();
                         },
                         title: 'Close',
                       ),
@@ -97,6 +98,7 @@ sucessfullyHoursAddedDialog(
     },
   );
 }
+
 sucessfullyHoursAddedRecruiterDialog(
     {required BuildContext context,
     required String title,
@@ -157,7 +159,8 @@ sucessfullyHoursAddedRecruiterDialog(
                             ? AppColor.blue.withOpacity(0.37)
                             : AppColor.blue,
                         onTap: () {
-                          Get.offAllNamed(AppRoutes.navBarRecruiterView);
+                          Get.back();
+                          // Get.offAllNamed(AppRoutes.navBarRecruiterView);
                         },
                         title: 'Close',
                       ),

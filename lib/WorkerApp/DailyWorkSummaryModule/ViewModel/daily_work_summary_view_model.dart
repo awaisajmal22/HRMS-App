@@ -17,7 +17,6 @@ class DailyWorkSummaryViewModel extends GetxController {
   bool isSuccess = false;
   RxList<DailyWorkSummaryModel> dailyWorkList = <DailyWorkSummaryModel>[].obs;
   Future<List<DailyWorkSummaryModel>> getDailyWorkSummary() async {
-  
     final data = await DailyWorkSummaryServices().getDailyWorkSummaryServices();
     if (data != null) {
       dailyWorkList.value = data;
@@ -42,8 +41,7 @@ class DailyWorkSummaryViewModel extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-
-    super.onInit();
     getDailyWorkSummary();
+    super.onInit();
   }
 }

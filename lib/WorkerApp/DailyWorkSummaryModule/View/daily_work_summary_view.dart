@@ -28,13 +28,14 @@ class DailyWorkSummaryView extends StatelessWidget {
       body: PopScope(
         canPop: false,
         onPopInvoked: (val) {
-          Get.offAllNamed(AppRoutes.navBarView);
+          val == false ? Get.offAllNamed(AppRoutes.navBarView) : null;
         },
         child: Column(
           children: [
             customAppBar(
               onTap: () {
                 Get.offAllNamed(AppRoutes.navBarView);
+                // Get.back();
               },
               title: 'Daily Summary',
               isBackButton: true,
@@ -281,7 +282,9 @@ class DailyWorkSummaryView extends StatelessWidget {
                   ),
                   customTextButton(
                     onTap: () {
+                      // Get.offAllNamed(AppRoutes.navBarView);
                       Get.offAllNamed(AppRoutes.navBarView);
+                      // Get.back();
                     },
                     title: 'Close',
                     buttonColor: AppColor.blue.withOpacity(0.37),

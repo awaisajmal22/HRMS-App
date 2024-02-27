@@ -35,7 +35,24 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
   int workerId = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
-    final date = DateTime.now();
+    List<String> startHours = model.startTime.split(':');
+    List<String> endHours = model.endTime.split(':');
+    editDailyTotalVM.totalHoursController.text = model.hours.toString();
+    editDailyTotalVM.parkingTravelController.text = model.parking.toString();
+    editDailyTotalVM.generalExpController.text = model.genexpence.toString();
+    editDailyTotalVM.pickedDate.value = model.date.toString();
+    homeVM.selectedDropDownValue.value = model.jobSiteName;
+    homeVM.selectedJobsiteId.value = model.jobsiteId!;
+    editDailyTotalVM.endTime.value =
+        TimeOfDay(hour: int.parse(endHours[0]), minute: int.parse(endHours[1]));
+    editDailyTotalVM.startTime.value = TimeOfDay(
+        hour: int.parse(startHours[0]), minute: int.parse(startHours[1]));
+    ;
+    editDailyTotalVM.startTimeController.text =
+        '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.startTime!))}';
+    editDailyTotalVM.endTimeController.text =
+        '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.endTime!))}';
+
     return Scaffold(
       body: Column(
         children: [
@@ -160,10 +177,12 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                               children: [
                                 Obx(
                                   () => appText(
-                                    title: editDailyTotalVM.pickedDate.value !=
-                                            ''
-                                        ? "${DateFormat('yyyy-MMM-dd').format(DateTime.parse(editDailyTotalVM.pickedDate.value))}"
-                                        : '${DateFormat('yyyy-MMM-dd').format(model.date!)}',
+                                    title:
+                                        // editDailyTotalVM.pickedDate.value !=
+                                        //         ''
+
+                                        "${DateFormat('yyyy-MMM-dd').format(DateTime.parse(editDailyTotalVM.pickedDate.value))}",
+                                    // : '${DateFormat('yyyy-MMM-dd').format(model.date!)}',
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                     textColor: AppColor.black.withOpacity(0.55),
@@ -191,7 +210,7 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                         ),
                         AppDropdownInput(
                             options: homeVM.jobSiteValue,
-                            value: model.jobSiteName,
+                            value: homeVM.selectedDropDownValue.value,
                             onChanged: (value) {
                               homeVM.selectedDropDownValue.value = value;
                               for (var data in homeVM.jobSites) {
@@ -235,8 +254,8 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                 onTap: () {
                                   editDailyTotalVM.selectStartTime(context);
                                 },
-                                hintText:
-                                    '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.startTime!))}',
+                                hintText: '',
+                                // '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.startTime!))}',
                                 controller:
                                     editDailyTotalVM.startTimeController,
                                 textInputType: TextInputType.text,
@@ -254,8 +273,8 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                 onTap: () {
                                   editDailyTotalVM.selectEndTime(context);
                                 },
-                                hintText:
-                                    '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.endTime!))}',
+                                hintText: '',
+                                // '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.endTime!))}',
                                 controller: editDailyTotalVM.endTimeController,
                                 textInputType: TextInputType.text,
                               ),
@@ -281,8 +300,10 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                           height: 2.h,
                         ),
                         customTextField(
-                          readOnly: false,
-                          hintText: model.hours.toString(),
+                          verticalPadding: 0,
+                          horizontalPadding: 10,
+                          hintText: '',
+                          // model.hours.toString(),
                           // editDailyTotalVM.endTime.value ==
                           //             TimeOfDay.now()
                           //         ? ''
@@ -348,8 +369,8 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                               horizontalPadding: 0,
                                               textInputType:
                                                   TextInputType.number,
-                                              hintText:
-                                                  model.parking.toString(),
+                                              hintText: '',
+                                              // model.parking.toString(),
                                               controller: editDailyTotalVM
                                                   .parkingTravelController,
                                               borderColor: Colors.transparent,
@@ -440,8 +461,8 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                               horizontalPadding: 0,
                                               textInputType:
                                                   TextInputType.number,
-                                              hintText:
-                                                  model.genexpence.toString(),
+                                              hintText: '',
+                                              // model.genexpence.toString(),
                                               controller: editDailyTotalVM
                                                   .generalExpController,
                                               borderColor: Colors.transparent,
@@ -567,14 +588,16 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                     context: context,
                                     title:
                                         'Your Daily Hours Successfully Added To List',
-                                    onTap: ()async {
+                                    onTap: () async {
+                                      Get.back();
                                       showLoadingIndicator(context: context);
-                                      List<DailyWorkSummaryRecruiterModel> result = await  dailySummaryVM
-                                          .getRecruiterDailyWorkSummary(
-                                              workerId: workerId);
+                                      List<DailyWorkSummaryRecruiterModel>
+                                          result = await dailySummaryVM
+                                              .getRecruiterDailyWorkSummary(
+                                                  workerId: workerId);
                                       hideOpenDialog(context: context);
                                       if (result.isNotEmpty) {
-                                        Get.toNamed(
+                                        Get.offAndToNamed(
                                             AppRoutes.dailySummaryRecruiterView,
                                             arguments: workerId);
                                       }
@@ -589,14 +612,16 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.lightblue,
                             title: 'Check Summary',
-                            onTap: () async{
+                            onTap: () async {
                               showLoadingIndicator(context: context);
-                              List<DailyWorkSummaryRecruiterModel> result = await 
-                                  dailySummaryVM.getRecruiterDailyWorkSummary(
-                                      workerId: workerId);
+                              List<DailyWorkSummaryRecruiterModel> result =
+                                  await dailySummaryVM
+                                      .getRecruiterDailyWorkSummary(
+                                          workerId: workerId);
                               hideOpenDialog(context: context);
                               if (result.isNotEmpty) {
-                                Get.toNamed(AppRoutes.dailySummaryRecruiterView,
+                                Get.offNamed(
+                                    AppRoutes.dailySummaryRecruiterView,
                                     arguments: workerId);
                               }
                             })

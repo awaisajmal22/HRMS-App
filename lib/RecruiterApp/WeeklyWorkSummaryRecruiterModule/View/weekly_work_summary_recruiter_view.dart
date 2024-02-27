@@ -25,14 +25,16 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
     return Scaffold(
       body: PopScope(
         canPop: false,
-        onPopInvoked: (val) {
-          Get.offAllNamed(AppRoutes.navBarRecruiterView);
+        onPopInvoked: (val){
+          val == false ? homeVM.getSpecificWorkerData().then(
+                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val)): null;
         },
         child: Column(
           children: [
             customAppBar(
               onTap: () {
-                Get.offAllNamed(AppRoutes.navBarRecruiterView);
+               homeVM.getSpecificWorkerData().then(
+                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
               },
               isBackButton: true,
               title: 'Weekly Summary',
@@ -101,7 +103,7 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
                                 workerId
                               ],
                             );
-
+        
                             weeklySummaryVM.selectCurrentSummaryIndex.value =
                                 index;
                           },
@@ -109,8 +111,7 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
                             () => Container(
                               decoration: BoxDecoration(
                                   color: weeklySummaryVM
-                                              .selectCurrentSummaryIndex
-                                              .value ==
+                                              .selectCurrentSummaryIndex.value ==
                                           index
                                       ? Colors.blue
                                       : Colors.transparent,
@@ -122,13 +123,12 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       appText(
-                                          title:
-                                              weeklySummaryVM.weeklyWorkList !=
-                                                      null
-                                                  ? weeklySummaryVM
-                                                      .weeklyWorkList[index]
-                                                      .jobSiteName
-                                                  : 'Job Site',
+                                          title: weeklySummaryVM.weeklyWorkList !=
+                                                  null
+                                              ? weeklySummaryVM
+                                                  .weeklyWorkList[index]
+                                                  .jobSiteName
+                                              : 'Job Site',
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700),
                                       // Row(
@@ -309,7 +309,8 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: customTextButton(
                 onTap: () {
-                  Get.offAllNamed(AppRoutes.navBarRecruiterView);
+                 homeVM.getSpecificWorkerData().then(
+                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
                 },
                 title: 'Close',
                 buttonColor: AppColor.blue.withOpacity(0.37),

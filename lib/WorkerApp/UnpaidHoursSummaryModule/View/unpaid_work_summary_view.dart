@@ -7,33 +7,34 @@ import 'package:hrmsapp/Constant/AppBar/custom_app_bar.dart';
 import 'package:hrmsapp/Constant/AppButton/text_button.dart';
 import 'package:hrmsapp/Constant/AppDialogs/sucessfully_hours_submit_dialog.dart';
 import 'package:hrmsapp/RecruiterApp/HomeRecruiterModule/ViewModel/home_recruiter_view_model.dart';
-import 'package:hrmsapp/RecruiterApp/UnpaidRecruiterHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
+
 import 'package:hrmsapp/RoutesAndBindings/app_routes.dart';
 import 'package:hrmsapp/Utils/spint_kit_view_spinner.dart';
+import 'package:hrmsapp/WorkerApp/HomeModule/ViewModel/home_view_model.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/ViewModel/unpaid_work_summary_view_model.dart';
 
 import '../../../Constant/AppColors/colors.dart';
 import '../../../Constant/AppText/app_text.dart';
 
-class UnpaidRecruiterSummaryView extends StatelessWidget {
-  UnpaidRecruiterSummaryView({super.key});
-  final unPaidSummaryVM = Get.find<UnpaidRecruiterSummaryViewModel>();
-  final homeVM = Get.find<HomeRecruiterViewModel>();
-  final workerId = Get.arguments;
+class UnpaidWorkSummaryView extends StatelessWidget {
+  UnpaidWorkSummaryView({super.key});
+  final unPaidSummaryVM = Get.find<UnpaidSummaryViewModel>();
+  final homeVM = Get.find<HomeViewModel>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PopScope(
         canPop: false,
-        onPopInvoked: (val) {
-          val == false ? homeVM.getSpecificWorkerData().then(
-                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val)) : null;
+        onPopInvoked: (val){
+          val == false ? Get.offAllNamed(AppRoutes.navBarView) : null;
         },
         child: Column(
           children: [
             customAppBar(
               onTap: () {
-                homeVM.getSpecificWorkerData().then(
-                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
+                Get.offAllNamed(AppRoutes.navBarView);
+                // Get.back();
               },
               isBackButton: true,
               title: 'Unpaid Summary',
@@ -102,7 +103,7 @@ class UnpaidRecruiterSummaryView extends StatelessWidget {
                             //     workerId
                             //   ],
                             // );
-
+        
                             // unPaidSummaryVM.selectCurrentSummaryIndex.value =
                             //     index;
                           },
@@ -110,8 +111,7 @@ class UnpaidRecruiterSummaryView extends StatelessWidget {
                             () => Container(
                               decoration: BoxDecoration(
                                   color: unPaidSummaryVM
-                                              .selectCurrentSummaryIndex
-                                              .value ==
+                                              .selectCurrentSummaryIndex.value ==
                                           index
                                       ? Colors.blue
                                       : Colors.transparent,
@@ -123,13 +123,12 @@ class UnpaidRecruiterSummaryView extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       appText(
-                                          title:
-                                              unPaidSummaryVM.unpaidWorkList !=
-                                                      null
-                                                  ? unPaidSummaryVM
-                                                      .unpaidWorkList[index]
-                                                      .jobSiteName
-                                                  : 'Job Site',
+                                          title: unPaidSummaryVM.unpaidWorkList !=
+                                                  null
+                                              ? unPaidSummaryVM
+                                                  .unpaidWorkList[index]
+                                                  .jobSiteName
+                                              : 'Job Site',
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700),
                                       // Row(
@@ -310,9 +309,8 @@ class UnpaidRecruiterSummaryView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: customTextButton(
                 onTap: () {
-                 homeVM.getSpecificWorkerData().then(
-                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
-               
+                  Get.offAllNamed(AppRoutes.navBarView);
+                  // Get.back();
                 },
                 title: 'Close',
                 buttonColor: AppColor.blue.withOpacity(0.37),

@@ -6,10 +6,10 @@ WorkersListModel WorkersListModelFromJson(String str) => WorkersListModel.fromJs
 String WorkersListModelToJson(WorkersListModel data) => json.encode(data.toJson());
 
 class WorkersListModel {
-    int id;
-    String firstName;
-    String lastName;
-    int timeSheettype;
+    dynamic id;
+    dynamic firstName;
+    dynamic lastName;
+    dynamic timeSheettype;
 
     WorkersListModel({
         required this.id,

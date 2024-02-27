@@ -21,6 +21,7 @@ class OnBoardingView extends StatelessWidget {
   final token = Get.arguments;
   @override
   Widget build(BuildContext context) {
+    onBVM.checkVersion(context);
     return Scaffold(
       body: backgroundGradient(
         context: context,

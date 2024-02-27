@@ -24,6 +24,7 @@ class UnpaidHoursRecruiterServices {
   }) async {
     bool isSuccess = false;
     try {
+      print('Week Number is $weekNumber');
       if (parkingTravelImage.isNotEmpty && generalExpImage.isNotEmpty) {
         FormData data = FormData.fromMap({
           "workerid": workerId,
@@ -34,7 +35,7 @@ class UnpaidHoursRecruiterServices {
           "Genexpence": generalExpValue,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
-          "weekNumber":weekNumber,
+          "weekNumber": weekNumber,
           "Parkingdoc": await MultipartFile.fromFile(
             parkingTravelImage,
             filename: parkingTravelImage.split('/').last,
@@ -63,7 +64,7 @@ class UnpaidHoursRecruiterServices {
               DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
           "Unpaidhours": unpaidHours,
           "Parking": parkingTravelValue ?? 0.0,
-          "Genexpence": generalExpValue  ?? 0.0,
+          "Genexpence": generalExpValue ?? 0.0,
           "Feedback": feedBack,
           "weekNumber": weekNumber,
           "JobsiteId": jobSiteID,
@@ -84,13 +85,12 @@ class UnpaidHoursRecruiterServices {
     } catch (e) {}
     return isSuccess;
   }
-  Future<List<Last12WeeksModel>> getLast12WeeksRecruiter(
-      ) async {
+
+  Future<List<Last12WeeksModel>> getLast12WeeksRecruiter() async {
     bool? isSuccess = false;
     List<Last12WeeksModel> last12Weeks = [];
     try {
-      var response = await API().getRequestHeader(
-          "${ApiUrl.last12WeeksUrl}");
+      var response = await API().getRequestHeader("${ApiUrl.last12WeeksUrl}");
       // print(response);
       if (response == null) {}
       if (response.statusCode == 200) {

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppColors/colors.dart';
@@ -49,9 +52,18 @@ class HomeRecruiterView extends StatelessWidget {
                 return Column(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.workerView,
-                            arguments: homeVM.workerList[index]);
+                      onTap: () async{
+                        final jsonEncoded = jsonEncode(homeVM.workerList[index]);
+                        SharedPreferences pref =await  SharedPreferences.getInstance();
+
+                        pref.setString('userData', jsonEncoded).whenComplete(() {
+                          homeVM.getSpecificWorkerData().whenComplete(() => Get.toNamed(AppRoutes.workerView,
+                            arguments: homeVM.workerList[index]
+                            ));
+                        });
+
+                        
+
                       },
                       child: Container(
                         alignment: Alignment.centerLeft,

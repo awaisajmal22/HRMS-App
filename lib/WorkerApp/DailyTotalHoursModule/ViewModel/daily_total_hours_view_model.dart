@@ -21,7 +21,19 @@ class DailyTotalHoursViewModel extends GetxController {
   Rx<TimeOfDay> startTime = TimeOfDay.now().obs;
   Rx<TimeOfDay> endTime = TimeOfDay.now().obs;
   RxString totalHours = ''.obs;
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
 
+    jobSiteController.dispose();
+    startTimeController.dispose();
+    endTimeController.dispose();
+    commentController.dispose();
+    generalExpController.dispose();
+    parkingTravelController.dispose();
+    totalHoursController.dispose();
+  }
   // selectionChanged(DateRangePickerSelectionChangedArgs args) {
   //   selectedPayPeriod.value =
   //       DateFormat('dd, MMMM yyyy').format(args.value).toString() ?? "";

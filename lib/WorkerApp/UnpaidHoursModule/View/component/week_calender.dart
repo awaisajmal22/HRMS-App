@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 import '../../../../Constant/AppColors/colors.dart';
 import '../../ViewModel/unpaid_hours_view_model.dart';
 
-class UnpaidDatePicker extends StatelessWidget {
-  UnpaidDatePicker({super.key});
+class UnpaidDatePickerWorker extends StatelessWidget {
+  UnpaidDatePickerWorker({super.key});
   List weekDays = [
     'M',
     'T',
@@ -26,6 +26,23 @@ class UnpaidDatePicker extends StatelessWidget {
       builder: (controller) {
         return Column(
           children: [
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: appText(
+                textColor: Colors.white,
+                fontSize: 12,
+                title: controller.startYear.value == controller.endYear.value
+                    ? "Year ${controller.startYear.value}"
+                    : "Year ${controller.startYear.value} - Year ${controller.endYear.value}",
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.010,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -48,13 +65,25 @@ class UnpaidDatePicker extends StatelessWidget {
                                   controller.selectedWeekIndex.value]
                               .dates![6])
                           .toString();
-                       controller.startweek.value = DateFormat.MMMMd().format(
+                      controller.startweek.value = DateFormat.MMMMd().format(
                           DateTime.parse(controller
                               .last12WeekList[
                                   controller.selectedWeekIndex.value]
                               .dates![0]
                               .toString()));
-                              controller.endWeek.value = DateFormat.MMMMd().format(
+                      controller.endWeek.value = DateFormat.MMMMd().format(
+                          DateTime.parse(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![6]
+                              .toString()));
+                      controller.startYear.value = DateFormat.y().format(
+                          DateTime.parse(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0]
+                              .toString()));
+                      controller.endYear.value = DateFormat.y().format(
                           DateTime.parse(controller
                               .last12WeekList[
                                   controller.selectedWeekIndex.value]
@@ -62,7 +91,10 @@ class UnpaidDatePicker extends StatelessWidget {
                               .toString()));
                     }
                   },
-                  child: Icon(Icons.keyboard_arrow_left),
+                  child: Icon(
+                    Icons.keyboard_arrow_left,
+                    size: 30.h,
+                  ),
                 ),
                 SizedBox(
                   width: size.width * 0.020,
@@ -111,7 +143,19 @@ class UnpaidDatePicker extends StatelessWidget {
                                   controller.selectedWeekIndex.value]
                               .dates![0]
                               .toString()));
-                              controller.endWeek.value = DateFormat.MMMMd().format(
+                      controller.endWeek.value = DateFormat.MMMMd().format(
+                          DateTime.parse(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![6]
+                              .toString()));
+                      controller.startYear.value = DateFormat.y().format(
+                          DateTime.parse(controller
+                              .last12WeekList[
+                                  controller.selectedWeekIndex.value]
+                              .dates![0]
+                              .toString()));
+                      controller.endYear.value = DateFormat.y().format(
                           DateTime.parse(controller
                               .last12WeekList[
                                   controller.selectedWeekIndex.value]
@@ -119,7 +163,10 @@ class UnpaidDatePicker extends StatelessWidget {
                               .toString()));
                     }
                   },
-                  child: Icon(Icons.keyboard_arrow_right),
+                  child: Icon(
+                    Icons.keyboard_arrow_right,
+                    size: 30.h,
+                  ),
                 ),
               ],
             ),

@@ -24,7 +24,19 @@ class EditWeeklyTotalHoursViewModel extends GetxController {
 
   RxString selectedPayPeriod = 'Monday+Date to Sunday+Date'.obs;
   var payPeriodList = ['Monday+Date to Sunday+Date'];
- 
+ @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    payPeriodController.clear();
+    jobSiteController.clear();
+    startTimeController.clear();
+    endTimeController.clear();
+    commentController.clear();
+    generalExpController.clear();
+    parkingTravelController.clear();
+    totalHoursController.clear();
+  }
 
   RxString startDate = 'Monday+Date'.obs;
   RxString endDate = 'Sunday+Date'.obs;

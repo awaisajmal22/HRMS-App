@@ -294,10 +294,9 @@ class DailyTotalHoursView extends StatelessWidget {
                             ),
                             customTextField(
                               focusNode: focusNode,
-                              onTap: () {
-                                FocusScope.of(context).requestFocus(focusNode);
-                              },
-                              readOnly: false,
+                              
+                              verticalPadding: 0,
+                              horizontalPadding: 10,
                               hintText: '',
                               //  dailytotalVM.endTime.value ==
                               //         TimeOfDay.now()
@@ -622,12 +621,14 @@ class DailyTotalHoursView extends StatelessWidget {
                                               onTap: () async {
                                                 showLoadingIndicator(
                                                     context: context);
-                                                List<DailyWorkSummaryModel> result = await dailySummaryVM
-                                                    .getDailyWorkSummary();
+                                                List<DailyWorkSummaryModel>
+                                                    result =
+                                                    await dailySummaryVM
+                                                        .getDailyWorkSummary();
                                                 hideOpenDialog(
                                                     context: context);
                                                 if (result.isNotEmpty) {
-                                                  Get.toNamed(AppRoutes
+                                                  Get.offAndToNamed(AppRoutes
                                                       .dailySummaryView);
                                                 }
                                               },
@@ -647,10 +648,11 @@ class DailyTotalHoursView extends StatelessWidget {
                                   child: customTextButton(
                                       buttonColor: AppColor.blue,
                                       title: 'Check Summary',
-                                      onTap: ()async {
+                                      onTap: () async {
                                         showLoadingIndicator(context: context);
-                                        List<DailyWorkSummaryModel> result = await dailySummaryVM
-                                            .getDailyWorkSummary();
+                                        List<DailyWorkSummaryModel> result =
+                                            await dailySummaryVM
+                                                .getDailyWorkSummary();
                                         hideOpenDialog(context: context);
                                         if (result.isNotEmpty) {
                                           Get.toNamed(

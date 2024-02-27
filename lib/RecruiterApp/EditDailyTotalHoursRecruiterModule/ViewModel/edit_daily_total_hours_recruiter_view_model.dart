@@ -20,6 +20,19 @@ class EditDailyTotalHoursRecruiterViewModel extends GetxController {
   Rx<TimeOfDay> startTime = TimeOfDay.now().obs;
   Rx<TimeOfDay> endTime = TimeOfDay.now().obs;
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    jobSiteController.clear();
+    startTimeController.clear();
+    endTimeController.clear();
+    commentController.clear();
+    parkingTravelController.clear();
+    generalExpController.clear();
+    totalHoursController.clear();
+  }
+
   TimeOfDay selectedTime = TimeOfDay.now();
   String getTime(TimeOfDay? start, TimeOfDay? end) {
     if (start == null || end == null) return '';

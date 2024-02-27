@@ -408,8 +408,10 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                                                     workerId: workerId);
                                         hideOpenDialog(context: context);
                                         if (result.isNotEmpty) {
-                                          Get.toNamed(AppRoutes
-                                              .weeklySummaryRecruiterView,arguments: workerId);
+                                          Get.offAndToNamed(
+                                              AppRoutes
+                                                  .weeklySummaryRecruiterView,
+                                              arguments: workerId);
                                         }
                                       },
                                     );
@@ -447,7 +449,8 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                                   hideOpenDialog(context: context);
                                   if (result.isNotEmpty) {
                                     Get.toNamed(
-                                        AppRoutes.weeklySummaryRecruiterView, arguments: workerId);
+                                        AppRoutes.weeklySummaryRecruiterView,
+                                        arguments: workerId);
                                   }
                                 })
                           ],

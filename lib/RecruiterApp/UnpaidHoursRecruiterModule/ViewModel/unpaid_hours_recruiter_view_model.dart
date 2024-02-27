@@ -20,6 +20,8 @@ class UnpaidHoursRecruiterViewModel extends GetxController {
   RxInt selectedWeekIndex = 0.obs;
   RxString startweek = ''.obs;
   RxString endWeek =''.obs;
+  RxString startYear =''.obs;
+  RxString endYear =''.obs;
   Future<bool> submitUnpaidRecruiterHours(
       {required int workerId,
       required double unpaidHours,

@@ -23,6 +23,7 @@ class LoginView extends StatelessWidget {
   final loginVM = Get.find<LoginViewModel>();
   @override
   Widget build(BuildContext context) {
+    // loginVM.checkVersion(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Obx(
@@ -149,7 +150,7 @@ class LoginView extends StatelessWidget {
                                     check: result.timeSheettype,
                                     token: result.token ?? "",
                                     name: result.fname ?? '',
-                                    lastName: result.lname ??'',
+                                    lastName: result.lname ?? '',
                                     id: result.id ?? '');
                                 if (result.userRoles![0] == "RECRUITER") {
                                   print('recruiter is here');

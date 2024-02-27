@@ -20,7 +20,18 @@ class EditDailyTotalHoursViewModel extends GetxController {
   RxString selectedPayPeriod = 'Monday+Date to Sunday+Date'.obs;
   Rx<TimeOfDay> startTime = TimeOfDay.now().obs;
   Rx<TimeOfDay> endTime = TimeOfDay.now().obs;
-
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    jobSiteController.clear();
+    startTimeController.clear();
+    endTimeController.clear();
+    commentController.clear();
+    generalExpController.clear();
+    parkingTravelController.clear();
+    totalHoursController.clear();
+  }
   // selectionChanged(DateRangePickerSelectionChangedArgs args) {
   //   selectedPayPeriod.value =
   //       DateFormat('dd, MMMM yyyy').format(args.value).toString() ?? "";

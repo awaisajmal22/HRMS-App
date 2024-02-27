@@ -77,6 +77,14 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                   .format(
                                       unpaidHoursVM.last12WeekList[0].dates![6])
                                   .toString();
+                              unpaidHoursVM.startYear.value = DateFormat.y()
+                                  .format(DateTime.parse(unpaidHoursVM
+                                      .last12WeekList[0].dates![0]
+                                      .toString()));
+                              unpaidHoursVM.endYear.value = DateFormat.y()
+                                  .format(DateTime.parse(unpaidHoursVM
+                                      .last12WeekList[0].dates![6]
+                                      .toString()));
                               showGeneralDialog(
                                 context: context,
                                 pageBuilder:
@@ -95,19 +103,19 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                           color:
                                               AppColor.blue.withOpacity(0.44),
                                         ),
-                                        height: 100.h,
+                                        height: 140.h,
                                         child: UnpaidDatePicker()),
                                   );
                                 },
                               );
                             },
-                            hintText: unpaidHoursVM.weekNumber.value != 0
-                                ?
+                            hintText: unpaidHoursVM.selectedWeekIndex.value == 0
+                                ? ""
+                                :
                                 //  unpaidHoursVM.pickedDate.value != ''
                                 //     ? DateFormat("yyyy-MMM-dd").format(
                                 //         DateTime.parse(
-                                "${unpaidHoursVM.startweek.value} to ${unpaidHoursVM.endWeek.value}"
-                                : '',
+                                "${unpaidHoursVM.startweek.value} to ${unpaidHoursVM.endWeek.value}",
                             controller: unpaidHoursVM.dateController,
                           ),
                         ),
@@ -273,7 +281,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.blue,
                             onTap: () async {
-                              if (unpaidHoursVM.weekNumber.value == 0) {
+                              if (unpaidHoursVM.selectedWeekIndex.value == 0) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:

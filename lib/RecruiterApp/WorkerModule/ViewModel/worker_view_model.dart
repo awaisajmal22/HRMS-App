@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:hrmsapp/RecruiterApp/HomeRecruiterModule/Model/workers_list_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../RoutesAndBindings/app_routes.dart';
 import '../../../Utils/spint_kit_view_spinner.dart';
@@ -7,6 +9,8 @@ import '../../WeeklyWorkSummaryRecruiterModule/ViewModel/weekly_work_summary_rec
 import '../Model/worker_model.dart';
 
 class WorkerViewModel extends GetxController {
+ 
+
   RxList<WorkerModel> homeFeatureList = <WorkerModel>[
     WorkerModel(
       title: 'Submit Hours',
@@ -34,7 +38,8 @@ class WorkerViewModel extends GetxController {
         } else if (check == 0) {
           final weeklyWorkVM = Get.put(WeeklyWorkSummaryRecruiterViewModel());
           showLoadingIndicator(context: context);
-          final result = await weeklyWorkVM.getRecruiterweeklyWorkSummary(workerId: id);
+          final result =
+              await weeklyWorkVM.getRecruiterweeklyWorkSummary(workerId: id);
           print(result);
           hideOpenDialog(context: context);
           if (result != null) {
@@ -54,4 +59,8 @@ class WorkerViewModel extends GetxController {
       },
     ),
   ].obs;
+  @override
+  void onInit() {
+    super.onInit();
+  }
 }

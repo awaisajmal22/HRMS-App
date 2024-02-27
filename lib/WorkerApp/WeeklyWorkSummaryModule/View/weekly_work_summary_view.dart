@@ -25,13 +25,14 @@ class WeeklyWorkSummaryView extends StatelessWidget {
       body: PopScope(
         canPop: false,
         onPopInvoked: (val) {
-          Get.offAllNamed(AppRoutes.navBarView);
+          val == false ? Get.offAllNamed(AppRoutes.navBarView) : null;
         },
         child: Column(
           children: [
             customAppBar(
               onTap: () {
                 Get.offAllNamed(AppRoutes.navBarView);
+                // Get.back();
               },
               isBackButton: true,
               title: 'Weekly Summary',
@@ -274,6 +275,7 @@ class WeeklyWorkSummaryView extends StatelessWidget {
               child: customTextButton(
                 onTap: () {
                   Get.offAllNamed(AppRoutes.navBarView);
+                  // Get.back();
                 },
                 title: 'Close',
                 buttonColor: AppColor.blue.withOpacity(0.37),

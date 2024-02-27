@@ -8,9 +8,9 @@ import '../../../Network/api_service.dart';
 import '../../../Network/api_url.dart';
 import '../../../Utils/toast_message.dart';
 
-class UnpaidHoursServices{
+class UnpaidHoursServices {
   Future<bool> unpaidSubmitHoursServices({
-   required int weekNumber,
+    required int weekNumber,
     required double unpaidHours,
     required String jobSite,
     required double generalExpValue,
@@ -21,18 +21,19 @@ class UnpaidHoursServices{
     required String date,
     required int jobSiteID,
   }) async {
+    print("Week Number is $weekNumber");
     bool isSuccess = false;
     try {
       if (parkingTravelImage.isNotEmpty && generalExpImage.isNotEmpty) {
         FormData data = FormData.fromMap({
-          // "Date": 
-              // DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
+          // "Date":
+          // DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
           "Unpaidhours": unpaidHours,
           "Parking": parkingTravelValue,
           "Genexpence": generalExpValue,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
-          "WeekNumber":weekNumber,
+          "WeekNumber": weekNumber,
           "Parkingdoc": await MultipartFile.fromFile(
             parkingTravelImage,
             filename: parkingTravelImage.split('/').last,
@@ -56,14 +57,14 @@ class UnpaidHoursServices{
         }
       } else {
         FormData data = FormData.fromMap({
-          // "Date": 
+          // "Date":
           //     DateFormat('yyyy-d-M').format(DateTime.parse(date)).toString(),
           "Unpaidhours": unpaidHours,
           "Parking": parkingTravelValue ?? 0.0,
           "Genexpence": generalExpValue ?? 0.0,
           "Feedback": feedBack,
           "JobsiteId": jobSiteID,
-          "WeekNumber":weekNumber,
+          "WeekNumber": weekNumber,
         });
         print(generalExpImage);
         print(parkingTravelImage);
@@ -81,13 +82,12 @@ class UnpaidHoursServices{
     } catch (e) {}
     return isSuccess;
   }
-  Future<List<Last12WeeksModel>> getLast12WeeksWorker(
-      ) async {
+
+  Future<List<Last12WeeksModel>> getLast12WeeksWorker() async {
     bool? isSuccess = false;
     List<Last12WeeksModel> last12Weeks = [];
     try {
-      var response = await API().getRequestHeader(
-          "${ApiUrl.last12WeeksUrl}");
+      var response = await API().getRequestHeader("${ApiUrl.last12WeeksUrl}");
       // print(response);
       if (response == null) {}
       if (response.statusCode == 200) {

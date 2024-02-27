@@ -288,22 +288,12 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                               height: 2.h,
                             ),
                             customTextField(
-                                readOnly: false,
-                                hintText: '',
-                                // dailytotalVM.endTime.value ==
-                                //         TimeOfDay.now()
-                                //     ? ''
-                                //     : dailytotalVM.endTime.value ==
-                                //             dailytotalVM.startTime.value
-                                //         ? ''
-                                //         :  dailytotalVM.endTime.value !=
-                                //             dailytotalVM.startTime.value
-                                //         ? "${dailytotalVM.getTime(dailytotalVM.startTime.value, dailytotalVM.endTime.value)}"
-                                //         : '',
-                                controller: dailytotalVM.totalHoursController,
-                                textInputType: TextInputType.number,
-                              ),
-                            
+                              verticalPadding: 0,
+                              horizontalPadding: 10,
+                              hintText: '',
+                              controller: dailytotalVM.totalHoursController,
+                              textInputType: TextInputType.number,
+                            ),
                             SizedBox(height: 18.h),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -592,16 +582,17 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                                         context: context,
                                         title:
                                             'Your Daily Hours Successfully Added To List',
-                                        onTap: () async{
+                                        onTap: () async {
                                           showLoadingIndicator(
                                               context: context);
-                                      List<DailyWorkSummaryRecruiterModel> result = await dailySummaryVM
-                                              .getRecruiterDailyWorkSummary(
+                                          List<DailyWorkSummaryRecruiterModel>
+                                              result = await dailySummaryVM
+                                                  .getRecruiterDailyWorkSummary(
                                             workerId: workerId,
                                           );
                                           hideOpenDialog(context: context);
                                           if (result.isNotEmpty) {
-                                            Get.toNamed(
+                                            Get.offAndToNamed(
                                                 AppRoutes
                                                     .dailySummaryRecruiterView,
                                                 arguments: workerId);
@@ -619,10 +610,11 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                             customTextButton(
                                 buttonColor: AppColor.lightblue,
                                 title: 'Check Summary',
-                                onTap: ()async {
+                                onTap: () async {
                                   showLoadingIndicator(context: context);
-                                  List<DailyWorkSummaryRecruiterModel> result = await dailySummaryVM
-                                      .getRecruiterDailyWorkSummary(
+                                  List<DailyWorkSummaryRecruiterModel> result =
+                                      await dailySummaryVM
+                                          .getRecruiterDailyWorkSummary(
                                     workerId: workerId,
                                   );
                                   hideOpenDialog(context: context);

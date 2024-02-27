@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/current_week_recruiter_model.dart';
+
 import '../Model/job_site_recruiter_model.dart';
 import '../Model/workers_list_model.dart';
 import '../services/home_recruiter_services.dart';
@@ -69,6 +70,12 @@ class HomeRecruiterViewModel extends GetxController {
   RxString startOfWeek = ''.obs;
   RxString endOfWeek = ''.obs;
   Rx<DateTime> endWeekDate = DateTime.now().obs;
+   Rx<WorkersListModel> worker = WorkersListModel.fromJson({}).obs;
+  Future<WorkersListModel> getSpecificWorkerData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    worker.value = WorkersListModelFromJson(pref.getString('userData') ?? '');
+    return worker.value;
+  }
   getCurrentWeek() async {
     CurrentWeekRecruiterDateModel date =
         await HomeRecruiterServices().getCurrentWeekDate();

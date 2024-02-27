@@ -393,7 +393,7 @@ class WeeklyTotalHoursView extends StatelessWidget {
                                   weeklySummaryVM.getweeklyWorkSummary();
                               hideOpenDialog(context: context);
                               if (result.isNotEmpty) {
-                                Get.toNamed(AppRoutes.weeklySummaryView);
+                                Get.offAndToNamed(AppRoutes.weeklySummaryView);
                               }
                             },
                           );

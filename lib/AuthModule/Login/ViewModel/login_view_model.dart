@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/login_model.dart';
@@ -39,6 +42,22 @@ class LoginViewModel extends GetxController {
     pref.setInt('check', check);
     pref.setString('email', email);
     pref.setString('lastname', lastName);
+  }
+  checkVersion(BuildContext context) async {
+    //
+
+    await Future.delayed(Duration(milliseconds: 300));
+
+    await NewVersionPlus(
+      iOSId: 'com.vconekt.hrmsapp',
+      androidId: 'com.vconekt.hrmsapp',
+    ).showAlertIfNecessary(
+        context: context,
+        launchModeVersion: Platform.isAndroid
+            ? LaunchModeVersion.external
+            : LaunchModeVersion.normal);
+
+    
   }
   RxBool isKeyboard =false.obs;
   @override

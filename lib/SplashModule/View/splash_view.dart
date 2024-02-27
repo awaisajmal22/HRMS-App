@@ -16,6 +16,7 @@ class SplashView extends StatelessWidget {
   final splashVM = Get.find<SplashViewModel>();
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: backgroundGradient(
         context: context,

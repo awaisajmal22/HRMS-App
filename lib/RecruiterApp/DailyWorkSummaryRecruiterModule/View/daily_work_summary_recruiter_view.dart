@@ -29,13 +29,19 @@ class DailyWorkSummaryRecruiterView extends StatelessWidget {
       body: PopScope(
         canPop: false,
         onPopInvoked: (val) {
-          Get.offAllNamed(AppRoutes.navBarRecruiterView);
+          val == false
+              ? homeVM
+                  .getSpecificWorkerData()
+                  .then((val) => Get.offAllNamed(AppRoutes.workerView, arguments: val))
+              : null;
         },
         child: Column(
           children: [
             customAppBar(
               onTap: () {
-                Get.offAllNamed(AppRoutes.navBarRecruiterView);
+                homeVM
+                    .getSpecificWorkerData()
+                    .then((val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
               },
               title: 'Daily Summary',
               isBackButton: true,
@@ -281,7 +287,8 @@ class DailyWorkSummaryRecruiterView extends StatelessWidget {
                   ),
                   customTextButton(
                     onTap: () {
-                      Get.offAllNamed(AppRoutes.navBarRecruiterView);
+                      homeVM.getSpecificWorkerData().then(
+                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
                     },
                     title: 'Close',
                     buttonColor: AppColor.blue.withOpacity(0.37),

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -29,18 +28,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      builder: (context, _) {
-        return GetMaterialApp(
-          useInheritedMediaQuery: true,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            scaffoldBackgroundColor: AppColor.white
-          ),
-         getPages: AppPages.routes,
-         initialRoute: AppRoutes.splashView,
-        );
-      }
-    );
+    return ScreenUtilInit(builder: (context, _) {
+      return GetMaterialApp(
+        useInheritedMediaQuery: true,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            // colorScheme: ColorScheme.light(surface: Colors.blue),
+            scaffoldBackgroundColor: AppColor.white),
+        getPages: AppPages.routes,
+        initialRoute: AppRoutes.splashView,
+      );
+    });
   }
 }

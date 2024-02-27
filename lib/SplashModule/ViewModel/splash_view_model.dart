@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../RoutesAndBindings/app_routes.dart';
@@ -12,7 +15,7 @@ class SplashViewModel extends GetxController {
     // TODO: implement onInit
     Timer.periodic(
         const Duration(
-          seconds: 2,
+          seconds: 3,
         ), (timer) {
       onLogin();
       timer.cancel();

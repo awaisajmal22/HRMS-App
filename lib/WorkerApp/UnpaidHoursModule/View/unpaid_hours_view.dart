@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/Model/unpaid_recruiter_summary_model.dart';
-import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/ViewModel/unpaid_recuiter_summary_view_model.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/ViewModel/unpaid_work_summary_view_model.dart';
 import 'package:hrmsapp/WorkerApp/WeeklyWorkSummaryModule/Model/weekly_work_summary_model.dart';
 import 'package:intl/intl.dart';
 
@@ -73,6 +73,14 @@ class UnpaidHoursView extends StatelessWidget {
                                   .format(DateTime.parse(unpaidHoursVM
                                       .last12WeekList[0].dates![6]
                                       .toString()));
+                              unpaidHoursVM.startYear.value = DateFormat.y()
+                                  .format(DateTime.parse(unpaidHoursVM
+                                      .last12WeekList[0].dates![0]
+                                      .toString()));
+                              unpaidHoursVM.endYear.value = DateFormat.y()
+                                  .format(DateTime.parse(unpaidHoursVM
+                                      .last12WeekList[0].dates![6]
+                                      .toString()));
                               showGeneralDialog(
                                 context: context,
                                 pageBuilder:
@@ -90,20 +98,21 @@ class UnpaidHoursView extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         color: AppColor.blue.withOpacity(0.44),
                                       ),
-                                      height: 100.h,
-                                      child: UnpaidDatePicker(),
+                                      height: 140.h,
+                                      child: UnpaidDatePickerWorker(),
                                     ),
                                   );
                                 },
                               );
                             },
-                            hintText: unpaidHoursVM.weekNumber.value != 0
-                                ?
+                            hintText: unpaidHoursVM.selectedWeekIndex.value == 0
+                                ? ''
+                                :
+
                                 // unpaidHoursVM.pickedDate.value != ''
                                 //     ? DateFormat("yyyy-MMM-dd").format(
                                 //         DateTime.parse(
-                                "${unpaidHoursVM.startweek.value} to ${unpaidHoursVM.endWeek.value}"
-                                : '',
+                                "${unpaidHoursVM.startweek.value} to ${unpaidHoursVM.endWeek.value}",
                             // ))
                             // : '',
                             controller: unpaidHoursVM.dateController,
@@ -270,113 +279,131 @@ class UnpaidHoursView extends StatelessWidget {
                         SizedBox(
                           height: 14.h,
                         ),
-                        customTextButton(
-                            buttonColor: AppColor.blue,
-                            onTap: () async {
-                              if (unpaidHoursVM.weekNumber.value == 0) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content:
-                                            Text('Please select the Week')));
-                              } else if (unpaidHoursVM
-                                  .unpaidHoursController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            'Please fill the required fields')));
-                              } else if (unpaidHoursVM
-                                      .unpaidHoursController.text ==
-                                  '0') {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            'Total hours must be greater than 0')));
-                              } else if (unpaidHoursVM
-                                          .unpaidHoursController.text !=
-                                      '' &&
-                                  unpaidHoursVM.pickedDate.value != '' &&
-                                  homeVM.selectedDropDownValue.value != '') {
-                                showLoadingIndicator(context: context);
+                        Row(
+                          children: [
+                            Expanded(
+                              child: customTextButton(
+                                  buttonColor: AppColor.blue,
+                                  onTap: () async {
+                                    if (unpaidHoursVM.selectedWeekIndex.value ==
+                                        0) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Please select the Week')));
+                                    } else if (unpaidHoursVM
+                                        .unpaidHoursController.text.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Please fill the required fields')));
+                                    } else if (unpaidHoursVM
+                                            .unpaidHoursController.text ==
+                                        '0') {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Total hours must be greater than 0')));
+                                    } else if (unpaidHoursVM
+                                                .unpaidHoursController.text !=
+                                            '' &&
+                                        unpaidHoursVM.pickedDate.value != '' &&
+                                        homeVM.selectedDropDownValue.value !=
+                                            '') {
+                                      showLoadingIndicator(context: context);
 
-                                bool isSuccess =
-                                    await unpaidHoursVM.submitUnpaidHours(
-                                        weeknumber:
-                                            unpaidHoursVM.weekNumber.value,
-                                        generalExpValue: unpaidHoursVM
-                                                .generalExpController
-                                                .text
-                                                .isNotEmpty
-                                            ? double.parse(unpaidHoursVM
-                                                .generalExpController.text)
-                                            : 0.0,
-                                        parkingTravelValue: unpaidHoursVM
-                                                .parkingTravelController
-                                                .text
-                                                .isNotEmpty
-                                            ? double.parse(
-                                                unpaidHoursVM
-                                                    .parkingTravelController
-                                                    .text,
-                                              )
-                                            : 0.0,
-                                        unpaidHours: double.parse(unpaidHoursVM
-                                            .unpaidHoursController.text),
-                                        jobSite:
-                                            homeVM.selectedDropDownValue.value,
-                                        feedBack: unpaidHoursVM
-                                            .commentController.text,
-                                        date: unpaidHoursVM.pickedDate.value,
-                                        jobSiteID:
-                                            homeVM.selectedJobsiteId.value,
-                                        generalExpImage: uploadDocVM.generalExpImage.value,
-                                        parkingTravelImage: uploadDocVM.parkingimage.value);
+                                      bool isSuccess =
+                                          await unpaidHoursVM.submitUnpaidHours(
+                                              weeknumber: unpaidHoursVM
+                                                  .weekNumber.value,
+                                              generalExpValue: unpaidHoursVM
+                                                      .generalExpController
+                                                      .text
+                                                      .isNotEmpty
+                                                  ? double.parse(unpaidHoursVM
+                                                      .generalExpController
+                                                      .text)
+                                                  : 0.0,
+                                              parkingTravelValue: unpaidHoursVM
+                                                      .parkingTravelController
+                                                      .text
+                                                      .isNotEmpty
+                                                  ? double.parse(
+                                                      unpaidHoursVM
+                                                          .parkingTravelController
+                                                          .text,
+                                                    )
+                                                  : 0.0,
+                                              unpaidHours: double.parse(
+                                                  unpaidHoursVM
+                                                      .unpaidHoursController
+                                                      .text),
+                                              jobSite: homeVM
+                                                  .selectedDropDownValue.value,
+                                              feedBack: unpaidHoursVM.commentController.text,
+                                              date: unpaidHoursVM.pickedDate.value,
+                                              jobSiteID: homeVM.selectedJobsiteId.value,
+                                              generalExpImage: uploadDocVM.generalExpImage.value,
+                                              parkingTravelImage: uploadDocVM.parkingimage.value);
 
-                                hideOpenDialog(context: context);
-                                if (isSuccess == true) {
-                                  sucessfullyHoursAddedDialog(
-                                      context: context,
-                                      title:
-                                          'Your Unpaid Hours Have Been Successfully Submitted',
-                                      checkTitle: 'Check Summary',
-                                      onTap: () async {
-                                        showLoadingIndicator(context: context);
-                                        List<UnpaidWorkSummaryModel> result =
-                                            await unpaidSummaryVM
-                                                .getUnpaidWorkSummary();
-                                        hideOpenDialog(context: context);
-                                        if (result.isNotEmpty) {
-                                          Get.offAndToNamed(
-                                              AppRoutes.unpaidWorkSummaryView);
-                                        }
-                                      });
-                                }
-                              } else if (unpaidHoursVM.pickedDate.value == '') {
-                                toast(msg: 'Please select the date.');
-                              } else if (homeVM.selectedDropDownValue.value ==
-                                  '') {
-                                toast(msg: 'Please select job site.');
-                              } else {
-                                toast(msg: "Please fill your all fields");
-                              }
-                            },
-                            title: 'Submit'),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        customTextButton(
-                            buttonColor: AppColor.lightblue,
-                            title: 'Check Summary',
-                            onTap: () async {
-                              showLoadingIndicator(context: context);
-                              List<UnpaidWorkSummaryModel> result =
-                                  await unpaidSummaryVM.getUnpaidWorkSummary();
-                              hideOpenDialog(context: context);
-                              if (result.isNotEmpty) {
-                                Get.toNamed(
-                                  AppRoutes.unpaidWorkSummaryView,
-                                );
-                              }
-                            })
+                                      hideOpenDialog(context: context);
+                                      if (isSuccess == true) {
+                                        sucessfullyHoursAddedDialog(
+                                            context: context,
+                                            title:
+                                                'Your Unpaid Hours Have Been Successfully Submitted',
+                                            checkTitle: 'Check Summary',
+                                            onTap: () async {
+                                              showLoadingIndicator(
+                                                  context: context);
+                                              List<UnpaidWorkSummaryModel>
+                                                  result = await unpaidSummaryVM
+                                                      .getUnpaidWorkSummary();
+                                              hideOpenDialog(context: context);
+                                              if (result.isNotEmpty) {
+                                                Get.offAndToNamed(AppRoutes
+                                                    .unpaidWorkSummaryView);
+                                              }
+                                            });
+                                      }
+                                    } else if (unpaidHoursVM.pickedDate.value ==
+                                        '') {
+                                      toast(msg: 'Please select the date.');
+                                    } else if (homeVM
+                                            .selectedDropDownValue.value ==
+                                        '') {
+                                      toast(msg: 'Please select job site.');
+                                    } else {
+                                      toast(msg: "Please fill your all fields");
+                                    }
+                                  },
+                                  title: 'Submit'),
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Expanded(
+                              child: customTextButton(
+                                  buttonColor: AppColor.blue,
+                                  title: 'Check Summary',
+                                  onTap: () async {
+                                    showLoadingIndicator(context: context);
+                                    List<UnpaidWorkSummaryModel> result =
+                                        await unpaidSummaryVM
+                                            .getUnpaidWorkSummary();
+                                    hideOpenDialog(context: context);
+                                    if (result.isNotEmpty) {
+                                      Get.toNamed(
+                                        AppRoutes.unpaidWorkSummaryView,
+                                      );
+                                    }
+                                  }),
+                            )
+                          ],
+                        )
+
+                        // SizedBox(
+                        //   height: 12.h,
                       ],
                     ),
                   ),

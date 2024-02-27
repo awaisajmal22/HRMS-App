@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingRecruiterViewModel extends GetxController {
@@ -10,6 +14,22 @@ class OnBoardingRecruiterViewModel extends GetxController {
     name.value = pref.getString('name') ?? '';
     lastname.value = pref.getString('lastname')?? '';
     token.value = pref.getString('token') ?? '';
+  }
+  checkVersion(BuildContext context) async {
+    //
+
+    await Future.delayed(Duration(milliseconds: 300));
+
+    await NewVersionPlus(
+      iOSId: 'com.vconekt.hrmsapp',
+      androidId: 'com.vconekt.hrmsapp',
+    ).showAlertIfNecessary(
+        context: context,
+        launchModeVersion: Platform.isAndroid
+            ? LaunchModeVersion.external
+            : LaunchModeVersion.normal);
+
+    
   }
 
   @override
