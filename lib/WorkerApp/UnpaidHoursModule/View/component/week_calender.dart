@@ -188,6 +188,29 @@ class UnpaidDatePickerWorker extends StatelessWidget {
             // SizedBox(
             //   height: size.height * 0.010,
             // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                  controller.last12WeekList[controller.selectedWeekIndex.value]
+                      .dates!.length, (index) {
+                return Column(
+                  children: [
+                    Text(weekDays[index]),
+                    SizedBox(
+                      height: size.height * 0.010,
+                    ),
+                    Text(controller
+                        .last12WeekList[controller.selectedWeekIndex.value]
+                        .dates![index]
+                        .day
+                        .toString()),
+                  ],
+                );
+              }),
+            ),
+            SizedBox(
+              height: size.height * 0.020,
+            ),
             GestureDetector(
               onTap: () {
                 controller.weekNumber.value = controller
@@ -195,29 +218,17 @@ class UnpaidDatePickerWorker extends StatelessWidget {
                     .weekNumber!;
                 Get.back();
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                    controller
-                        .last12WeekList[controller.selectedWeekIndex.value]
-                        .dates!
-                        .length, (index) {
-                  return Column(
-                    children: [
-                      Text(weekDays[index]),
-                      SizedBox(
-                        height: size.height * 0.010,
-                      ),
-                      Text(controller
-                          .last12WeekList[controller.selectedWeekIndex.value]
-                          .dates![index]
-                          .day
-                          .toString()),
-                    ],
-                  );
-                }),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: appText(
+                    textColor: Colors.white, fontSize: 12, title: 'Confirm'),
               ),
-            )
+            ),
           ],
         );
       },

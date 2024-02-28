@@ -12,8 +12,8 @@ class UnpaidHoursViewModel extends GetxController {
   RxInt weekNumber = (0).obs;
   RxString startDate = ''.obs;
   RxString endDate = ''.obs;
-    RxString startweek = ''.obs;
-  RxString endWeek =''.obs;
+  RxString startweek = ''.obs;
+  RxString endWeek = ''.obs;
   final dateController = TextEditingController();
   final unpaidHoursController = TextEditingController();
   final commentController = TextEditingController();
@@ -21,7 +21,6 @@ class UnpaidHoursViewModel extends GetxController {
   final generalExpController = TextEditingController();
 
   RxString pickedDate = DateTime.now().toIso8601String().obs;
-
 
   Future<bool> submitUnpaidHours(
       {required int weeknumber,
@@ -58,8 +57,9 @@ class UnpaidHoursViewModel extends GetxController {
     // TODO: implement onInit
     super.onInit();
   }
-RxString startYear = ''.obs;
-RxString endYear = ''.obs;
+
+  RxString startYear = ''.obs;
+  RxString endYear = ''.obs;
   List<Last12WeeksModel> last12WeekList = <Last12WeeksModel>[];
   Future getLast12WeeksDataWR() async {
     last12WeekList.clear();
@@ -67,13 +67,15 @@ RxString endYear = ''.obs;
     response.forEach((element) => last12WeekList.add(element));
     print('weeks List ${last12WeekList.length}');
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     dateController.dispose();
     unpaidHoursController.dispose();
-    commentController.dispose();parkingTravelController.dispose();
+    commentController.dispose();
+    parkingTravelController.dispose();
     generalExpController.dispose();
   }
 }

@@ -417,6 +417,7 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                   print(isSuccess);
                                   hideOpenDialog(context: context);
                                   if (isSuccess == true) {
+                                    Get.back();
                                     sucessfullyHoursAddedRecruiterDialog(
                                       checkTitle: 'Check Summary',
                                       context: context,

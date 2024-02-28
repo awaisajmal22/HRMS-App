@@ -21,6 +21,18 @@ class DailyTotalHoursRecruiterViewModel extends GetxController {
 
   TimeOfDay selectedTime = TimeOfDay.now();
 
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    jobSiteController.dispose();
+    startTimeController.dispose();
+    endTimeController.dispose();
+    commentController.dispose();
+    generalExpController.dispose();
+    parkingTravelController.dispose();
+    totalHoursController.dispose();
+  }
   Future<void> selectEndTime(BuildContext context) async {
     final TimeOfDay? picked_s = await showTimePicker(
       context: context,

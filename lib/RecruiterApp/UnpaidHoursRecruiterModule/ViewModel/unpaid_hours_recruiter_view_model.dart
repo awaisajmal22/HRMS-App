@@ -69,4 +69,14 @@ class UnpaidHoursRecruiterViewModel extends GetxController {
     response.forEach((element) => last12WeekList.add(element));
     print('weeks List ${last12WeekList.length}');
   }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+   
+    commentController.dispose();
+    generalExpController.dispose();
+    parkingTravelController.dispose();dateController.dispose();
+    unpaidHoursController.dispose();
+  }
 }

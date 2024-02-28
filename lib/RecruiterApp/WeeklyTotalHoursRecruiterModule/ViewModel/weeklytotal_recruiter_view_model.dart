@@ -23,7 +23,19 @@ class WeeklyTotalHoursRecruiterViewModel extends GetxController {
 
   RxString startDate = 'Monday+Date'.obs;
   RxString endDate = 'Sunday+Date'.obs;
-
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    payPeriodController.dispose();
+    jobSiteController.dispose();
+    startTimeController.dispose();
+    endTimeController.dispose();
+    commentController.dispose();
+    generalExpController.dispose();
+    parkingTravelController.dispose();
+    totalHoursController.dispose();
+  }
   bool isSameDate(DateTime? date1, DateTime? date2) {
     if (date2 == date1) {
       return true;
