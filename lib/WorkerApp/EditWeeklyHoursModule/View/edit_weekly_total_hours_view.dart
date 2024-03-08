@@ -399,6 +399,10 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                         hideOpenDialog(context: context);
                         if (isSuccess == true) {
                           sucessfullyHoursAddedDialog(
+                             backButtonCallback: (){
+                                          Get.back();
+                                         
+                                        },
                             checkTitle: 'Check Summary',
                             isCheckButton: false,
                             context: context,

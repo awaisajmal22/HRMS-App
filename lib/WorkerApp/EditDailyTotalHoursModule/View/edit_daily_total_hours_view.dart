@@ -599,6 +599,10 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                       hideOpenDialog(context: context);
                                       if (isSuccess == true) {
                                         sucessfullyHoursAddedDialog(
+
+                                          backButtonCallback: (){
+                                            Get.back();
+                                          },
                                           checkTitle: 'Check List',
                                           context: context,
                                           title:

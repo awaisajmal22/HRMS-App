@@ -92,148 +92,171 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                     Column(
                       children: List.generate(
                           weeklySummaryVM.weeklyWorkList.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            weeklySummaryVM.selectedCurrentSummaryIndex.value =
-                                index;
-                            Get.toNamed(
-                              AppRoutes.editWeeklyTotalHoursView,
-                              arguments: weeklySummaryVM.weeklyWorkList[index],
-                            );
-                          },
-                          child: Obx(
-                            () => Container(
-                              decoration: BoxDecoration(
-                                  color: weeklySummaryVM
-                                              .selectedCurrentSummaryIndex
-                                              .value ==
-                                          index
-                                      ? Colors.blue
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      appText(
-                                          title:
-                                              weeklySummaryVM.weeklyWorkList !=
-                                                      null
-                                                  ? weeklySummaryVM
-                                                      .weeklyWorkList[index]
-                                                      .jobSiteName
-                                                  : 'Job Site',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700),
-                                      // Row(
-                                      //   mainAxisSize: MainAxisSize.min,
-                                      //   children: [
-                                      //     appText(
-                                      //         title: weeklySummaryVM
-                                      //                     .weeklyWorkList[index]
-                                      //                     .date !=
-                                      //                 null
-                                      //             ? DateFormat('yyyy-MMM-dd').format(
-                                      //                 DateTime.parse(weeklySummaryVM
-                                      //                     .weeklyWorkList[index]
-                                      //                     .date))
-                                      //             : '',
-                                      //         fontSize: 16,
-                                      //         fontWeight: FontWeight.w400),
-                                      //     SizedBox(
-                                      //       width: 5.w,
-                                      //     ),
-                                      //     GestureDetector(
-                                      //       onTap: () {
-                                      //         Get.toNamed(
-                                      //           AppRoutes.editWeeklyTotalHoursView,
-                                      //           arguments: weeklySummaryVM
-                                      //               .weeklyWorkList[index],
-                                      //         );
-                                      //       },
-                                      //       child: Image.asset(
-                                      //         'assets/icons/create.png',
-                                      //         height: 22.h,
-                                      //         width: 22.w,
-                                      //       ),
-                                      //     ),
-                                      // ],
-                                      // )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  Container(
-                                    height: 1,
-                                    width: double.infinity,
-                                    color: AppColor.black.withOpacity(0.50),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 11.w, vertical: 20.h),
-                                    child: Column(
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    // color: weeklySummaryVM
+                                    //             .selectedCurrentSummaryIndex
+                                    //             .value ==
+                                    //         index
+                                    //     ? Colors.blue
+                                    //     : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10)),
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, top: 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            appText(
-                                                title: 'Hours Worked',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
-                                            appText(
-                                                title:
-                                                    '${weeklySummaryVM.weeklyWorkList[index].hours} hrs',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            appText(
-                                                title: 'Parking Travel',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
-                                            appText(
-                                                title:
-                                                    '\$${weeklySummaryVM.weeklyWorkList[index].parking}',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            appText(
-                                                title: 'General Expenses',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
-                                            appText(
-                                                title:
-                                                    '\$${weeklySummaryVM.weeklyWorkList[index].generalexpence}',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
-                                          ],
-                                        ),
+                                        appText(
+                                            title: weeklySummaryVM
+                                                        .weeklyWorkList !=
+                                                    null
+                                                ? weeklySummaryVM
+                                                    .weeklyWorkList[index]
+                                                    .jobSiteName
+                                                : 'Job Site',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700),
+                                        // Row(
+                                        //   mainAxisSize: MainAxisSize.min,
+                                        //   children: [
+                                        //     appText(
+                                        //         title: weeklySummaryVM
+                                        //                     .weeklyWorkList[index]
+                                        //                     .date !=
+                                        //                 null
+                                        //             ? DateFormat('yyyy-MMM-dd').format(
+                                        //                 DateTime.parse(weeklySummaryVM
+                                        //                     .weeklyWorkList[index]
+                                        //                     .date))
+                                        //             : '',
+                                        //         fontSize: 16,
+                                        //         fontWeight: FontWeight.w400),
+                                        //     SizedBox(
+                                        //       width: 5.w,
+                                        //     ),
+                                        //     GestureDetector(
+                                        //       onTap: () {
+                                        //         Get.toNamed(
+                                        //           AppRoutes.editWeeklyTotalHoursView,
+                                        //           arguments: weeklySummaryVM
+                                        //               .weeklyWorkList[index],
+                                        //         );
+                                        //       },
+                                        //       child: Image.asset(
+                                        //         'assets/icons/create.png',
+                                        //         height: 22.h,
+                                        //         width: 22.w,
+                                        //       ),
+                                        //     ),
+                                        // ],
+                                        // )
                                       ],
                                     ),
-                                  )
-                                ],
+                                    SizedBox(
+                                      height: 5.h,
+                                    ),
+                                    Container(
+                                      height: 1,
+                                      width: double.infinity,
+                                      color: AppColor.black.withOpacity(0.50),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 11.w, vertical: 20.h),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              appText(
+                                                  title: 'Hours Worked',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                              appText(
+                                                  title:
+                                                      '${weeklySummaryVM.weeklyWorkList[index].hours} hrs',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              appText(
+                                                  title: 'Parking Travel',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                              appText(
+                                                  title:
+                                                      '\$${weeklySummaryVM.weeklyWorkList[index].parking}',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              appText(
+                                                  title: 'General Expenses',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                              appText(
+                                                  title:
+                                                      '\$${weeklySummaryVM.weeklyWorkList[index].generalexpence}',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
+                            GestureDetector(
+                              onTap: () {
+                                weeklySummaryVM
+                                    .selectedCurrentSummaryIndex.value = index;
+                                Get.toNamed(
+                                  AppRoutes.editWeeklyTotalHoursView,
+                                  arguments:
+                                      weeklySummaryVM.weeklyWorkList[index],
+                                );
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 15,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                      top: BorderSide(
+                                    color: Colors.black.withOpacity(0.1),
+                                    width: 1,
+                                  )),
+                                  color: Colors.blue.withOpacity(0.35),
+                                ),
+                                child: const Icon(Icons.edit),
+                              ),
+                            ),
+                          ],
                         );
                       }, growable: true),
                     )

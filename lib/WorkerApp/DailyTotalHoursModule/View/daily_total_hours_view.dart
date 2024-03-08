@@ -614,6 +614,16 @@ class DailyTotalHoursView extends StatelessWidget {
                                           hideOpenDialog(context: context);
                                           if (isSuccess == true) {
                                             sucessfullyHoursAddedDialog(
+                                               backButtonCallback: (){
+                                          Get.back();
+                                          dailytotalVM.commentController.clear();
+                                          dailytotalVM.endTimeController.clear();
+                                          dailytotalVM.generalExpController.clear();
+                                          dailytotalVM.jobSiteController.clear();
+                                          dailytotalVM.parkingTravelController.clear();
+                                          dailytotalVM.startTimeController.clear();
+                                          dailytotalVM.totalHoursController.clear();
+                                        },
                                               checkTitle: 'Check List',
                                               context: context,
                                               title:

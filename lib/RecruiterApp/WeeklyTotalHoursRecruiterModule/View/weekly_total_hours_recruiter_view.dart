@@ -396,6 +396,17 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                                   hideOpenDialog(context: context);
                                   if (isSuccess == true) {
                                     sucessfullyHoursAddedRecruiterDialog(
+                                      backButtonCallback: (){
+                                        weeklytotalVM.commentController.clear();
+                                        weeklytotalVM.endTimeController.clear();
+                                        weeklytotalVM.startTimeController.clear();
+                                        weeklytotalVM.generalExpController.clear();
+                                        weeklytotalVM.jobSiteController.clear();
+                                        weeklytotalVM.payPeriodController.clear();
+                                        weeklytotalVM.parkingTravelController.clear();
+                                        weeklytotalVM.totalHoursController.clear();
+                                        Get.back();
+                                      },
                                       checkTitle: 'Check Summary',
                                       context: context,
                                       title:

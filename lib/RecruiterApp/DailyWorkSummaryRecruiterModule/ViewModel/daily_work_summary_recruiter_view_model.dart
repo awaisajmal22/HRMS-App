@@ -19,6 +19,7 @@ class DailyWorkSummaryRecruiterViewModel extends GetxController {
   Future<List<DailyWorkSummaryRecruiterModel>> getRecruiterDailyWorkSummary({
     required int workerId,
   }) async {
+    dailyWorkList.clear();
     final data = await DailyWorkSummaryRecruiterServices()
         .getDailyWorkSummaryRecruiterServices(workerId: workerId);
     print(workerId);
@@ -45,6 +46,12 @@ class DailyWorkSummaryRecruiterViewModel extends GetxController {
     //   workerId:
     // );
     return model;
+  }
+
+  Future<bool> deleteSpecificData({required int id}) async {
+    final isSuccess = await DailyWorkSummaryRecruiterServices()
+        .deleteDailyRecruiterWorkSummary(id: id);
+    return isSuccess;
   }
 
   @override

@@ -48,8 +48,9 @@ class UnpaidDatePickerWorker extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    if (controller.selectedWeekIndex.value > 0) {
-                      controller.selectedWeekIndex.value--;
+                    print(controller.selectedWeekIndex.value);
+                    if (controller.selectedWeekIndex.value < 10) {
+                      controller.selectedWeekIndex++;
                       controller.weekNumber.value = controller
                           .last12WeekList[controller.selectedWeekIndex.value]
                           .weekNumber!;
@@ -119,9 +120,8 @@ class UnpaidDatePickerWorker extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print(controller.selectedWeekIndex.value);
-                    if (controller.selectedWeekIndex.value < 11) {
-                      controller.selectedWeekIndex++;
+                    if (controller.selectedWeekIndex.value > 0) {
+                      controller.selectedWeekIndex.value--;
                       controller.weekNumber.value = controller
                           .last12WeekList[controller.selectedWeekIndex.value]
                           .weekNumber!;

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:hrmsapp/WorkerApp/DailyWorkSummaryModule/View/component/delete_daily_summary_dialog.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
@@ -113,139 +114,200 @@ class DailyWorkSummaryView extends StatelessWidget {
                 },
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return ListView.builder(
-                    itemCount: dailyworkSummaryVM.dailyWorkList.length,
-                    padding: EdgeInsets.only(top: 0, left: 17.w, right: 17.w),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () async {
-                          dailyworkSummaryVM.selectedDailySummaryIndex.value =
-                              index;
-                          final editDailyVM =
-                              showLoadingIndicator(context: context);
-                          DailyWorkSummaryByIdModel model =
-                              await dailyworkSummaryVM.getSummaryByID(
-                                  id: dailyworkSummaryVM
-                                      .dailyWorkList[index].id);
-
-                          print(model.toJson());
-
-                          hideOpenDialog(context: context);
-
-                          if (model != null) {
-                            Get.toNamed(AppRoutes.editDailyTotalHoursView,
-                                arguments: model);
-                          }
-                        },
-                        child: Obx(
-                          () => Container(
-                            margin: EdgeInsets.only(bottom: 10.h),
-                            padding: EdgeInsets.only(
-                                top: 8.h, left: 12.w, right: 9.w, bottom: 4.h),
-                            decoration: BoxDecoration(
-                              color: dailyworkSummaryVM
-                                          .selectedDailySummaryIndex.value ==
-                                      index
-                                  ? Colors.blue
-                                  : Color(0xffA3CFF1).withOpacity(0.35),
-                            ),
-                            child: Obx(
-                              () => Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      appText(
-                                          textAlign: TextAlign.left,
-                                          title:
-                                              'Site ${dailyworkSummaryVM.dailyWorkList[index].jobSiteName}',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700),
-                                      // GestureDetector(
-                                      //   onTap: () async {
-                                      //     final editDailyVM =
-                                      //         showLoadingIndicator(
-                                      //             context: context);
-                                      //     DailyWorkSummaryByIdModel model =
-                                      //         await dailyworkSummaryVM
-                                      //             .getSummaryByID(
-                                      //                 id: dailyworkSummaryVM
-                                      //                     .dailyWorkList[index]
-                                      //                     .id);
-
-                                      //     print(model.toJson());
-
-                                      //     hideOpenDialog(context: context);
-
-                                      //     if (model != null) {
-                                      //       Get.toNamed(
-                                      //           AppRoutes
-                                      //               .editDailyTotalHoursView,
-                                      //           arguments: model);
-                                      //     }
-                                      //   },
-                                      //   child: Image.asset(
-                                      //     'assets/icons/create.png',
-                                      //     width: 14.w,
-                                      //     height: 14.h,
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 2.h),
-                                  Obx(
-                                    () => Row(
+                  return Obx(
+                    () => ListView.builder(
+                      itemCount: dailyworkSummaryVM.dailyWorkList.length,
+                      padding: EdgeInsets.only(top: 0, left: 17.w, right: 17.w),
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                  top: 8.h,
+                                  left: 12.w,
+                                  right: 9.w,
+                                  bottom: 4.h),
+                              decoration: BoxDecoration(
+                                color: Color(0xffA3CFF1).withOpacity(0.35),
+                              ),
+                              child: Obx(
+                                () => Column(
+                                  children: [
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         appText(
-                                          textAlign: TextAlign.left,
-                                          title:
-                                              'Start Time: ${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(dailyworkSummaryVM.dailyWorkList[index].startTime))}',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        appText(
-                                          textAlign: TextAlign.right,
-                                          title:
-                                              '${DateFormat.d().format(dailyworkSummaryVM.dailyWorkList[index].date)}-${DateFormat.MMMM().format(dailyworkSummaryVM.dailyWorkList[index].date)}-${DateFormat.y().format(dailyworkSummaryVM.dailyWorkList[index].date)}',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                            textAlign: TextAlign.left,
+                                            title:
+                                                'Site ${dailyworkSummaryVM.dailyWorkList[index].jobSiteName}',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700),
+                                        // GestureDetector(
+                                        //   onTap: () async {
+                                        //     final editDailyVM =
+                                        //         showLoadingIndicator(
+                                        //             context: context);
+                                        //     DailyWorkSummaryByIdModel model =
+                                        //         await dailyworkSummaryVM
+                                        //             .getSummaryByID(
+                                        //                 id: dailyworkSummaryVM
+                                        //                     .dailyWorkList[index]
+                                        //                     .id);
+
+                                        //     print(model.toJson());
+
+                                        //     hideOpenDialog(context: context);
+
+                                        //     if (model != null) {
+                                        //       Get.toNamed(
+                                        //           AppRoutes
+                                        //               .editDailyTotalHoursView,
+                                        //           arguments: model);
+                                        //     }
+                                        //   },
+                                        //   child: Image.asset(
+                                        //     'assets/icons/create.png',
+                                        //     width: 14.w,
+                                        //     height: 14.h,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
-                                  ),
-                                  SizedBox(height: 2.h),
-                                  Obx(
-                                    () => Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        appText(
-                                          textAlign: TextAlign.left,
-                                          title:
-                                              'Total hrs worked: ${dailyworkSummaryVM.dailyWorkList[index].hours} hrs',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        appText(
-                                          textAlign: TextAlign.right,
-                                          title:
-                                              'End Time: ${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(dailyworkSummaryVM.dailyWorkList[index].endTime))}',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ],
+                                    SizedBox(height: 2.h),
+                                    Obx(
+                                      () => Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          appText(
+                                            textAlign: TextAlign.left,
+                                            title:
+                                                'Start Time: ${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(dailyworkSummaryVM.dailyWorkList[index].startTime))}',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          appText(
+                                            textAlign: TextAlign.right,
+                                            title:
+                                                '${DateFormat.d().format(dailyworkSummaryVM.dailyWorkList[index].date)}-${DateFormat.MMMM().format(dailyworkSummaryVM.dailyWorkList[index].date)}-${DateFormat.y().format(dailyworkSummaryVM.dailyWorkList[index].date)}',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(height: 2.h),
+                                    Obx(
+                                      () => Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          appText(
+                                            textAlign: TextAlign.left,
+                                            title:
+                                                'Total hrs worked: ${dailyworkSummaryVM.dailyWorkList[index].hours} hrs',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          appText(
+                                            textAlign: TextAlign.right,
+                                            title:
+                                                'End Time: ${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(dailyworkSummaryVM.dailyWorkList[index].endTime))}',
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      dailyworkSummaryVM
+                                          .selectedDailySummaryIndex
+                                          .value = index;
+                                      final editDailyVM = showLoadingIndicator(
+                                          context: context);
+                                      DailyWorkSummaryByIdModel model =
+                                          await dailyworkSummaryVM
+                                              .getSummaryByID(
+                                                  id: dailyworkSummaryVM
+                                                      .dailyWorkList[index].id);
+
+                                      print(model.toJson());
+
+                                      hideOpenDialog(context: context);
+
+                                      if (model != null) {
+                                        Get.toNamed(
+                                            AppRoutes.editDailyTotalHoursView,
+                                            arguments: model);
+                                      }
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 15,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                            top: BorderSide(
+                                          color: Colors.black.withOpacity(0.1),
+                                          width: 1,
+                                        )),
+                                        color: Colors.blue.withOpacity(0.35),
+                                      ),
+                                      child: const Icon(Icons.edit),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showDeleteDialog(
+                                          context: context,
+                                          viewModel: dailyworkSummaryVM,
+                                          id: dailyworkSummaryVM
+                                              .dailyWorkList[index].id);
+                                      // dailyworkSummaryVM
+                                      //     .deleteSpecificData(
+                                      //         id: dailyworkSummaryVM
+                                      //             .dailyWorkList[index].id)
+                                      //     .whenComplete(() =>
+                                      //         dailyworkSummaryVM.getDailyWorkSummary());
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 15,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                            top: BorderSide(
+                                          color: Colors.black.withOpacity(0.1),
+                                          width: 1,
+                                        )),
+                                        color: Colors.red.withOpacity(0.35),
+                                      ),
+                                      child: const Icon(Icons.delete),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            )
+                          ],
+                        );
+                      },
+                    ),
                   );
                 },
               ),
@@ -266,6 +328,9 @@ class DailyWorkSummaryView extends StatelessWidget {
                         hideOpenDialog(context: context);
                         if (isSuccess == true) {
                           sucessfullyHoursAddedDialog(
+                            backButtonCallback: () {
+                              Get.back();
+                            },
                             isCheckButton: false,
                             checkTitle: 'Check List',
                             context: context,

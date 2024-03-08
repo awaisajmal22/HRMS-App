@@ -109,7 +109,8 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                 },
                               );
                             },
-                            hintText: unpaidHoursVM.selectedWeekIndex.value == 0
+                            hintText: unpaidHoursVM.startweek.value == '' ||
+                                    unpaidHoursVM.endWeek.value == ''
                                 ? ""
                                 :
                                 //  unpaidHoursVM.pickedDate.value != ''
@@ -281,7 +282,8 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                         customTextButton(
                             buttonColor: AppColor.blue,
                             onTap: () async {
-                              if (unpaidHoursVM.selectedWeekIndex.value == 0) {
+                              if (unpaidHoursVM.startweek.value == '' ||
+                                  unpaidHoursVM.endWeek.value == '') {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:
@@ -330,6 +332,17 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
                                 hideOpenDialog(context: context);
                                 if (isSuccess == true) {
                                   sucessfullyHoursAddedRecruiterDialog(
+                                      backButtonCallback: () {
+                                        unpaidHoursVM.commentController.clear();
+                                        unpaidHoursVM.dateController.clear();
+                                        unpaidHoursVM.generalExpController
+                                            .clear();
+                                        unpaidHoursVM.parkingTravelController
+                                            .clear();
+                                        unpaidHoursVM.unpaidHoursController
+                                            .clear();
+                                        Get.back();
+                                      },
                                       context: context,
                                       title:
                                           'Your Unpaid Hours Have Been Successfully Submitted',

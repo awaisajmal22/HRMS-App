@@ -47,4 +47,6 @@ static const unpaidWorkSummaryUri ="${ApiUrl.baseUrl}/ReportUnpaidHourssummary";
       static const codeVerificationUrl = "${ApiUrl.baseUrl}/Authentication/VerificationCode";
       static const changeUserPasswordUrl = "${ApiUrl.baseUrl}/Authentication/ChangeUserPassword";
       static const last12WeeksUrl = "${ApiUrl.baseUrl}/GetLast12week";
+      static const deleteDailyHoursUri ='${ApiUrl.baseUrl}/DeleteDailyHours?Id=';
+      static const deleteDailyRecruiterHoursUri ='${ApiUrl.baseUrl}/RecruiterDeleteDailyHours?Id=';
 }

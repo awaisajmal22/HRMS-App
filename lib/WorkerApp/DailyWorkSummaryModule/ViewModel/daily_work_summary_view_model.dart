@@ -17,8 +17,9 @@ class DailyWorkSummaryViewModel extends GetxController {
   bool isSuccess = false;
   RxList<DailyWorkSummaryModel> dailyWorkList = <DailyWorkSummaryModel>[].obs;
   Future<List<DailyWorkSummaryModel>> getDailyWorkSummary() async {
+    dailyWorkList.clear();
     final data = await DailyWorkSummaryServices().getDailyWorkSummaryServices();
-    if (data != null) {
+    if (data.isNotEmpty) {
       dailyWorkList.value = data;
 
       print(dailyWorkList.length);
@@ -36,6 +37,12 @@ class DailyWorkSummaryViewModel extends GetxController {
         .getDailyWorkSummaryServicesByID(id: id);
 
     return model;
+  }
+
+  Future<bool> deleteSpecificData({required int id}) async {
+    final isSuccess =
+        await DailyWorkSummaryServices().deleteDailyWorkSummary(id: id);
+    return isSuccess;
   }
 
   @override

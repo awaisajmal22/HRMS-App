@@ -84,4 +84,18 @@ class DailyWorkSummaryRecruiterServices {
     }
     return isSuccess;
   }
+  Future<bool> deleteDailyRecruiterWorkSummary({required int id}) async {
+    bool isSuccess = false;
+    print(id);
+    try {
+   
+      final response =
+          await API().getRequest( "${ApiUrl.deleteDailyRecruiterHoursUri}$id");
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        isSuccess = true;
+      }
+    } catch (e) {}
+    return isSuccess;
+  }
 }

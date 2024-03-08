@@ -25,16 +25,18 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
     return Scaffold(
       body: PopScope(
         canPop: false,
-        onPopInvoked: (val){
-          val == false ? homeVM.getSpecificWorkerData().then(
-                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val)): null;
+        onPopInvoked: (val) {
+          val == false
+              ? homeVM.getSpecificWorkerData().then((val) =>
+                  Get.offAllNamed(AppRoutes.workerView, arguments: val))
+              : null;
         },
         child: Column(
           children: [
             customAppBar(
               onTap: () {
-               homeVM.getSpecificWorkerData().then(
-                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
+                homeVM.getSpecificWorkerData().then((val) =>
+                    Get.offAllNamed(AppRoutes.workerView, arguments: val));
               },
               isBackButton: true,
               title: 'Weekly Summary',
@@ -94,41 +96,31 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
                     Column(
                       children: List.generate(
                           weeklySummaryVM.weeklyWorkList.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(
-                              AppRoutes.editWeeklyTotalHoursRecruiterView,
-                              arguments: [
-                                weeklySummaryVM.weeklyWorkList[index],
-                                workerId
-                              ],
-                            );
-        
-                            weeklySummaryVM.selectCurrentSummaryIndex.value =
-                                index;
-                          },
-                          child: Obx(
-                            () => Container(
+                        return Column(
+                          children: [
+                            Container(
                               decoration: BoxDecoration(
-                                  color: weeklySummaryVM
-                                              .selectCurrentSummaryIndex.value ==
-                                          index
-                                      ? Colors.blue
-                                      : Colors.transparent,
+                                  //  color: weeklySummaryVM
+                                  //              .selectCurrentSummaryIndex.value ==
+                                  //          index
+                                  //      ? Colors.blue
+                                  //      : Colors.transparent,
                                   borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.all(10),
+                              padding:
+                                  EdgeInsets.only(top: 10, left: 10, right: 10),
                               child: Column(
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       appText(
-                                          title: weeklySummaryVM.weeklyWorkList !=
-                                                  null
-                                              ? weeklySummaryVM
-                                                  .weeklyWorkList[index]
-                                                  .jobSiteName
-                                              : 'Job Site',
+                                          title:
+                                              weeklySummaryVM.weeklyWorkList !=
+                                                      null
+                                                  ? weeklySummaryVM
+                                                      .weeklyWorkList[index]
+                                                      .jobSiteName
+                                                  : 'Job Site',
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700),
                                       // Row(
@@ -241,7 +233,40 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(
+                                  AppRoutes.editWeeklyTotalHoursRecruiterView,
+                                  arguments: [
+                                    weeklySummaryVM.weeklyWorkList[index],
+                                    workerId
+                                  ],
+                                );
+
+                                weeklySummaryVM
+                                    .selectCurrentSummaryIndex.value = index;
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 15,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                      top: BorderSide(
+                                    color: Colors.black.withOpacity(0.1),
+                                    width: 1,
+                                  )),
+                                  color: Colors.blue.withOpacity(0.35),
+                                ),
+                                child: const Icon(Icons.edit),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            )
+                          ],
                         );
                       }, growable: true),
                     )
@@ -288,6 +313,9 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
                   hideOpenDialog(context: context);
                   if (isSuccess == true) {
                     sucessfullyHoursAddedRecruiterDialog(
+                      backButtonCallback: () {
+                        Get.back();
+                      },
                       isCheckButton: false,
                       checkTitle: 'Check List',
                       context: context,
@@ -309,8 +337,8 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: customTextButton(
                 onTap: () {
-                 homeVM.getSpecificWorkerData().then(
-                          (val) => Get.offAllNamed(AppRoutes.workerView,arguments: val));
+                  homeVM.getSpecificWorkerData().then((val) =>
+                      Get.offAllNamed(AppRoutes.workerView, arguments: val));
                 },
                 title: 'Close',
                 buttonColor: AppColor.blue.withOpacity(0.37),

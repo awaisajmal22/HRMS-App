@@ -383,6 +383,15 @@ class WeeklyTotalHoursView extends StatelessWidget {
                         hideOpenDialog(context: context);
                         if (isSuccess == true) {
                           sucessfullyHoursAddedDialog(
+                             backButtonCallback: (){
+                                      weeklytotalVM.commentController.clear();
+                                      weeklytotalVM.endTimeController.clear();
+                                      weeklytotalVM.generalExpController.clear();
+                                      weeklytotalVM.startTimeController.clear();
+                                      weeklytotalVM.parkingTravelController.clear();
+                                      weeklytotalVM.totalHoursController.clear();
+                                      Get.back();
+                                    },
                             isCheckButton: false,
                             checkTitle: 'Check Summary',
                             context: context,

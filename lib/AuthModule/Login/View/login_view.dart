@@ -23,7 +23,7 @@ class LoginView extends StatelessWidget {
   final loginVM = Get.find<LoginViewModel>();
   @override
   Widget build(BuildContext context) {
-    // loginVM.checkVersion(context);
+    loginVM.checkVersion(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Obx(

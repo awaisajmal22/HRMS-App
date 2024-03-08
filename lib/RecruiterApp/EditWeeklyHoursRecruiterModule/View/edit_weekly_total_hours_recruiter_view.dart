@@ -419,6 +419,9 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                   if (isSuccess == true) {
                                     Get.back();
                                     sucessfullyHoursAddedRecruiterDialog(
+                                      backButtonCallback: (){
+                                        Get.back();
+                                      },
                                       checkTitle: 'Check Summary',
                                       context: context,
                                       title:

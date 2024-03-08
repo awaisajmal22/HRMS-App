@@ -22,6 +22,22 @@ class SplashViewModel extends GetxController {
     });
     super.onInit();
   }
+  checkVersion(BuildContext context) async {
+    //
+
+    await Future.delayed(Duration(milliseconds: 300));
+
+    await NewVersionPlus(
+      iOSId: 'com.vconekt.hrmsapp',
+      androidId: 'com.vconekt.hrmsapp',
+    ).showAlertIfNecessary(
+        context: context,
+        launchModeVersion: Platform.isAndroid
+            ? LaunchModeVersion.external
+            : LaunchModeVersion.normal);
+
+    
+  }
 
   onLogin() async {
     final prefs = await SharedPreferences.getInstance();

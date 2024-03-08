@@ -105,10 +105,10 @@ class UnpaidHoursView extends StatelessWidget {
                                 },
                               );
                             },
-                            hintText: unpaidHoursVM.selectedWeekIndex.value == 0
+                            hintText: unpaidHoursVM.startweek.value == '' ||
+                                    unpaidHoursVM.endWeek.value == ''
                                 ? ''
                                 :
-
                                 // unpaidHoursVM.pickedDate.value != ''
                                 //     ? DateFormat("yyyy-MMM-dd").format(
                                 //         DateTime.parse(
@@ -285,8 +285,8 @@ class UnpaidHoursView extends StatelessWidget {
                               child: customTextButton(
                                   buttonColor: AppColor.blue,
                                   onTap: () async {
-                                    if (unpaidHoursVM.selectedWeekIndex.value ==
-                                        0) {
+                                    if (unpaidHoursVM.startweek.value == '' ||
+                                        unpaidHoursVM.endWeek.value == '') {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
                                               content: Text(
@@ -349,6 +349,21 @@ class UnpaidHoursView extends StatelessWidget {
                                       hideOpenDialog(context: context);
                                       if (isSuccess == true) {
                                         sucessfullyHoursAddedDialog(
+                                            backButtonCallback: () {
+                                              unpaidHoursVM.commentController
+                                                  .clear();
+                                              unpaidHoursVM.dateController
+                                                  .clear();
+                                              unpaidHoursVM.generalExpController
+                                                  .clear();
+                                              unpaidHoursVM
+                                                  .parkingTravelController
+                                                  .clear();
+                                              unpaidHoursVM
+                                                  .unpaidHoursController
+                                                  .clear();
+                                              Get.back();
+                                            },
                                             context: context,
                                             title:
                                                 'Your Unpaid Hours Have Been Successfully Submitted',

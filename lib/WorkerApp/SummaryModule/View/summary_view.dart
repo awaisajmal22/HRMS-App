@@ -101,6 +101,9 @@ class SummaryView extends StatelessWidget {
                   buttonColor: AppColor.blue,
                   onTap: () {
                     sucessfullyHoursAddedDialog(
+                      backButtonCallback: (){
+                        Get.back();
+                      },
                         isCheckButton: false,
                         context: context,
                         title:

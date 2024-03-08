@@ -664,7 +664,7 @@ class API {
     // }
   }
 
-  deleteRequest({
+  deleteRequest( {
     required String apiUrl,
   }) async {
     try {

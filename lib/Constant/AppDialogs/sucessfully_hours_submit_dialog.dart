@@ -13,6 +13,7 @@ sucessfullyHoursAddedDialog(
     required String title,
     required String checkTitle,
     bool isCheckButton = true,
+    required VoidCallback backButtonCallback,
     required VoidCallback onTap}) {
   return showGeneralDialog(
     context: context,
@@ -67,10 +68,7 @@ sucessfullyHoursAddedDialog(
                         buttonColor: isCheckButton == true
                             ? AppColor.blue.withOpacity(0.37)
                             : AppColor.blue,
-                        onTap: () {
-                          // Get.offAllNamed(AppRoutes.navBarView);
-                          Get.back();
-                        },
+                        onTap: backButtonCallback,
                         title: 'Close',
                       ),
                       isCheckButton == true
@@ -85,9 +83,7 @@ sucessfullyHoursAddedDialog(
                     top: 19.h,
                     right: 22.w,
                     child: GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
+                      onTap: backButtonCallback,
                       child: SvgPicture.asset('assets/icons/close.svg'),
                     ))
               ],
@@ -103,6 +99,7 @@ sucessfullyHoursAddedRecruiterDialog(
     {required BuildContext context,
     required String title,
     required String checkTitle,
+    required VoidCallback backButtonCallback,
     bool isCheckButton = true,
     required VoidCallback onTap}) {
   return showGeneralDialog(
@@ -158,10 +155,7 @@ sucessfullyHoursAddedRecruiterDialog(
                         buttonColor: isCheckButton == true
                             ? AppColor.blue.withOpacity(0.37)
                             : AppColor.blue,
-                        onTap: () {
-                          Get.back();
-                          // Get.offAllNamed(AppRoutes.navBarRecruiterView);
-                        },
+                        onTap: backButtonCallback,
                         title: 'Close',
                       ),
                       isCheckButton == true
@@ -176,9 +170,7 @@ sucessfullyHoursAddedRecruiterDialog(
                     top: 19.h,
                     right: 22.w,
                     child: GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
+                      onTap: backButtonCallback,
                       child: SvgPicture.asset('assets/icons/close.svg'),
                     ))
               ],

@@ -32,7 +32,7 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
   final dailytotalVM = Get.find<DailyTotalHoursRecruiterViewModel>();
   final uploadImageVM = Get.find<UploadDocumentRecruiterViewModel>();
   final dailySummaryVM = Get.put(DailyWorkSummaryRecruiterViewModel());
-  final homeVM = Get.find<HomeRecruiterViewModel>();
+  final homeVM = Get.put(HomeRecruiterViewModel());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -578,6 +578,16 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                                     hideOpenDialog(context: context);
                                     if (isSuccess == true) {
                                       sucessfullyHoursAddedRecruiterDialog(
+                                        backButtonCallback: (){
+                                          Get.back();
+                                          dailytotalVM.commentController.clear();
+                                          dailytotalVM.endTimeController.clear();
+                                          dailytotalVM.generalExpController.clear();
+                                          dailytotalVM.jobSiteController.clear();
+                                          dailytotalVM.parkingTravelController.clear();
+                                          dailytotalVM.startTimeController.clear();
+                                          dailytotalVM.totalHoursController.clear();
+                                        },
                                         checkTitle: 'Check List',
                                         context: context,
                                         title:

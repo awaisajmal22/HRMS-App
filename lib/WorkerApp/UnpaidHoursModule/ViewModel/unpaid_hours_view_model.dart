@@ -64,7 +64,11 @@ class UnpaidHoursViewModel extends GetxController {
   Future getLast12WeeksDataWR() async {
     last12WeekList.clear();
     final response = await UnpaidHoursServices().getLast12WeeksWorker();
-    response.forEach((element) => last12WeekList.add(element));
+    if (response.isNotEmpty) {
+      response.removeAt(0);
+      response.forEach((element) => last12WeekList.add(element));
+    }
+
     print('weeks List ${last12WeekList.length}');
   }
 
