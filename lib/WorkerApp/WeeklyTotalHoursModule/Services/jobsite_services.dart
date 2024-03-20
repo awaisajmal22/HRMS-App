@@ -9,7 +9,9 @@ import '../Model/jobSite_model.dart';
 class ApiServices {
   Future<List<JobSiteModel>> getjobSiteServices() async {
     bool? isSuccess = false;
-    List<JobSiteModel> jobSites = [];
+    List<JobSiteModel> jobSites = [
+   JobSiteModel(id: -1010, value: 'Select job site')
+    ];
     try {
       var response = await API().getRequestHeader(ApiUrl.getJobSiteUrl);
       // print(response);

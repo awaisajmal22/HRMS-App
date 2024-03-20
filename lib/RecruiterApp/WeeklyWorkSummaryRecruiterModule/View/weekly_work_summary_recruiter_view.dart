@@ -19,9 +19,10 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
   WeeklyWorkSummaryRecruiterView({super.key});
   final weeklySummaryVM = Get.find<WeeklyWorkSummaryRecruiterViewModel>();
   int workerId = Get.arguments;
-  final homeVM = Get.find<HomeRecruiterViewModel>();
+  final homeVM = Get.put(HomeRecruiterViewModel());
   @override
   Widget build(BuildContext context) {
+    homeVM.getSpecificWorkerData();
     return Scaffold(
       body: PopScope(
         canPop: false,

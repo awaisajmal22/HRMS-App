@@ -294,7 +294,7 @@ class DailyTotalHoursView extends StatelessWidget {
                             ),
                             customTextField(
                               focusNode: focusNode,
-                              
+
                               verticalPadding: 0,
                               horizontalPadding: 10,
                               hintText: '',
@@ -528,6 +528,16 @@ class DailyTotalHoursView extends StatelessWidget {
                                               .showSnackBar(const SnackBar(
                                                   content: Text(
                                                       'Please select the date')));
+                                        } else if (homeVM
+                                                    .selectedJobsiteId.value ==
+                                                -1010 ||
+                                            homeVM.selectedDropDownValue
+                                                    .value ==
+                                                'Select job site'||homeVM.selectedDropDownValue.value =='') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'Please Select job Site')));
                                         } else if (dailytotalVM
                                             .totalHoursController
                                             .text
@@ -546,7 +556,7 @@ class DailyTotalHoursView extends StatelessWidget {
                                                 .totalHoursController.text ==
                                             '0') {
                                           ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
+                                              .showSnackBar(const SnackBar(
                                                   content: Text(
                                                       'Total hours must be greater than 0')));
                                         } else if (dailytotalVM
@@ -614,16 +624,33 @@ class DailyTotalHoursView extends StatelessWidget {
                                           hideOpenDialog(context: context);
                                           if (isSuccess == true) {
                                             sucessfullyHoursAddedDialog(
-                                               backButtonCallback: (){
-                                          Get.back();
-                                          dailytotalVM.commentController.clear();
-                                          dailytotalVM.endTimeController.clear();
-                                          dailytotalVM.generalExpController.clear();
-                                          dailytotalVM.jobSiteController.clear();
-                                          dailytotalVM.parkingTravelController.clear();
-                                          dailytotalVM.startTimeController.clear();
-                                          dailytotalVM.totalHoursController.clear();
-                                        },
+                                              backButtonCallback: () {
+                                                Get.back();
+                                                homeVM.selectedJobsiteId.value =
+                                                    homeVM.jobSites[0].id;
+                                                homeVM.selectedDropDownValue
+                                                        .value =
+                                                    homeVM.jobSites[0].value;
+                                                dailytotalVM.pickedDate.value =
+                                                    '';
+                                                dailytotalVM.commentController
+                                                    .clear();
+                                                dailytotalVM.endTimeController
+                                                    .clear();
+                                                dailytotalVM
+                                                    .generalExpController
+                                                    .clear();
+                                                dailytotalVM.jobSiteController
+                                                    .clear();
+                                                dailytotalVM
+                                                    .parkingTravelController
+                                                    .clear();
+                                                dailytotalVM.startTimeController
+                                                    .clear();
+                                                dailytotalVM
+                                                    .totalHoursController
+                                                    .clear();
+                                              },
                                               checkTitle: 'Check List',
                                               context: context,
                                               title:

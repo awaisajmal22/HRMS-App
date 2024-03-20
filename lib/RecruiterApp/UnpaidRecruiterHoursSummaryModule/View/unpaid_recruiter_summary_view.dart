@@ -17,10 +17,11 @@ import '../../../Constant/AppText/app_text.dart';
 class UnpaidRecruiterSummaryView extends StatelessWidget {
   UnpaidRecruiterSummaryView({super.key});
   final unPaidSummaryVM = Get.find<UnpaidRecruiterSummaryViewModel>();
-  final homeVM = Get.find<HomeRecruiterViewModel>();
+  final homeVM = Get.put(HomeRecruiterViewModel());
   final workerId = Get.arguments;
   @override
   Widget build(BuildContext context) {
+    homeVM.getSpecificWorkerData();
     return Scaffold(
       body: PopScope(
         canPop: false,

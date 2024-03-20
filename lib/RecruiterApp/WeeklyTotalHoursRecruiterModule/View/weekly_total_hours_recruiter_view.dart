@@ -27,11 +27,12 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
   // WeeklyTotalHoursRecruiterView({super.key});
   final weeklytotalVM = Get.find<WeeklyTotalHoursRecruiterViewModel>();
   final uploadImageVM = Get.find<UploadDocumentRecruiterViewModel>();
-  final homeVM = Get.find<HomeRecruiterViewModel>();
+ final homeVM = Get.put(HomeRecruiterViewModel());
   int workerId = Get.arguments;
   final weeklySummaryVM = Get.put(WeeklyWorkSummaryRecruiterViewModel());
   @override
   Widget build(BuildContext context) {
+    homeVM.getSpecificWorkerData();
     return Scaffold(
       body: Column(
         children: [
@@ -57,6 +58,23 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.blue.withOpacity(0.2)),
+                              child: Obx(
+                                () => appText(
+                                  title:
+                                      "${homeVM.worker.value.firstName} ${homeVM.worker.value.lastName}",
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                           appText(
                             title: 'Please add hours worked',
                             fontSize: 20,
@@ -349,7 +367,17 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                                       SnackBar(
                                           content: Text(
                                               'Please fill the required fields')));
-                                } else if (weeklytotalVM
+                                }else if (homeVM
+                                                    .selectedJobsiteId.value ==
+                                                -1010 ||
+                                            homeVM.selectedDropDownValue
+                                                    .value ==
+                                                'Select job site'||homeVM.selectedDropDownValue.value =='') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'Please Select job Site')));
+                                        }  else if (weeklytotalVM
                                         .totalHoursController.text ==
                                     '0') {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -397,6 +425,8 @@ class WeeklyTotalHoursRecruiterView extends StatelessWidget {
                                   if (isSuccess == true) {
                                     sucessfullyHoursAddedRecruiterDialog(
                                       backButtonCallback: (){
+                                        homeVM.selectedDropDownValue.value =homeVM.jobSites[0].value;
+                                        homeVM.selectedJobsiteId.value =homeVM.jobSites[0].id;
                                         weeklytotalVM.commentController.clear();
                                         weeklytotalVM.endTimeController.clear();
                                         weeklytotalVM.startTimeController.clear();

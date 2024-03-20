@@ -39,6 +39,7 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
         summary.generalexpence.toString();
     homeVM.selectedDropDownValue.value = summary.jobSiteName;
     homeVM.selectedJobsiteId.value = summary.jobId;
+
     return Scaffold(
       body: Column(
         children: [
@@ -353,13 +354,23 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                     title: 'Add',
                     onTap: () async {
                       if (editWeeklyHoursVM.totalHoursController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Please fill the required fields')));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Please fill the required fields')));
                       } else if (editWeeklyHoursVM.totalHoursController.text ==
                           '0') {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text('Total hours must be greater than 0')));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    'Total hours must be greater than 0')));
+                      } else if (homeVM.selectedJobsiteId.value == -1010 ||
+                          homeVM.selectedDropDownValue.value ==
+                              'Select job site' ||
+                          homeVM.selectedDropDownValue.value == '') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Please Select job Site')));
                       } else if (editWeeklyHoursVM.totalHoursController.text !=
                               null &&
                           editWeeklyHoursVM.totalHoursController.text != '' &&
@@ -399,10 +410,9 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                         hideOpenDialog(context: context);
                         if (isSuccess == true) {
                           sucessfullyHoursAddedDialog(
-                             backButtonCallback: (){
-                                          Get.back();
-                                         
-                                        },
+                            backButtonCallback: () {
+                              Get.back();
+                            },
                             checkTitle: 'Check Summary',
                             isCheckButton: false,
                             context: context,

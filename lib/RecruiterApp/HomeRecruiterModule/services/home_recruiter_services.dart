@@ -76,7 +76,7 @@ class HomeRecruiterServices {
   Future<List<JobSiteRecruiterModel>> getRecruiterJobSiteServices(
       {required int workerId}) async {
     bool? isSuccess = false;
-    List<JobSiteRecruiterModel> jobSites = [];
+    List<JobSiteRecruiterModel> jobSites = [JobSiteRecruiterModel(id: -1010, value: "Select job site")];
     try {
       print(workerId);
       var response = await API().getRequestHeader(

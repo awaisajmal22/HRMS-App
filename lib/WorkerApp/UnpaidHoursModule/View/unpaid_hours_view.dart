@@ -291,6 +291,16 @@ class UnpaidHoursView extends StatelessWidget {
                                           .showSnackBar(const SnackBar(
                                               content: Text(
                                                   'Please select the Week')));
+                                    } else if (homeVM.selectedJobsiteId.value ==
+                                            -1010 ||
+                                        homeVM.selectedDropDownValue.value ==
+                                            'Select job site' ||
+                                        homeVM.selectedDropDownValue.value ==
+                                            '') {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Please Select job Site')));
                                     } else if (unpaidHoursVM
                                         .unpaidHoursController.text.isEmpty) {
                                       ScaffoldMessenger.of(context)
@@ -350,6 +360,14 @@ class UnpaidHoursView extends StatelessWidget {
                                       if (isSuccess == true) {
                                         sucessfullyHoursAddedDialog(
                                             backButtonCallback: () {
+                                              unpaidHoursVM.startweek.value =
+                                                  '';
+                                              unpaidHoursVM.endWeek.value = '';
+                                              homeVM.selectedDropDownValue
+                                                      .value =
+                                                  homeVM.jobSites[0].value;
+                                              homeVM.selectedJobsiteId.value =
+                                                  homeVM.jobSites[0].id;
                                               unpaidHoursVM.commentController
                                                   .clear();
                                               unpaidHoursVM.dateController

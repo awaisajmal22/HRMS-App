@@ -31,10 +31,11 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
   EditWeeklyTotalHoursRecruiterView({super.key});
   final editWeeklyHoursVM = Get.find<EditWeeklyTotalHoursRecruiterViewModel>();
   final uploadImageVM = Get.find<UploadDocumentRecruiterViewModel>();
-  final homeVM = Get.find<HomeRecruiterViewModel>();
+  final homeVM = Get.put(HomeRecruiterViewModel());
   final weeklySummaryVM = Get.put(WeeklyWorkSummaryRecruiterViewModel());
   @override
   Widget build(BuildContext context) {
+    homeVM.getSpecificWorkerData();
     editWeeklyHoursVM.totalHoursController.text = summary.hours.toString();
     editWeeklyHoursVM.parkingTravelController.text = summary.parking.toString();
     editWeeklyHoursVM.generalExpController.text =
@@ -66,6 +67,23 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: Column(
                     children: [
+                      Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.blue.withOpacity(0.2)),
+                              child: Obx(
+                                () => appText(
+                                  title:
+                                      "${homeVM.worker.value.firstName} ${homeVM.worker.value.lastName}",
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -360,7 +378,15 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                               buttonColor: AppColor.blue,
                               title: 'Add',
                               onTap: () async {
-                                if (editWeeklyHoursVM
+                                if (homeVM.selectedJobsiteId.value == -1010 ||
+                                    homeVM.selectedDropDownValue.value ==
+                                        'Select job site' ||
+                                    homeVM.selectedDropDownValue.value == '') {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text('Please Select job Site')));
+                                } else if (editWeeklyHoursVM
                                     .totalHoursController.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -419,7 +445,7 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                   if (isSuccess == true) {
                                     Get.back();
                                     sucessfullyHoursAddedRecruiterDialog(
-                                      backButtonCallback: (){
+                                      backButtonCallback: () {
                                         Get.back();
                                       },
                                       checkTitle: 'Check Summary',

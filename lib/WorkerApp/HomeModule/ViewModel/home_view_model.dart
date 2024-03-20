@@ -86,11 +86,14 @@ class HomeViewModel extends GetxController {
       _jobSites.clear();
     }
     final response = await ApiServices().getjobSiteServices();
+    
     selectedDropDownValue.value = response[0].value;
     selectedJobsiteId.value = response[0].id;
     print(selectedDropDownValue.value);
+   
     for (var a in response) {
       _jobSiteValue.add(a.value);
+      
       _jobSites.add(a);
       print('yes its done');
     }

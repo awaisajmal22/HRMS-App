@@ -53,7 +53,7 @@ class EditDailyTotalHoursView extends StatelessWidget {
         '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.startTime!))}';
     editDailyTotalVM.endTimeController.text =
         '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.endTime!))}';
-
+    editDailyTotalVM.commentController.text = model.feefback ?? '';
     // final date = DateTime.now();
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -520,6 +520,7 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                   buttonColor: AppColor.blue,
                                   title: 'Add',
                                   onTap: () async {
+                                    print(homeVM.selectedJobsiteId.value);
                                     print(
                                         "total Hours ${editDailyTotalVM.totalHoursController.text}");
                                     if (editDailyTotalVM
@@ -535,7 +536,21 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                           .showSnackBar(const SnackBar(
                                               content: Text(
                                                   'Total Hours must be greater than 0')));
-                                    } else if (editDailyTotalVM.endTime.value ==
+                                    } else if (homeVM
+                                                .selectedJobsiteId.value ==
+                                            -1010 ||
+                                        homeVM
+                                                .selectedDropDownValue.value ==
+                                            'Select job site' ||
+                                        homeVM
+                                                .selectedDropDownValue.value ==
+                                            '') {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  'Please Select job Site')));
+                                    } else if (editDailyTotalVM
+                                            .endTime.value ==
                                         editDailyTotalVM.startTime.value) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
@@ -599,8 +614,7 @@ class EditDailyTotalHoursView extends StatelessWidget {
                                       hideOpenDialog(context: context);
                                       if (isSuccess == true) {
                                         sucessfullyHoursAddedDialog(
-
-                                          backButtonCallback: (){
+                                          backButtonCallback: () {
                                             Get.back();
                                           },
                                           checkTitle: 'Check List',

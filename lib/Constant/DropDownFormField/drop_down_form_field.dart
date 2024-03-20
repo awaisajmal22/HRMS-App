@@ -22,6 +22,7 @@ class AppDropdownInput<T> extends StatelessWidget {
         builder: (FormFieldState<T> state) {
           return InputDecorator(
             decoration: InputDecoration(
+              hintText: 'Select job site',
               hintStyle: GoogleFonts.roboto().copyWith(
                   color: AppColor.black.withOpacity(0.50), fontSize: 14.sp),
               contentPadding:
@@ -48,13 +49,11 @@ class AppDropdownInput<T> extends StatelessWidget {
                 items: options.map((T value) {
                   return DropdownMenuItem<T>(
                       value: value,
-                      child: value == ''
-                          ? const SizedBox.shrink()
-                          : Text(value.toString(),
-                              style: GoogleFonts.roboto().copyWith(
-                                color: AppColor.black.withOpacity(0.50),
-                                fontSize: 14.sp,
-                              )));
+                      child: Text(value.toString(),
+                          style: GoogleFonts.roboto().copyWith(
+                            color: AppColor.black.withOpacity(0.50),
+                            fontSize: 14.sp,
+                          )));
                 }).toList(),
               ),
             ),

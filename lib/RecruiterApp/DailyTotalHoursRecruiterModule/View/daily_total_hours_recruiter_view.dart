@@ -35,6 +35,7 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
   final homeVM = Get.put(HomeRecruiterViewModel());
   @override
   Widget build(BuildContext context) {
+    homeVM.getSpecificWorkerData();
     return Scaffold(
       body: Column(
         children: [
@@ -61,6 +62,23 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.blue.withOpacity(0.2)),
+                              child: Obx(
+                                () => appText(
+                                  title:
+                                      "${homeVM.worker.value.firstName} ${homeVM.worker.value.lastName}",
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             appText(
                               title: 'Please add hours worked',
                               fontSize: 20,
@@ -507,6 +525,16 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                                         const SnackBar(
                                             content: Text(
                                                 'Please select the date')));
+                                  } else if (homeVM.selectedJobsiteId.value ==
+                                          -1010 ||
+                                      homeVM.selectedDropDownValue.value ==
+                                          'Select job site' ||
+                                      homeVM.selectedDropDownValue.value ==
+                                          '') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Please Select job Site')));
                                   } else if (dailytotalVM
                                       .totalHoursController.text.isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -519,14 +547,15 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                                         SnackBar(
                                             content: Text(
                                                 'Picked Hours date time must be different')));
-                                  } else if (dailytotalVM.totalHoursController.text ==
+                                  } else if (dailytotalVM
+                                          .totalHoursController.text ==
                                       '0') {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                             content: Text(
                                                 'Total hours must be greater than 0')));
-                                  } else if (dailytotalVM.totalHoursController
-                                          .text.isNotEmpty &&
+                                  } else if (dailytotalVM.totalHoursController.text
+                                          .isNotEmpty &&
                                       dailytotalVM.totalHoursController.text !=
                                           '0' &&
                                       dailytotalVM.endTime.value !=
@@ -578,15 +607,27 @@ class DailyTotalHoursRecruiterView extends StatelessWidget {
                                     hideOpenDialog(context: context);
                                     if (isSuccess == true) {
                                       sucessfullyHoursAddedRecruiterDialog(
-                                        backButtonCallback: (){
+                                        backButtonCallback: () {
                                           Get.back();
-                                          dailytotalVM.commentController.clear();
-                                          dailytotalVM.endTimeController.clear();
-                                          dailytotalVM.generalExpController.clear();
-                                          dailytotalVM.jobSiteController.clear();
-                                          dailytotalVM.parkingTravelController.clear();
-                                          dailytotalVM.startTimeController.clear();
-                                          dailytotalVM.totalHoursController.clear();
+                                          dailytotalVM.pickedDate.value = '';
+                                          homeVM.selectedDropDownValue.value =
+                                              homeVM.jobSites[0].value;
+                                          homeVM.selectedJobsiteId.value =
+                                              homeVM.jobSites[0].id;
+                                          dailytotalVM.commentController
+                                              .clear();
+                                          dailytotalVM.endTimeController
+                                              .clear();
+                                          dailytotalVM.generalExpController
+                                              .clear();
+                                          dailytotalVM.jobSiteController
+                                              .clear();
+                                          dailytotalVM.parkingTravelController
+                                              .clear();
+                                          dailytotalVM.startTimeController
+                                              .clear();
+                                          dailytotalVM.totalHoursController
+                                              .clear();
                                         },
                                         checkTitle: 'Check List',
                                         context: context,

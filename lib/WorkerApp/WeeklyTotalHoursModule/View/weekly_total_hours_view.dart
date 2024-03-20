@@ -342,15 +342,23 @@ class WeeklyTotalHoursView extends StatelessWidget {
                     buttonColor: AppColor.blue,
                     title: 'Add',
                     onTap: () async {
-                      if (
-                                  weeklytotalVM.totalHoursController.text.isEmpty){
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fill the required fields')));
-                                    } else if(weeklytotalVM.totalHoursController.text =='0'){
-  
-                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Total hours must be greater than 0')));
-                                    }
-                                    else
-                      if (weeklytotalVM.totalHoursController.text.isNotEmpty ||
+                      if (weeklytotalVM.totalHoursController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Please fill the required fields')));
+                      } else if (homeVM.selectedJobsiteId.value == -1010 ||
+                          homeVM.selectedDropDownValue.value ==
+                              'Select job site' ||
+                          homeVM.selectedDropDownValue.value == '') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Please Select job Site')));
+                      } else if (weeklytotalVM.totalHoursController.text ==
+                          '0') {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text('Total hours must be greater than 0')));
+                      } else if (weeklytotalVM
+                              .totalHoursController.text.isNotEmpty ||
                           weeklytotalVM.totalHoursController.text != "0") {
                         showLoadingIndicator(context: context);
                         bool isSuccess = await weeklytotalVM.submitWeeklyHour(
@@ -383,23 +391,27 @@ class WeeklyTotalHoursView extends StatelessWidget {
                         hideOpenDialog(context: context);
                         if (isSuccess == true) {
                           sucessfullyHoursAddedDialog(
-                             backButtonCallback: (){
-                                      weeklytotalVM.commentController.clear();
-                                      weeklytotalVM.endTimeController.clear();
-                                      weeklytotalVM.generalExpController.clear();
-                                      weeklytotalVM.startTimeController.clear();
-                                      weeklytotalVM.parkingTravelController.clear();
-                                      weeklytotalVM.totalHoursController.clear();
-                                      Get.back();
-                                    },
+                            backButtonCallback: () {
+                              homeVM.selectedDropDownValue.value =
+                                  homeVM.jobSites[0].value;
+                              homeVM.selectedJobsiteId.value =
+                                  homeVM.jobSites[0].id;
+                              weeklytotalVM.commentController.clear();
+                              weeklytotalVM.endTimeController.clear();
+                              weeklytotalVM.generalExpController.clear();
+                              weeklytotalVM.startTimeController.clear();
+                              weeklytotalVM.parkingTravelController.clear();
+                              weeklytotalVM.totalHoursController.clear();
+                              Get.back();
+                            },
                             isCheckButton: false,
                             checkTitle: 'Check Summary',
                             context: context,
                             title: 'Your Hours Have Been Successfully Added',
-                            onTap: () async{
+                            onTap: () async {
                               showLoadingIndicator(context: context);
-                              List<WeeklyWorkSummaryModel> result =await 
-                                  weeklySummaryVM.getweeklyWorkSummary();
+                              List<WeeklyWorkSummaryModel> result =
+                                  await weeklySummaryVM.getweeklyWorkSummary();
                               hideOpenDialog(context: context);
                               if (result.isNotEmpty) {
                                 Get.offAndToNamed(AppRoutes.weeklySummaryView);
@@ -418,9 +430,10 @@ class WeeklyTotalHoursView extends StatelessWidget {
                   child: customTextButton(
                       buttonColor: AppColor.blue,
                       title: 'Check Summary',
-                      onTap: () async{
+                      onTap: () async {
                         showLoadingIndicator(context: context);
-                        List<WeeklyWorkSummaryModel> result =await weeklySummaryVM.getweeklyWorkSummary();
+                        List<WeeklyWorkSummaryModel> result =
+                            await weeklySummaryVM.getweeklyWorkSummary();
                         hideOpenDialog(context: context);
                         if (result.isNotEmpty) {
                           Get.toNamed(AppRoutes.weeklySummaryView);

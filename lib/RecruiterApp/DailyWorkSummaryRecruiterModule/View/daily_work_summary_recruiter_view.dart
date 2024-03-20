@@ -26,6 +26,7 @@ class DailyWorkSummaryRecruiterView extends StatelessWidget {
   final homeVM = Get.put(HomeRecruiterViewModel());
   @override
   Widget build(BuildContext context) {
+    homeVM.getSpecificWorkerData();
     return Scaffold(
       body: PopScope(
         canPop: false,

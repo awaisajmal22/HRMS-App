@@ -29,12 +29,13 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
   EditDailyTotalHoursRecruiterView({super.key});
   final editDailyTotalVM = Get.find<EditDailyTotalHoursRecruiterViewModel>();
   final uploadImageVM = Get.find<UploadDocumentRecruiterViewModel>();
-  final homeVM = Get.find<HomeRecruiterViewModel>();
+ final homeVM = Get.put(HomeRecruiterViewModel());
   final dailySummaryVM = Get.put(DailyWorkSummaryRecruiterViewModel());
   DailyWorkSummaryRecruiterByIdModel model = Get.arguments[0];
   int workerId = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
+    homeVM.getSpecificWorkerData();
     List<String> startHours = model.startTime.split(':');
     List<String> endHours = model.endTime.split(':');
     editDailyTotalVM.totalHoursController.text = model.hours.toString();
@@ -52,7 +53,7 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
         '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.startTime!))}';
     editDailyTotalVM.endTimeController.text =
         '${DateFormat.jm().format(DateFormat("HH:mm:ss").parse(model.endTime!))}';
-
+    editDailyTotalVM.commentController.text = model.feefback ?? '';
     return Scaffold(
       body: Column(
         children: [
@@ -79,6 +80,23 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.blue.withOpacity(0.2)),
+                          child: Obx(
+                            () => appText(
+                              title:
+                                  "${homeVM.worker.value.firstName} ${homeVM.worker.value.lastName}",
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         appText(
                           title: 'Please add hours worked',
                           fontSize: 20,
@@ -524,7 +542,17 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                     const SnackBar(
                                         content: Text(
                                             'Please fill the required fields')));
-                              } else if (editDailyTotalVM.totalHoursController.text ==
+                              } else if (homeVM.selectedJobsiteId.value ==
+                                      -1010 ||
+                                  homeVM.selectedDropDownValue.value ==
+                                      'Select job site' ||
+                                  homeVM.selectedDropDownValue.value == '') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('Please Select job Site')));
+                              } else if (editDailyTotalVM
+                                      .totalHoursController.text ==
                                   '0') {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -584,7 +612,7 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
                                 hideOpenDialog(context: context);
                                 if (isSuccess == true) {
                                   sucessfullyHoursAddedRecruiterDialog(
-                                    backButtonCallback: (){
+                                    backButtonCallback: () {
                                       Get.back();
                                     },
                                     checkTitle: 'Check List',
