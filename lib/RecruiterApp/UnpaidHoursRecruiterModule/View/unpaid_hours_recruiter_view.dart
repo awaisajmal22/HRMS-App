@@ -41,7 +41,7 @@ class UnpaidHoursRecruiterView extends StatelessWidget {
   final unpaidSummaryVM = Get.put(UnpaidRecruiterSummaryViewModel());
   @override
   Widget build(BuildContext context) {
-    homeVM.getSpecificWorkerData();
+   homeVM.getSpecificWorkerData().then((val) => homeVM.getRecruiterJobSite(reload: true, workerId: int.parse(val.id)));
     return Scaffold(
       body: Column(
         children: [

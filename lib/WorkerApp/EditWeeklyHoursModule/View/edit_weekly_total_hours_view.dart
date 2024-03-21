@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hrmsapp/WorkerApp/WeeklyWorkSummaryModule/Model/weekly_work_summary_worker_id.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppButton/text_button.dart';
@@ -25,7 +26,7 @@ import '../../WeeklyWorkSummaryModule/ViewModel/weekly_work_summary_view_model.d
 import '../ViewModel/edit_weeklytotal_view_model.dart';
 
 class EditWeeklyTotalHoursView extends StatelessWidget {
-  WeeklyWorkSummaryModel summary = Get.arguments;
+  WeeklyWorkSummaryWorkerByIdModel summary = Get.arguments;
   EditWeeklyTotalHoursView({super.key});
   final editWeeklyHoursVM = Get.find<EditWeeklyTotalHoursViewModel>();
   final uploadImageVM = Get.find<UploadDocumentViewModel>();
@@ -37,8 +38,9 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
     editWeeklyHoursVM.parkingTravelController.text = summary.parking.toString();
     editWeeklyHoursVM.generalExpController.text =
         summary.generalexpence.toString();
-    homeVM.selectedDropDownValue.value = summary.jobSiteName;
-    homeVM.selectedJobsiteId.value = summary.jobId;
+    homeVM.selectedDropDownValue.value = summary.jobSiteName.toString();
+    homeVM.selectedJobsiteId.value = summary.jobsiteId;
+    editWeeklyHoursVM.commentController.text = summary.feefback ?? '';
 
     return Scaffold(
       body: Column(
@@ -392,7 +394,7 @@ class EditWeeklyTotalHoursView extends StatelessWidget {
                               : 0.0,
                           id: summary.id,
                           jobSiteID: homeVM.selectedJobsiteId.value == ''
-                              ? summary.jobId
+                              ? summary.jobsiteId
                               : homeVM.selectedJobsiteId.value,
                           startDate: editWeeklyHoursVM.startDate.value,
                           endDate: editWeeklyHoursVM.endDate.value,

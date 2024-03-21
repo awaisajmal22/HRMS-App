@@ -35,7 +35,7 @@ class EditDailyTotalHoursRecruiterView extends StatelessWidget {
   int workerId = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
-    homeVM.getSpecificWorkerData();
+    homeVM.getSpecificWorkerData().then((val) => homeVM.getRecruiterJobSite(reload: true, workerId: int.parse(val.id)));
     List<String> startHours = model.startTime.split(':');
     List<String> endHours = model.endTime.split(':');
     editDailyTotalVM.totalHoursController.text = model.hours.toString();

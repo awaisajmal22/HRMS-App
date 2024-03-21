@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hrmsapp/RecruiterApp/HomeRecruiterModule/Model/job_site_recruiter_model.dart';
+import 'package:hrmsapp/RecruiterApp/WeeklyWorkSummaryRecruiterModule/Model/weekly_work_summary_id_model.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
 import '../../../Constant/AppButton/text_button.dart';
@@ -26,7 +27,7 @@ import '../../WeeklyWorkSummaryRecruiterModule/ViewModel/weekly_work_summary_rec
 import '../ViewModel/edit_weeklytotal_recruiter_view_model.dart';
 
 class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
-  WeeklyWorkSummaryRecruiterModel summary = Get.arguments[0];
+  WeeklyWorkSummaryRecruiterByIdModel summary = Get.arguments[0];
   int workerId = Get.arguments[1];
   EditWeeklyTotalHoursRecruiterView({super.key});
   final editWeeklyHoursVM = Get.find<EditWeeklyTotalHoursRecruiterViewModel>();
@@ -35,12 +36,14 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
   final weeklySummaryVM = Get.put(WeeklyWorkSummaryRecruiterViewModel());
   @override
   Widget build(BuildContext context) {
-    homeVM.getSpecificWorkerData();
+    homeVM.getSpecificWorkerData().then((val) =>
+        homeVM.getRecruiterJobSite(reload: true, workerId: int.parse(val.id)));
     editWeeklyHoursVM.totalHoursController.text = summary.hours.toString();
     editWeeklyHoursVM.parkingTravelController.text = summary.parking.toString();
     editWeeklyHoursVM.generalExpController.text =
         summary.generalexpence.toString();
-    homeVM.selectedDropDownValue.value = summary.jobSiteName;
+    homeVM.selectedDropDownValue.value = summary.jobSiteName!;
+    editWeeklyHoursVM.commentController.text = summary.feefback?? '';
     JobSiteRecruiterModel jobSitesData = homeVM.jobSites
         .firstWhere((element) => element.value == summary.jobSiteName);
     int siteID = jobSitesData.id;
@@ -67,23 +70,26 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: Column(
                     children: [
-                      Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.blue.withOpacity(0.2)),
-                              child: Obx(
-                                () => appText(
-                                  title:
-                                      "${homeVM.worker.value.firstName} ${homeVM.worker.value.lastName}",
-                                  fontSize: 20,
-                                ),
-                              ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.blue.withOpacity(0.2)),
+                          child: Obx(
+                            () => appText(
+                              title:
+                                  "${homeVM.worker.value.firstName} ${homeVM.worker.value.lastName}",
+                              fontSize: 20,
                             ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -418,10 +424,10 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                         ? double.parse(editWeeklyHoursVM
                                             .generalExpController.text)
                                         : 0.0,
-                                    id: summary.id,
+                                    id:summary.id!,
                                     jobSiteID:
                                         homeVM.selectedJobsiteId.value == ''
-                                            ? summary.id
+                                            ? summary.id!
                                             : homeVM.selectedJobsiteId.value,
                                     startDate:
                                         editWeeklyHoursVM.startDate.value,
@@ -430,7 +436,7 @@ class EditWeeklyTotalHoursRecruiterView extends StatelessWidget {
                                         .totalHoursController.text),
                                     jobSite:
                                         homeVM.selectedDropDownValue.value == ''
-                                            ? summary.jobSiteName
+                                            ? summary.jobSiteName!
                                             : homeVM
                                                 .selectedDropDownValue.value,
                                     feedBack: editWeeklyHoursVM

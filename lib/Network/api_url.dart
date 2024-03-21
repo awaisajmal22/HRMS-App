@@ -14,6 +14,7 @@ class ApiUrl {
   static const getJobSiteUrl = "${ApiUrl.baseUrl}/GetJobSite";
   static const dailyWorkSummarySubmit =
       "${ApiUrl.baseUrl}/Dailyworksummarysubmit";
+  static const getWeeklyWorkerSummaryById ="${ApiUrl.baseUrl}/weeklyworksummaryGetbyId?Id=";
       static const weeklyRecruiterWorkSummarySubmit = "${ApiUrl.baseUrl}/RecruiterWeeklySubmitHours";
   static const dailyRecruiterWorkSummarySubmit ='${ApiUrl.baseUrl}/RecruiterDailyworksummarysubmit';
   static const reportUnpaidHours = "${ApiUrl.baseUrl}/ReportUnpaidHours";
@@ -42,6 +43,7 @@ static const unpaidWorkSummaryUri ="${ApiUrl.baseUrl}/ReportUnpaidHourssummary";
       "${ApiUrl.baseUrl}/RecruiterDailyworksummaryGetbyId?Id=";
   static const recruiterEditDailyHoursUrl =
       "${ApiUrl.baseUrl}/RecruiterEditDailyHours";
+   static const recruiterGetWeeklyWorkSummaryById ="${ApiUrl.baseUrl}/RecruiterweeklyworksummaryGetbyId?Id=";
       static const getWorkerURL = "${ApiUrl.baseUrl}/GetWorkers";
       static const forgetPasswordUrl = "${ApiUrl.baseUrl}/Authentication/ForgetPassword?Email=";
       static const codeVerificationUrl = "${ApiUrl.baseUrl}/Authentication/VerificationCode";

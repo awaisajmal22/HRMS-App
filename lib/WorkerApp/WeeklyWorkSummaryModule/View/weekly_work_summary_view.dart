@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hrmsapp/WorkerApp/WeeklyWorkSummaryModule/Model/weekly_work_summary_worker_id.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
@@ -230,13 +231,22 @@ class WeeklyWorkSummaryView extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                weeklySummaryVM
-                                    .selectedCurrentSummaryIndex.value = index;
+                              onTap: () async{
+                                 showLoadingIndicator(context: context);
+                                WeeklyWorkSummaryWorkerByIdModel model =
+                                    await weeklySummaryVM
+                                        .getWorkerSummaryByID(
+                                            id: weeklySummaryVM
+                                                .weeklyWorkList[index].id);
+                                // weeklySummaryVM
+                                //     .selectedCurrentSummaryIndex.value = index;
+                                if(model != null){
+                                  hideOpenDialog(context: context);
+                                }
                                 Get.toNamed(
                                   AppRoutes.editWeeklyTotalHoursView,
-                                  arguments:
-                                      weeklySummaryVM.weeklyWorkList[index],
+                                  arguments:model
+                                      // weeklySummaryVM.weeklyWorkList[index],
                                 );
                               },
                               child: Container(

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hrmsapp/WorkerApp/WeeklyWorkSummaryModule/Model/weekly_work_summary_worker_id.dart';
 
 import '../Model/weekly_work_summary_model.dart';
 import '../Services/weekly_work_summary_services.dart';
@@ -23,5 +24,16 @@ class WeeklyWorkSummaryViewModel extends GetxController {RxInt selectedCurrentSu
     // TODO: implement onInit
     super.onInit();
     getweeklyWorkSummary();
+  }
+   Future<WeeklyWorkSummaryWorkerByIdModel> getWorkerSummaryByID(
+      {required int id}) async {
+    WeeklyWorkSummaryWorkerByIdModel model =
+        await WeeklyWorkSummaryServices()
+            .getWeeklyWorkSummaryWorkerServicesByID(id: id);
+            // print(model);
+    // getDailyWorkSummary(
+    //   workerId:
+    // );
+    return model;
   }
 }

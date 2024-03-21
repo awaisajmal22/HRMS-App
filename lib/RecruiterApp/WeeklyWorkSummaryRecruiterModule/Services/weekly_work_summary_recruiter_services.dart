@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
+import 'package:hrmsapp/RecruiterApp/WeeklyWorkSummaryRecruiterModule/Model/weekly_work_summary_id_model.dart';
+
 import '../../../Network/Server/response.dart';
 import '../../../Network/api_service.dart';
 import '../../../Network/api_url.dart';
@@ -29,6 +32,7 @@ class WeeklyWorkSummaryRecruiterServices {
               parking: data['parking'],
               generalexpence: data['generalexpence']));
         }
+        weeklyWorkSummaryList.sort((a, b) => a.date.compareTo(b.date));
         print("weekly Length ${weeklyWorkSummaryList.length}");
       }
       // response.data.forEach((d) =>
@@ -38,6 +42,34 @@ class WeeklyWorkSummaryRecruiterServices {
       ApiResponse.withError('error');
     }
     return weeklyWorkSummaryList;
+  }
+
+  Future<WeeklyWorkSummaryRecruiterByIdModel>
+      getWeeklyWorkSummaryRecruiterServicesByID({required int id}) async {
+    Rx<WeeklyWorkSummaryRecruiterByIdModel> weeklyWorkSummaryRecruiterModel =
+        WeeklyWorkSummaryRecruiterByIdModel.fromJson({}).obs;
+    try {
+      var response = await API().getRequestHeader(
+        "${ApiUrl.recruiterGetWeeklyWorkSummaryById}$id",
+      );
+      // print(response);
+      if (response == null) {}
+      if (response.statusCode == 200) {
+        final data = ApiResponse.withSuccess(response);
+        // print(data.response!.data);
+        weeklyWorkSummaryRecruiterModel.value =
+            WeeklyWorkSummaryRecruiterByIdModel.fromJson(data.response!.data);
+        print(weeklyWorkSummaryRecruiterModel.value.id);
+        // print(jobSites.length);
+      }
+      // response.data.forEach((d) =>
+      //     JobSiteRecruiterModel.add(JobSiteRecruiterModel.fromJson(d)));
+      // ShowMessage().showMessage("Login Successfully!");
+    } catch (e) {
+      ApiResponse.withError('error');
+    }
+
+    return weeklyWorkSummaryRecruiterModel.value;
   }
 
   Future<bool> submitWeeklyRecruiterHours({required int workerID}) async {

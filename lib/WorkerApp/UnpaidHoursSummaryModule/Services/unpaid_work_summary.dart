@@ -8,7 +8,7 @@ import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/Model/unpaid_recruite
 class UnpaidSummaryServices {
   getUnpaidWorkSumamryData() async {
     // bool isSuccess = false;
-    List<UnpaidWorkSummaryModel> unpaidRecruiterWorkSummaryList = [];
+    List<UnpaidWorkSummaryModel> unpaidWorkSummaryList = [];
     try {
       var response = await API().getRequestHeader(
           "${ApiUrl.unpaidWorkSummaryUri}");
@@ -18,11 +18,12 @@ class UnpaidSummaryServices {
         final data = ApiResponse.withSuccess(response);
 
         for(var d in data.response!.data){
-          unpaidRecruiterWorkSummaryList.add(UnpaidWorkSummaryModel.fromJson(d));
+          unpaidWorkSummaryList.add(UnpaidWorkSummaryModel.fromJson(d));
        
         }
+        unpaidWorkSummaryList.sort((a, b) => a.date.compareTo(b.date));
         print('data is updated');
-        print(unpaidRecruiterWorkSummaryList.length);
+        print(unpaidWorkSummaryList.length);
       }
       // response.data.forEach((d) =>
       //     JobSiteRecruiterModel.add(JobSiteRecruiterModel.fromJson(d)));
@@ -30,6 +31,6 @@ class UnpaidSummaryServices {
     } catch (e) {
       ApiResponse.withError('error');
     }
-    return unpaidRecruiterWorkSummaryList;
+    return unpaidWorkSummaryList;
   }
 }

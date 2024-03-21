@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/Model/unpaid_recruiter_summary_model.dart';
-import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/Services/unpaid_recuiter_summary_services.dart';
+import 'package:hrmsapp/WorkerApp/UnpaidHoursSummaryModule/Services/unpaid_work_summary.dart';
 
 class UnpaidSummaryViewModel extends GetxController{
   RxInt selectCurrentSummaryIndex = (-1).obs;

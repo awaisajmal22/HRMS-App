@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hrmsapp/RecruiterApp/WeeklyWorkSummaryRecruiterModule/Model/weekly_work_summary_id_model.dart';
 
 import '../Model/weekly_work_summary_recruiter_model.dart';
 import '../Services/weekly_work_summary_recruiter_services.dart';
@@ -28,5 +29,16 @@ Future<bool> submitWeeklyRecruiterHours({required int workerId}) async {
     // TODO: implement onInit
     super.onInit();
     // getweeklyWorkSummary();
+  }
+  Future<WeeklyWorkSummaryRecruiterByIdModel> getRecruiterSummaryByID(
+      {required int id}) async {
+    WeeklyWorkSummaryRecruiterByIdModel model =
+        await WeeklyWorkSummaryRecruiterServices()
+            .getWeeklyWorkSummaryRecruiterServicesByID(id: id);
+            // print(model);
+    // getDailyWorkSummary(
+    //   workerId:
+    // );
+    return model;
   }
 }

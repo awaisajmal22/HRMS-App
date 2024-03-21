@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hrmsapp/RecruiterApp/WeeklyWorkSummaryRecruiterModule/Model/weekly_work_summary_id_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Constant/AppBar/custom_app_bar.dart';
@@ -235,14 +236,21 @@ class WeeklyWorkSummaryRecruiterView extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                Get.toNamed(
-                                  AppRoutes.editWeeklyTotalHoursRecruiterView,
-                                  arguments: [
-                                    weeklySummaryVM.weeklyWorkList[index],
-                                    workerId
-                                  ],
-                                );
+                              onTap: () async {
+                                showLoadingIndicator(context: context);
+                                WeeklyWorkSummaryRecruiterByIdModel model =
+                                    await weeklySummaryVM
+                                        .getRecruiterSummaryByID(
+                                            id: weeklySummaryVM
+                                                .weeklyWorkList[index].id);
+                                if (model != null) {
+                                  hideOpenDialog(context: context);
+                                  print(model.toJson());
+                                  Get.toNamed(
+                                    AppRoutes.editWeeklyTotalHoursRecruiterView,
+                                    arguments: [model, workerId],
+                                  );
+                                }
 
                                 weeklySummaryVM
                                     .selectCurrentSummaryIndex.value = index;
