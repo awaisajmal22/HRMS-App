@@ -21,7 +21,7 @@ class UnpaidSummaryServices {
           unpaidWorkSummaryList.add(UnpaidWorkSummaryModel.fromJson(d));
        
         }
-        unpaidWorkSummaryList.sort((a, b) => a.date.compareTo(b.date));
+        unpaidWorkSummaryList.sort((a, b) => b.date.compareTo(a.date));
         print('data is updated');
         print(unpaidWorkSummaryList.length);
       }

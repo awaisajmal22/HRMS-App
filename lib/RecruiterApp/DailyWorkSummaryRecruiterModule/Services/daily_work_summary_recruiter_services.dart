@@ -32,7 +32,7 @@ class DailyWorkSummaryRecruiterServices {
         });
         print('data is updated');
         print(dailyWorkSummaryList.length);
-        dailyWorkSummaryList.sort((a, b) => a.date.compareTo(b.date));
+        dailyWorkSummaryList.sort((a, b) => b.date.compareTo(a.date));
       }
       // response.data.forEach((d) =>
       //     JobSiteRecruiterModel.add(JobSiteRecruiterModel.fromJson(d)));

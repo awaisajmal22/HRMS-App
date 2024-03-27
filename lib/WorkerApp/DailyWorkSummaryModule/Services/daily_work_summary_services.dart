@@ -21,7 +21,7 @@ class DailyWorkSummaryServices {
         isSuccess = true;
         data.response!.data.forEach(
             (d) => dailyWorkSummaryList.add(DailyWorkSummaryModel.fromJson(d)));
-            dailyWorkSummaryList.sort((a, b) => a.date.compareTo(b.date));
+            dailyWorkSummaryList.sort((a, b) => b.date.compareTo(a.date));
         print('Data added successfully');
         // print(jobSites.length);
       }

@@ -19,6 +19,16 @@ class WeeklyWorkSummaryRecruiterViewModel extends GetxController {
     }
     return data;
   }
+  RxList<WeeklyWorkSummaryRecruiterModel> newWeeklyWorkList =
+      <WeeklyWorkSummaryRecruiterModel>[].obs;
+  getWeeklyWorkByJobSite(String query){
+    newWeeklyWorkList.clear();
+    for(int i = 0; i < weeklyWorkList.length;i++){
+      if(weeklyWorkList[i].jobSiteName == query){
+        newWeeklyWorkList.add(weeklyWorkList[i]);
+      }
+    }
+  }
 Future<bool> submitWeeklyRecruiterHours({required int workerId}) async {
     bool isSuccess = await WeeklyWorkSummaryRecruiterServices()
         .submitWeeklyRecruiterHours(workerID: workerId);

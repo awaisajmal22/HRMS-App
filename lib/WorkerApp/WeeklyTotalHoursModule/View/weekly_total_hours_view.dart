@@ -414,6 +414,10 @@ class WeeklyTotalHoursView extends StatelessWidget {
                                   await weeklySummaryVM.getweeklyWorkSummary();
                               hideOpenDialog(context: context);
                               if (result.isNotEmpty) {
+                                homeVM.selectedDropDownValue.value =
+                                    homeVM.jobSites[0].value;
+                                homeVM.selectedJobsiteId.value =
+                                    homeVM.jobSites[0].id;
                                 Get.offAndToNamed(AppRoutes.weeklySummaryView);
                               }
                             },
@@ -436,6 +440,10 @@ class WeeklyTotalHoursView extends StatelessWidget {
                             await weeklySummaryVM.getweeklyWorkSummary();
                         hideOpenDialog(context: context);
                         if (result.isNotEmpty) {
+                          homeVM.selectedDropDownValue.value =
+                              homeVM.jobSites[0].value;
+                          homeVM.selectedJobsiteId.value =
+                              homeVM.jobSites[0].id;
                           Get.toNamed(AppRoutes.weeklySummaryView);
                         }
                       }),

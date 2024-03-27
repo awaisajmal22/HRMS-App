@@ -33,7 +33,7 @@ class WeeklyWorkSummaryServices {
               parking: data['parking'],
               generalexpence: data['generalexpence']));
         }
-        weeklyWorkSummaryList.sort((a, b) => a.date.compareTo(b.date));
+        weeklyWorkSummaryList.sort((a, b) => b.date.compareTo(a.date));
         print("data add successfully ${weeklyWorkSummaryList.length}");
       }
       // response.data.forEach((d) =>

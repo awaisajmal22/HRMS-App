@@ -22,7 +22,7 @@ class UnpaidRecruiterSummaryServices {
         // });
         }
         print('data is updated');
-        unpaidRecruiterWorkSummaryList.sort((a, b) => a.date.compareTo(b.date));
+        unpaidRecruiterWorkSummaryList.sort((a, b) => b.date.compareTo(a.date));
         print(unpaidRecruiterWorkSummaryList.length);
       }
       // response.data.forEach((d) =>
